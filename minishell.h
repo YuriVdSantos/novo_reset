@@ -6,9 +6,15 @@
 /*   By: yvieira- <yvieira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 15:10:26 by jhualves          #+#    #+#             */
-/*   Updated: 2025/05/27 04:37:54 by yvieira-         ###   ########.fr       */
+/*   Updated: 2025/05/28 20:39:13 by yvieira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/*
+TO DO
+CONSTRUIR GETPATH
+*/
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H

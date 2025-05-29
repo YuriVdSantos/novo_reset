@@ -2,11 +2,13 @@
 
 #include "../../minishell.h"
 
+//Quando o fork é executado ele não está com o path na env, ou seja preciso garantir que a env esteja pronta quando essa chamada acontecer.
 
 int	execute_forked_external(char **args, t_ctx *ctx)
 {
     int		child_pid;
-
+    
+    printf("PATH: '%s'\n", getenv("PATH"));
     child_pid = fork();
     define_execute_signals(child_pid);
     if (child_pid == -1)
@@ -67,12 +69,12 @@ int	execute_one_command(t_cmd *command, t_ctx *ctx)
         return (EXIT_FAILURE);
     }
     args = command->args;
-    free(command);
+    // free(command);
     if (is_builtin(args[0]))
         exit_status = execute_builtin(args, ctx, &ctx->env_list);
     else
         exit_status = execute_forked_external(args, ctx);
-    free_string_array(args);
+    // free_string_array(args);
     restore_original_fds(original_fds);
     return (exit_status);
 }

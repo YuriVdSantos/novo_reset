@@ -46,6 +46,7 @@ static int	minienv_has_path(t_ctx *minienv)
 	return (get_env_value(minienv, "PATH") != NULL);
 }
 
+
 int	execute_external(char **args, t_env *minienv, t_ctx *ctx)
 {
 	char	const	*path;
@@ -57,7 +58,8 @@ int	execute_external(char **args, t_env *minienv, t_ctx *ctx)
 		external_exit(args, minienv, EXIT_SUCCESS);
 	if (is_folder(command))
 		external_exit(args, minienv, NOT_EXECUTABLE);
-	path = ctx->cmd_list->cmd_path;
+	path = get_path(command, ctx);
+	// printf("Executing external command: %s\n", path);
 	if (path == NULL && minienv_has_path(ctx))
 		external_exit(args, minienv, CMD_NOT_FOUND);
 	else if (path == NULL)

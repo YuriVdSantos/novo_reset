@@ -6,7 +6,7 @@
 /*   By: yvieira- <yvieira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 15:09:55 by jhualves          #+#    #+#             */
-/*   Updated: 2025/05/27 04:21:33 by yvieira-         ###   ########.fr       */
+/*   Updated: 2025/05/28 19:55:07 by yvieira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	main_loop(t_ctx *ctx, char *input)
 		}
 		if (input[0] != '\0')
 			process_minishell(ctx, &input);
+		break;
 		// super_free(ctx, &input);
 	}
 }
