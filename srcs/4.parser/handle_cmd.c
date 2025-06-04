@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yvieira- <yvieira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 23:23:43 by jhualves          #+#    #+#             */
-/*   Updated: 2025/05/26 03:38:56 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/03 22:13:04 by yvieira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,10 @@ void	handle_redir(t_ctx *ctx, t_token **tmp, t_cmd *current)
 
 void	handle_word(t_ctx *ctx, t_token **tmp, t_cmd *current)
 {
-	add_arg(ctx, current, (*tmp)->value);
+	char *value_copy;
+
+	value_copy = safe_strdup(ctx, (*tmp)->value);
+	add_arg(ctx, current, value_copy);
 	*tmp = (*tmp)->next;
 }
 

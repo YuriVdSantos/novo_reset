@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yvieira- <yvieira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 23:26:04 by jhualves          #+#    #+#             */
-/*   Updated: 2025/05/26 01:33:34 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/03 22:42:48 by yvieira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,28 @@ void	add_arg(t_ctx *ctx, t_cmd *cmd, char *value)
 	size_t	i;
 
 	count = 0;
-	while (cmd->args[count])
-		count++;
+	if (cmd->args)
+	{
+		while (cmd->args[count])
+			count++;
+		// cmd->args = safe_malloc(ctx, sizeof(char *), ALLOC_TYPE_STR);
+		// cmd->args[0] = safe_strdup(ctx, value);
+		// cmd->args[0] = NULL;
+	}
+	// while (cmd->args[count])
+	// 	count++;
 	new_args = safe_malloc(ctx, sizeof(char *) * (count + 2), \
 	ALLOC_TYPE_STR);
 	i = 0;
-	while (cmd->args[i])
+	while (i < count)
 	{
 		new_args[i] = cmd->args[i];
 		i++;
 	}
-	new_args[i] = safe_strdup(ctx, value);
-	new_args[i + 1] = NULL;
-	free(cmd->args);
+	new_args[count] = value;
+	new_args[count + 1] = '\0';
+	// if (cmd->args)
+	// 	free(cmd->args);
 	cmd->args = new_args;
 }
 
