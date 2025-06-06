@@ -2,15 +2,15 @@
 
 #include "../../minishell.h"
 
-//Quando o fork é executado ele não está com o path na env, ou seja preciso garantir que a env esteja pronta quando essa chamada acontecer.
-
 int	execute_forked_external(char **args, t_ctx *ctx)
 {
     int		child_pid;
     
     // printf("PATH: '%s'\n", getenv("PATH"));
     child_pid = fork();
+    // printf("child_pid: %d\n", child_pid);
     define_execute_signals(child_pid);
+
     if (child_pid == -1)
     {
         print_error_msg("fork", args[0]);

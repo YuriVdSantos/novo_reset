@@ -53,7 +53,7 @@ char	*get_path(char *command, t_ctx *ctx)
 
     if (is_absolute_or_relative_path(command))
         return (resolve_local_path(command, ctx));
-    path_env = get_env_value(ctx, "PATH");
+    path_env = getenv("PATH");
     if (!path_env)
         return (NULL);
     return (search_in_path_env(command, path_env));

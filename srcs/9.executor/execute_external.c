@@ -1,16 +1,16 @@
 #include "../../minishell.h"
 
-static int	is_folder(const char *command)
+static int is_folder(const char *command)
 {
-    struct stat	statbuf;
+    struct stat statbuf;
 
     if (stat(command, &statbuf) == 0 && S_ISDIR(statbuf.st_mode))
     {
         while (*command == '.' || *command == '/')
             command++;
-        return (*command == '\0') ? TRUE : FALSE;
+        return (*command == '\0');
     }
-    return (FALSE);
+    return FALSE;
 }
 
 static void	handle_execve_errors(char **args, const char *path, char **envp)
@@ -88,8 +88,8 @@ int	execute_external(char **args, t_env *minienv, t_ctx *ctx)
 		external_exit(args, minienv, EXIT_SUCCESS);
 	if (is_folder(command))
 		external_exit(args, minienv, NOT_EXECUTABLE);
-	path = getenv("PATH");
-	// path = get_path(command, ctx);
+	// path = getenv("PATH");
+	path = get_path(command, ctx);
 	// printf("Executing external command: %s\n", path);
 	if (path == NULL && minienv_has_path(ctx))
 		external_exit(args, minienv, CMD_NOT_FOUND);
@@ -98,13 +98,8 @@ int	execute_external(char **args, t_env *minienv, t_ctx *ctx)
 	rl_clear_history();
 	close_extra_fds();
 	envp = convert_env_list_to_array(minienv);
-	printf("Path: '%s'\n", path);
-	printf("Args: %s\n", args[0]);
-	for (int i = 0; envp[i] != NULL; i++)
-	{
-		printf("envp[%d]: %s\n", i, envp[i]);
-	}
-
+	// printf("Path: '%s'\n", path);
+	// printf("Args: %s\n", args[0]);
 	if (execve(path, args, envp) == -1)
 		handle_execve_errors(args, path, envp);
 	exit(EXIT_SUCCESS);
