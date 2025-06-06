@@ -13,7 +13,7 @@ static void	handle_sigint(int sig)
 	rl_redisplay();
 }
 
-void	define_main_signals(void)
+void	define_signals(void)
 {
 	struct sigaction	sa_sigint;
 	struct sigaction	sa_sigquit;

@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 01:28:41 by jhualves          #+#    #+#             */
-/*   Updated: 2025/05/26 01:28:42 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/05/27 01:51:00 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,12 @@ void	free_env_list(t_env *env_list)
 	while (current != NULL)
 	{
 		free(current->key);
+		current->key = NULL;
 		free(current->value);
+		current->value = NULL;
 		next = current->next;
 		free(current);
 		current = next;
 	}
+	current = NULL;
 }

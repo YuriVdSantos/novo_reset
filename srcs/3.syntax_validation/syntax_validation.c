@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 15:27:25 by jhualves          #+#    #+#             */
-/*   Updated: 2025/05/25 21:32:20 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/04 15:35:44 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static bool	check_pipes(t_ctx *ctx, t_token *tokens);
 static bool	check_redirections(t_ctx *ctx, t_token *tokens);
-static bool	check_quotes(t_ctx *ctx, t_token *tokens);
+// static bool	check_quotes(t_ctx *ctx, t_token *tokens);
 
 bool	validate_syntax(t_ctx *ctx, t_token *tokens)
 {
@@ -22,8 +22,8 @@ bool	validate_syntax(t_ctx *ctx, t_token *tokens)
 		return (false);
 	if (!check_redirections(ctx, tokens))
 		return (false);
-	if (!check_quotes(ctx, tokens))
-		return (false);
+	// if (!check_quotes(ctx, tokens))
+	// 	return (false);
 	return (true);
 }
 
@@ -63,26 +63,26 @@ static bool	check_redirections(t_ctx *ctx, t_token *tokens)
 	return (true);
 }
 
-static bool	check_quotes(t_ctx *ctx, t_token *tokens)
-{
-	t_token	*current;
-	int		squote;
-	int		dquote;
+// static bool	check_quotes(t_ctx *ctx, t_token *tokens)
+// {
+// 	t_token	*current;
+// 	int		squote;
+// 	int		dquote;
 
-	current = tokens;
-	squote = 0;
-	dquote = 0;
-	while (current && current->type != END)
-	{
-		if (current->type == SQUOTE)
-			squote++;
-		else if (current->type == DQUOTE)
-			dquote++;
-		current = current->next;
-	}
-	if (squote % 2 != 0)
-		return (syntax_error(ctx, "unclosed single quote"));
-	if (dquote % 2 != 0)
-		return (syntax_error(ctx, "unclosed double quote"));
-	return (true);
-}
+// 	current = tokens;
+// 	squote = 0;
+// 	dquote = 0;
+// 	while (current && current->type != END)
+// 	{
+// 		if (current->type == SQUOTE)
+// 			squote++;
+// 		else if (current->type == DQUOTE)
+// 			dquote++;
+// 		current = current->next;
+// 	}
+// 	if (squote % 2 != 0)
+// 		return (syntax_error(ctx, "unclosed single quote"));
+// 	if (dquote % 2 != 0)
+// 		return (syntax_error(ctx, "unclosed double quote"));
+// 	return (true);
+// }

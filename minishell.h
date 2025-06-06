@@ -3,30 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yvieira- <yvieira-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 15:10:26 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/03 21:04:40 by yvieira-         ###   ########.fr       */
+/*   Updated: 2025/06/06 00:36:53 by yurivieirad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-/*
-TO DO
-CONSTRUIR GETPATH
-*/
-
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
 # include "Libft42/libft.h"
+# include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <errno.h>
 # include <limits.h>
 # include <sys/fcntl.h>
 # include <string.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
@@ -37,7 +31,6 @@ CONSTRUIR GETPATH
 # include <sys/stat.h> 
 # include <signal.h> 
 # include <sys/types.h>
-
 
 # define ERR_SUCCESS_MSG "Success"
 # define ERR_GENERAL_MSG "General error"
@@ -52,7 +45,7 @@ CONSTRUIR GETPATH
 # define ERR_UNKNOWN_MSG "Unknown error"
 # define _POSIX_C_SOURCE 200809L
 
-//for execute
+//For Execute
 # define INTERRUPT 128
 # define FORK_ERROR -1
 # define TRUE 1	
@@ -71,8 +64,7 @@ CONSTRUIR GETPATH
 # define FORK_ERROR -1
 # define CMD_NOT_FOUND_MSG	"command not found"
 # define NOT_EXECUTABLE_MSG "Is a directory"
-# define PATH_MAX    4096
-
+// # define PATH_MAX    4096
 
 typedef enum e_alloc_type {
 	ALLOC_TYPE_GENERIC,
@@ -96,7 +88,8 @@ typedef enum e_token_type {
 	DQUOTE,
 	ENV_VAR,
 	ASSIGNMENT_VAR,
-	END
+	END,
+	ERROR
 }	t_token_type;
 
 typedef enum e_redir_type {
@@ -155,8 +148,6 @@ typedef struct s_ctx {
 	int						current_exit_status;
 	char					*last_error_message;
 	t_allocation			*allocations;
-	bool					sigint_received;
-	bool					sigquit_received;
 	bool					is_interactive;
 	char					*pwd;
 	char					*oldpwd;
@@ -233,15 +224,15 @@ bool	validate_syntax(t_ctx *ctx, t_token *tokens);
 // =============================================================================
 
 // srcs/4.parser/handle_cmd.c
-void	handle_pipe(t_ctx *ctx, t_token **tmp, t_cmd **current);
+void	handle_pipe(t_token **tmp, t_cmd **current);
 void	handle_redir(t_ctx *ctx, t_token **tmp, t_cmd *current);
-void	handle_word(t_ctx *ctx, t_token **tmp, t_cmd *current);
+void	handle_word(t_token **tmp, t_cmd *current);
 void	handle_dquote(t_ctx *ctx, t_token **tmp, t_cmd *current);
 void	handle_squote(t_ctx *ctx, t_token **tmp, t_cmd *current);
 
 // srcs/4.parser/handle_cmd_1.c
 void	handle_assignment_var(t_ctx *ctx, t_token **tmp, t_cmd *current);
-void	handle_env_var(t_ctx *ctx, t_token **tmp, t_cmd *current);
+void	handle_env_var(t_token **tmp, t_cmd *current);
 void	handle_parse_error(t_ctx *ctx, t_token **tmp);
 
 // srcs/4.parser/parsing.c
@@ -264,11 +255,10 @@ int		var_name_length(const char *input);
 // =============================================================================
 // srcs/6.signals/
 // =============================================================================
-
-// srcs/6.signals/signals.c
-void	define_main_signals(void);
 void	define_execute_signals(int child_pid);
+void	define_signals(void);
 void	define_heredoc_signals(int child_pid);
+
 
 // =============================================================================
 // srcs/7.memory_mgmt/
@@ -290,8 +280,7 @@ void	print_error(t_ctx *ctx, char *msg, int errnum, int exit_status);
 
 // =============================================================================
 // srcs/9.executor/
-
-
+// =============================================================================
 // executes
 int		execute_multiple_commands(t_cmd *commands, t_ctx *ctx);
 int		execute_one_command(t_cmd *command, t_ctx *ctx);
@@ -372,7 +361,7 @@ char	*value_only(char *key_pair);
 char	*name_only(char *key_pair);
 char	*create_keypair(char *name, char *value);
 
-
+// =============================================================================
 // srcs/12.handle_new_env/
 // =============================================================================
 
@@ -396,9 +385,9 @@ void	no_input(void);
 void	input_null(t_ctx *ctx, char **input);
 
 // utils/parsing_utils.c
-void	add_arg(t_ctx *ctx, t_cmd *cmd, char *value);
-void	add_redir(t_ctx *ctx, t_cmd *cmd, t_redir_type type, char *file);
-t_cmd	*new_cmd(t_ctx *ctx);
+void	add_arg(t_cmd *cmd, char *value);
+void	add_redir(t_cmd *cmd, t_redir_type type, char *file);
+t_cmd	*new_cmd(void);
 
 // utils/safe_split.c
 // static size_t	count_words(const char *s, char c);
@@ -418,14 +407,13 @@ char	*safe_strtrim(t_ctx *ctx, char const *s1, char const *set);
 char	*safe_strjoin(t_ctx *ctx, char const *s1, char const *s2);
 
 // utils/tokenizer_utils.c
-int		define_substring(t_ctx *ctx, char **str,const char **input, \
-		t_token_type type);
-void	get_pid_var(t_ctx *ctx, char **str);
+int		define_substring(char **str, const char **input, t_token_type type);
+void	get_pid_var(char **str);
 
 // =============================================================================
 // minishell.c (main program file)
 // =============================================================================
 int		main(int argc, char **argv, char **env);
-void	main_loop(t_ctx *ctx, char *input);
+void	main_loop(t_ctx *ctx);
 
 #endif
