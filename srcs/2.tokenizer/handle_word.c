@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 19:37:26 by jhualves          #+#    #+#             */
-/*   Updated: 2025/05/26 03:19:31 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/05/26 22:54:23 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,6 @@ int	is_valid_var_char(char c)
 {
 	return (ft_isalnum(c) || c == '_');
 }
-
-// static int	is_valid_var_name(const char *input)
-// {
-// 	int	i;
-
-// 	if (!input || !is_valid_var_char(input[0]))
-// 		return (0);
-// 	i = 1;
-// 	while (input[i])
-// 	{
-// 		if (!is_valid_var_char(input[i]))
-// 			return (0);
-// 		i++;
-// 	}
-// 	return (1);
-// }
 
 static int	is_assignment_var(const char *input, int *len)
 {

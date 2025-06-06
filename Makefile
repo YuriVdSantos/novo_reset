@@ -1,8 +1,12 @@
 # Compiler and Flags
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address -fPIC
+CFLAGS = -Wall -Wextra -Werror -g3 #-fsanitize=address
 IFLAGS = -I./Libft42 -I. -I/usr/include/readline
-LDFLAGS = -L./Libft42 -lft -lreadline -no-pie
+LDFLAGS = -L./Libft42 -lft -lreadline
+
+# Para Dispositivos Apple, adicione:
+CFLAGS += -I/opt/homebrew/opt/readline/include
+LDFLAGS += -L/opt/homebrew/opt/readline/lib
 
 # Project Name
 NAME = minishell
@@ -59,12 +63,22 @@ C_FILES = minishell.c \
 		  utils/safe_utils_libft_1.c \
 		  utils/tokenizer_utils.c
 
-# Object Files
-OBJS = $(C_FILES:.c=.o)
+# Object Directory
+OBJ_DIR = objs
+
+# Object Files: Prepend OBJ_DIR and use notdir to get basenames
+OBJS = $(addprefix $(OBJ_DIR)/, $(notdir $(C_FILES:.c=.o)))
+
+# Dependencies for .o files (header files)
+DEPS = minishell.h $(LIBFT_DIR)/libft.h
 
 # Libft
 LIBFT_DIR = Libft42
 LIBFT = $(LIBFT_DIR)/libft.a
+
+# Tell make where to find source files for the pattern rule
+# This adds all unique directories from C_FILES to the search path for .c files
+vpath %.c $(sort $(dir $(C_FILES)))
 
 # Default rule
 all: $(NAME)
@@ -80,19 +94,22 @@ $(NAME): $(OBJS) $(LIBFT)
 	@$(CC) $(CFLAGS) $(OBJS) $(LDFLAGS) -o $(NAME)
 	@echo "$(NAME) compiled successfully!"
 
-# Rule to compile .c files to .o files
-# Adding minishell.h and libft.h as dependencies for .o files
-%.o: %.c minishell.h $(LIBFT_DIR)/libft.h
-	@echo "Compiling $<..."
+# Rule to compile .c files to .o files in OBJ_DIR
+# $< is the first prerequisite (the .c file found via vpath)
+# $@ is the target (e.g., objs/file.o)
+# $(@D) is the directory part of the target (e.g., objs)
+$(OBJ_DIR)/%.o: %.c $(DEPS)
+	@echo "Compiling $< to $@..."
+	@mkdir -p $(@D) # Ensure the object directory exists
 	@$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 
 # Clean rule
 clean:
 	@echo "Cleaning Libft object files..."
 	@$(MAKE) -C $(LIBFT_DIR) clean
-	@echo "Cleaning project object files..."
-	@rm -f $(OBJS)
-	@echo "Object files cleaned!"
+	@echo "Cleaning project object files and directory..."
+	@rm -rf $(OBJ_DIR) # Remove the entire object directory
+	@echo "Object directory cleaned!"
 
 # Full clean rule
 fclean: clean

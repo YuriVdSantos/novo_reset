@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 20:14:13 by jhualves          #+#    #+#             */
-/*   Updated: 2025/05/25 23:39:19 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/05/26 22:51:25 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@ void	token_handle_pipe(t_ctx *ctx, const char **input, t_token **tokens)
 	c = **input;
 	if (c == '|')
 		type = PIPE;
+	else
+	{
+		type = ERROR;
+		print_error(ctx, "Invalid pipe character", -1, 2);
+		return ;
+	}
 	(*input)++;
 	ft_lstadd_back(tokens, new_token(ctx, type, NULL));
 }
