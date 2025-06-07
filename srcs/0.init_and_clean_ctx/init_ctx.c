@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_ctx.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yvieira- <yvieira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:55:10 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/04 20:39:37 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/06 21:53:12 by yvieira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,15 +87,17 @@ t_ctx	*init_ctx(t_ctx *ctx, char **env_array)
 	ctx->token_list = NULL;
 	ctx->input = NULL;
 	ctx->exit_status = 0;
+	ctx->env_mtz = malloc(sizeof(env_array));
 	ctx->previous_exit_status = 0;
 	ctx->current_exit_status = 0;
 	ctx->last_error_message = NULL;
 	ctx->allocations = malloc(sizeof(t_allocation));
-	if (!ctx->allocations)
+	if (!ctx->allocations || !ctx->env_mtz)
 	{
 		ft_putstr_fd("minishell: initialization error\n", 2);
 		return (NULL);
 	}
+	ctx->env_mtz = env_array;
 	ctx->pwd = NULL;
 	ctx->oldpwd = NULL;
 	ctx->is_interactive = isatty(STDIN_FILENO);

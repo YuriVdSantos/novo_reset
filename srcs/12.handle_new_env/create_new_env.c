@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_new_env.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yvieira- <yvieira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 21:10:41 by jhualves          #+#    #+#             */
-/*   Updated: 2025/05/26 03:13:36 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/06 21:50:00 by yvieira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	add_new_env_var(t_ctx *ctx, t_env **env_list, char *key, char *value)
 	t_env	*new_node;
 	t_env	*current;
 
+	// Atualizar matriz de ambiente
 	new_node = safe_malloc(ctx, sizeof(t_env), ALLOC_TYPE_ENV_NODE);
 	new_node->key = key;
 	new_node->value = value;
@@ -70,4 +71,30 @@ void	set_env_var(t_ctx *ctx, const char *assignment)
 	else
 		add_new_env_var(ctx, &ctx->env_list, key, value);
 	safe_free(ctx, key);
+}
+
+void	delete_env_var(t_ctx *ctx, const char *key)
+{
+	t_env	*current;
+	t_env	*prev;
+
+	current = ctx->env_list;
+	prev = NULL;
+	//Deletar da matriz de ambiente
+	while (current)
+	{
+		if (ft_strcmp(current->key, key) == 0)
+		{
+			if (prev)
+				prev->next = current->next;
+			else
+				ctx->env_list = current->next;
+			safe_free(ctx, current->key);
+			safe_free(ctx, current->value);
+			safe_free(ctx, current);
+			return ;
+		}
+		prev = current;
+		current = current->next;
+	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
+/*   By: yvieira- <yvieira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 15:10:26 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/06 00:36:53 by yurivieirad      ###   ########.fr       */
+/*   Updated: 2025/06/06 21:42:52 by yvieira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ typedef struct s_ctx {
 	t_env					*env_list;
 	t_cmd					*cmd_list;
 	t_token					*token_list;
+	char					**env_mtz;
 	char					*input;
 	int						exit_status;
 	int						previous_exit_status;
@@ -175,6 +176,7 @@ void	free_env_list(t_env *env_list); // Added prototype
 t_ctx	*init_ctx(t_ctx *ctx, char **env);
 void	init_environment(t_ctx *ctx, char **env_array);
 void	add_env_node(t_ctx *ctx, t_env **list_head, const char *env_var);
+void	delete_env_var(t_ctx *ctx, const char *key);
 
 // =============================================================================
 // srcs/1.process_input/
