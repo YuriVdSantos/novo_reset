@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_input.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
+/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 18:54:45 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/06 10:07:21 by yurivieirad      ###   ########.fr       */
+/*   Updated: 2025/06/09 16:38:35 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,8 @@ void	process_input(t_ctx *ctx, const char **input)
 		ctx->exit_status = 2;
 		return ;
 	}
-	if(ctx->cmd_list && ctx->cmd_list->next)
-	{
+	if (ctx->cmd_list && ctx->cmd_list->next)
 		ctx->exit_status = execute_multiple_commands(ast, ctx);
-	}
 	else
-	{
 		ctx->exit_status = execute_one_command(ast, ctx);
-	}
-	//expand_ast(ctx, ast);
-	//execute_ast(ctx, ast);
 }

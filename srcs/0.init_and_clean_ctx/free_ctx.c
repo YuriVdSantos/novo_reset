@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 19:15:54 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/04 22:27:47 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/09 16:56:59 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,11 @@ void	super_free(t_ctx *ctx)
 	token_list = ctx->token_list;
 	free_cmd_list(cmd_list);
 	free_token_list(token_list);
-	if (ctx->input)
-	{
-		free(ctx->input);
-		ctx->input = NULL;
-	}
+	// if (ctx->input)
+	// {
+	// 	free(ctx->input);
+	// 	ctx->input = NULL;
+	// }
 	free_all_allocations(ctx);
 }
 

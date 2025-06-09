@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
+/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 15:10:26 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/06 00:36:53 by yurivieirad      ###   ########.fr       */
+/*   Updated: 2025/06/09 16:38:14 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -297,8 +297,8 @@ void	clean_after_execute(int *children_pid);
 void	quit_child(char **commands, t_ctx *ctx);
 
 // execute builtin
-int	execute_forked_builtin(char **args, t_ctx *ctx, t_env **minienv);
-int	execute_builtin(char **args, t_ctx *ctx, t_env **minienv);
+int		execute_forked_builtin(char **args, t_ctx *ctx, t_env **minienv);
+int		execute_builtin(char **args, t_ctx *ctx, t_env **minienv);
 
 // execute external
 int		execute_external(char **args, t_env *minienv, t_ctx *ctx);
@@ -380,7 +380,6 @@ void	process_assignments(t_ctx *ctx, t_cmd *cmd);
 // =============================================================================
 
 // utils/main_utils.c
-void	process_minishell(t_ctx *ctx, char **input);
 void	no_input(void);
 void	input_null(t_ctx *ctx, char **input);
 
