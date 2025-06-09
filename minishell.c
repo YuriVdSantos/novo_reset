@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yvieira- <yvieira-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 15:09:55 by jhualves          #+#    #+#             */
-/*   Updated: 2025/05/28 19:55:07 by yvieira-         ###   ########.fr       */
+/*   Updated: 2025/06/06 10:30:05 by yurivieirad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ int	main(int argc, char **argv, char **env)
 {
 	t_ctx	*ctx;
 	int		exit_status;
-	char	*input;
-	char	*prompt;
 
 	if (argc != 1)
 	{
@@ -42,20 +40,24 @@ int	main(int argc, char **argv, char **env)
 	if (!ctx)
 		return (ft_putstr_fd("minishell: initialization error\n", 2), \
 				EXIT_FAILURE);
-	prompt = get_prompt(ctx);
-	input = readline(prompt);
-	main_loop(ctx, input);
+	main_loop(ctx);
 	exit_status = ctx->exit_status;
 	free_context(ctx);
 	rl_clear_history();
 	return (exit_status);
 }
 
-void	main_loop(t_ctx *ctx, char *input)
+void	main_loop(t_ctx *ctx)
 {
+	char	*prompt;
+	char	*input;
+
 	while (1)
 	{
-		// receive_signal();
+		
+		prompt = get_prompt(ctx);
+		input = readline(prompt);
+		define_signals();
 		if (!input)
 		{
 			no_input();
@@ -66,9 +68,7 @@ void	main_loop(t_ctx *ctx, char *input)
 			input_null(ctx, &input);
 			continue ;
 		}
-		if (input[0] != '\0')
-			process_minishell(ctx, &input);
-		break;
-		// super_free(ctx, &input);
+		process_minishell(ctx, &input);
+		super_free(ctx);
 	}
 }
