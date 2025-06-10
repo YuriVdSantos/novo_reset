@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:45:49 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/09 23:25:26 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/10 15:23:13 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,6 @@ char	*expand_env_var(t_ctx *ctx, const char *input)
 		ft_strlcpy(var_name, "?", sizeof(var_name));
 		input++;
 	}
-	else if (input[0] == '$' && input[1] == '?') // Caso $?
-	{
-		ft_strlcpy(var_name, "?", sizeof(var_name));
-		input += 2; // Avança o '$?'
-	}
 	else if (input[0] == '{') // Caso ${VAR}
 	{
 		input++;
@@ -88,7 +83,7 @@ char	*expand_string(t_ctx *ctx, const char *input)
 			var_value = expand_env_var(ctx, input + 1);
 			ft_strlcpy(buffer, var_value, BUFFER_SIZE - (buffer - result));
 			buffer += ft_strlen(var_value);
-			input += var_name_length(input + 1) + 1; // Função auxiliar para calcular tamanho
+			input += var_name_length(input + 1) + 1;
 			safe_free(ctx, var_value);
 		}
 		else
