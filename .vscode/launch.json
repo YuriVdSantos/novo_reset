@@ -32,7 +32,7 @@
       "request": "launch",
       "args": [],
       "cwd": "/Users/yurivieiradossantos/novo_reset_minishell",
-      "program": "/Users/yurivieiradossantos/novo_reset_minishell/build/Debug/outDebug"
+      "program": "/Users/yurivieiradossantos/novo_reset_minishell/minishell"
     }
   ]
 }
