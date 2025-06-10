@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:45:49 by jhualves          #+#    #+#             */
-/*   Updated: 2025/05/26 03:58:49 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/09 23:25:26 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,10 @@ char	*get_env_value(t_ctx *ctx, const char *key)
 	return (ft_strdup(""));
 }
 
+/*
+	ARRUMAR ESTA MERDA
+*/
+
 char	*expand_env_var(t_ctx *ctx, const char *input)
 {
 	char	var_name[256];
@@ -39,7 +43,17 @@ char	*expand_env_var(t_ctx *ctx, const char *input)
 	int		len;
 
 	len = 0;
-	if (input[0] == '{') // Caso ${VAR}
+	if (input[0] == '?') // Caso $? (código de saída)
+	{
+		ft_strlcpy(var_name, "?", sizeof(var_name));
+		input++;
+	}
+	else if (input[0] == '$' && input[1] == '?') // Caso $?
+	{
+		ft_strlcpy(var_name, "?", sizeof(var_name));
+		input += 2; // Avança o '$?'
+	}
+	else if (input[0] == '{') // Caso ${VAR}
 	{
 		input++;
 		while (input[len] && input[len] != '}')
