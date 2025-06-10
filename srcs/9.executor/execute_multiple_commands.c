@@ -1,86 +1,57 @@
-#include "../../minishell.h"
 
-static void	save_original_fds(int original_fds[2])
+#include "minishell.h"
+
+static void	child_process_logic(t_cmd *cmd, t_ctx *ctx)
 {
-    if ((original_fds[0] = dup(STDIN_FILENO)) == -1 || 
-        (original_fds[1] = dup(STDOUT_FILENO)) == -1)
-    {
-        perror("dup");
-        exit(EXIT_FAILURE);
-    }
-}
+	int	original_fds[2];
 
-static void	handle_redirects(t_cmd *command, t_env *minienv)
-{
-    char	redirect;
-	char	*cmd;
-
-	cmd = command->args[0];
-    while ((redirect = get_next_redirect(cmd)))
-	{
-        if (redirect == '<')
-        {
-            if (redirect_input(cmd) == FAILED)
-            {
-                free_cmd_list(command);
-                free_env_list(minienv);
-                exit(EXIT_FAILURE);
-            }
-        }
-        else if (redirect == '>')
-        {
-            if (redirect_output(cmd) == FAILED)
-            {
-                free_cmd_list(command);
-                free_env_list(minienv);
-                exit(EXIT_FAILURE);
-            }
-        }
-    }
-}
-
-static void	execute_forked_command(t_cmd *command, t_cmd *cmd_list, t_ctx *ctx)
-{
-	char	**args;
-
-	args = command->args;
-	close_extra_fds();
-	if (is_builtin(args[0]))
-		execute_forked_builtin(args, ctx, &ctx->env_list);
+	if (apply_redirections(cmd, original_fds) == FAILED)
+		exit(EXIT_FAILURE);
+	if (is_builtin(cmd->args[0]))
+		exit(execute_builtin(cmd->args, ctx, &ctx->env_list));
 	else
-		execute_external(args, ctx->env_list,  ctx);
-	free_cmd_list(cmd_list);
+		execute_external(cmd->args, ctx->env_list, ctx);
 }
 
-static void	restore_original_fds(int original_fds[2])
+int	execute_multiple_commands(t_cmd *cmd_list, t_ctx *ctx)
 {
-	redirect_fd(original_fds[IN], STDIN_FILENO);
-	redirect_fd(original_fds[OUT], STDOUT_FILENO);
-}
+	int		children_pid[1024];
+	int		fds[2];
+	int		i;
+	t_cmd	*current;
+	int		prev_pipe_read_end;
 
-int	execute_multiple_commands(t_cmd *cmd, t_ctx *ctx)
-{
-    int	original_fds[2];
-    int	children_pid[1024];
-    int	i = 0;
-    t_cmd *current = cmd;
-
-    save_original_fds(original_fds);
-    while (current)
-    {
-        children_pid[i] = fork();
-        define_execute_signals(children_pid[i]);
-        if (children_pid[i] == -1)
-            print_error_msg("fork", current->args[0]);
-        else if (children_pid[i] == 0)
-        {
-            handle_redirects(current, ctx->env_list);
-            execute_forked_command(current, cmd, ctx);
-        }
-        current = current->next;
-        i++;
-    }
-    children_pid[i] = 0; 
-    restore_original_fds(original_fds);
-    return (wait_for_children(children_pid, ctx));
+	i = 0;
+	ft_bzero(children_pid, sizeof(int) * 1024);
+	prev_pipe_read_end = STDIN_FILENO;
+	current = cmd_list;
+	while (current)
+	{
+		if (current->next != NULL)
+			if (pipe(fds) == -1)
+				return (print_error(ctx, "pipe", errno, 1), EXIT_FAILURE);
+		children_pid[i] = fork();
+		define_execute_signals(children_pid[i]);
+		if (children_pid[i] == 0)
+		{
+			if (prev_pipe_read_end != STDIN_FILENO)
+				redirect_fd(prev_pipe_read_end, STDIN_FILENO);
+			if (current->next != NULL)
+			{
+				close(fds[0]);
+				redirect_fd(fds[1], STDOUT_FILENO);
+			}
+			child_process_logic(current, ctx);
+		}
+		if (prev_pipe_read_end != STDIN_FILENO)
+			close(prev_pipe_read_end);
+		if (current->next != NULL)
+		{
+			close(fds[1]);
+			prev_pipe_read_end = fds[0];
+		}
+		current = current->next;
+		i++;
+	}
+	return (wait_for_children(children_pid, ctx));
 }

@@ -36,7 +36,7 @@ static int	process_argument(char *key_pair, t_ctx *ctx)
     status = EXIT_SUCCESS;
     if (!is_valid_varname(varname) || str_equal(key_pair, "="))
     {
-        print_error_msg("export", key_pair);
+        print_error_msg("not valid in this context:", varname);
         status = EXIT_FAILURE;
     }
     else if (ctx->env_list->next)

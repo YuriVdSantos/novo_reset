@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   handle_quote.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/24 20:12:24 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/05 20:05:00 by yurivieirad      ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -26,20 +15,22 @@ void	token_handle_quote(t_ctx *ctx, const char **input, t_token **tokens)
 	(*input)++;
 	if (!closed_quotation(ctx, input, c))
 		type = ERROR;
-	else if (**input != c && c == '"')
+	else if (**input != c)
 	{
-		type = DQUOTE;
-		define_substring(&str, input, type);
-	}
-	else if (**input != c && c == '\'')
-	{
-		type = SQUOTE;
+		if (c == '"')
+			type = DQUOTE;
+		else if (c == '\'')
+			type = SQUOTE;
 		define_substring(&str, input, type);
 	}
 	else if (**input == c)
 	{
 		str = ft_strdup("");
 		(*input)++;
+		if (c == '"')
+			type = DQUOTE;
+		else if (c == '\'')
+			type = SQUOTE;
 	}
 	ft_lstadd_back(tokens, new_token(ctx, type, str));
 }

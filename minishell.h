@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 15:10:26 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/09 16:38:14 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/10 01:24:50 by yurivieirad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -244,6 +244,8 @@ t_cmd	*parse_tokens(t_ctx *ctx, t_token **tokens);
 
 // srcs/5.expander/quotes_expánder.c
 char	*expand_dquotes(t_ctx *ctx, const char *input);
+void	expand_all_command_lists(t_ctx *ctx, t_cmd *cmd_list);
+char	*expand_string(t_ctx *ctx, const char *input);
 
 // srcs/5.expander/var_expander.c
 char	*expand_env_var(t_ctx *ctx, const char *input);
@@ -287,7 +289,6 @@ int		execute_one_command(t_cmd *command, t_ctx *ctx);
 
 // one command utils
 void	save_original_fd_in(int original_fds[2]);
-void	save_original_fd_out(int original_fds[2]);
 int		handle_input_redirect(char *command, int original_fds[2]);
 int		handle_output_redirect(char *command, int original_fds[2]);
 
@@ -347,7 +348,7 @@ int	fits_in_long_long(char *str);
 int ft_exit(char **args, t_ctx *ctx);
 int	ft_env(t_ctx *ctx);
 int	is_only_n(const char *str);
-int	ft_echo(char **args);
+int	ft_echo(char **args, t_ctx *ctx);
 int	ft_cd(char **args, t_ctx *ctx);
 int	cd_error(void);
 
@@ -360,6 +361,17 @@ int		is_valid_varname(char *name);
 char	*value_only(char *key_pair);
 char	*name_only(char *key_pair);
 char	*create_keypair(char *name, char *value);
+
+// =============================================================================
+// srcs/11.redirects/
+// =============================================================================
+
+int		apply_redirections(t_cmd *cmd, int original_fds[2]);
+void	redirect_fd(int fd_to_redirect, int fd_location);
+void	restore_original_fds(int original_fds[2]);
+void	save_original_fd_in(int original_fds[2]);
+void	save_original_fd_out(int original_fds[2]);
+
 
 // =============================================================================
 // srcs/12.handle_new_env/
