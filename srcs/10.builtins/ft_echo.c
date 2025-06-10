@@ -1,44 +1,53 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/09 20:51:03 by jhualves          #+#    #+#             */
+/*   Updated: 2025/06/09 20:51:19 by jhualves         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	is_only_n(const char *str)
 {
-    int	j;
+	int	j;
 
-    j = 2;
-    while (str[j])
-    {
-        if (str[j] != 'n')
-            return (0);
-        j++;
-    }
-    return (1);
+	j = 2;
+	while (str[j])
+	{
+		if (str[j] != 'n')
+			return (0);
+		j++;
+	}
+	return (1);
 }
 
 int	ft_echo(char **args)
 {
-    int	i;
-    int	new_line;
+	int	i;
+	int	new_line;
 
-    new_line = 1;
-    i = 1;
+	new_line = 1;
+	i = 1;
+	while (args[i] && ft_strncmp(args[i], "-n", 2) == 0 && is_only_n(args[i]))
+	{
+		new_line = 0;
+		i++;
+	}
+	while (args[i])
+	{
+		ft_putstr_fd(args[i], STDOUT_FILENO);
+		if (args[i + 1])
+			ft_putstr_fd(" ", STDOUT_FILENO);
+		i++;
+	}
+	if (new_line)
+		ft_putstr_fd("\n", STDOUT_FILENO);
 
-    while (args[i] && ft_strncmp(args[i], "-n", 2) == 0 && is_only_n(args[i]))
-    {
-        new_line = 0;
-        i++;
-    }
-
-    while (args[i])
-    {
-        ft_putstr_fd(args[i], STDOUT_FILENO);
-        if (args[i + 1])
-            ft_putstr_fd(" ", STDOUT_FILENO);
-        i++;
-    }
-
-    if (new_line)
-        ft_putstr_fd("\n", STDOUT_FILENO);
-
-    return (0);
+	return (0);
 }
 
