@@ -55,12 +55,11 @@ static void	handle_exit_errors(char **args)
     }
 }
 
-int ft_exit(char **args, t_ctx *ctx)
+int ft_exit(char **args)
 {
     int	exit_status;
 
     rl_clear_history();
-    free_env_list(ctx->env_list);
     ft_putstr_fd("exit\n", STDOUT_FILENO);
     handle_exit_errors(args);
     close_all_fds();

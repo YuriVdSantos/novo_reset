@@ -26,7 +26,7 @@ int	execute_builtin(char **args, t_ctx *ctx, t_env **minienv)
 	if (str_equal(command, "cd"))
 		return (ft_cd(args, ctx));
 	if (str_equal(command, "exit"))
-		return (ft_exit(args, ctx));
+		return (ft_exit(args));
 	else
 		return (EXIT_FAILURE);
 }

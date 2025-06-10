@@ -6,7 +6,7 @@
 /*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 15:10:26 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/10 01:24:50 by yurivieirad      ###   ########.fr       */
+/*   Updated: 2025/06/10 16:49:07 by yurivieirad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -345,7 +345,7 @@ int	ft_unset(char **args, t_env **minienv);
 int	ft_pwd(void);
 int	ft_export(char **args, t_ctx *ctx);
 int	fits_in_long_long(char *str);
-int ft_exit(char **args, t_ctx *ctx);
+int ft_exit(char **args);
 int	ft_env(t_ctx *ctx);
 int	is_only_n(const char *str);
 int	ft_echo(char **args, t_ctx *ctx);
