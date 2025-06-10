@@ -83,6 +83,9 @@ vpath %.c $(sort $(dir $(C_FILES)))
 # Default rule
 all: $(NAME)
 
+leak:
+	valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --suppressions=readline.supp ./${NAME}
+
 # Rule to build Libft
 $(LIBFT):
 	@echo "Making Libft..."
