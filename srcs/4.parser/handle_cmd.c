@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 23:23:43 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/09 21:43:33 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/09 22:28:09 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,9 @@ void	handle_dquote(t_ctx *ctx, t_token **tmp, t_cmd *current)
 {
 	char	*content;
 
-	content = safe_strtrim(ctx, (*tmp)->value, "\"");
-	add_arg(current, safe_strjoin(ctx, "\"", content));
+	content = 
+	safe_strtrim(ctx, (*tmp)->value, "\"");
+	add_arg(current, content);
 	*tmp = (*tmp)->next;
 }
 
