@@ -27,6 +27,7 @@ C_FILES = minishell.c \
 		  srcs/2.tokenizer/handle_word.c \
 		  srcs/2.tokenizer/tokenizer.c \
 		  srcs/3.syntax_validation/syntax_validation.c \
+		  srcs/3.syntax_validation/syntax_validation_utils.c \
 		  srcs/4.parser/handle_cmd.c \
 		  srcs/4.parser/handle_cmd_1.c \
 		  srcs/4.parser/parsing.c \

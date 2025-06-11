@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_ctx.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
+/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 19:15:54 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/10 19:07:46 by yurivieirad      ###   ########.fr       */
+/*   Updated: 2025/06/10 19:43:16 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	free_all_allocations(t_ctx *ctx)
 	while (alloc)
 	{
 		next = alloc->next;
-		if(!alloc->ptr)
+		if (!alloc->ptr)
 		{
 			free(alloc);
 			alloc = next;

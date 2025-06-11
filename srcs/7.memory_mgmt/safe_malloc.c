@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 16:04:12 by jhualves          #+#    #+#             */
-/*   Updated: 2025/05/27 00:49:24 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/10 23:24:15 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,17 @@ void	safe_free_all(t_ctx *ctx)
 		current = next;
 	}
 	ctx->allocations = NULL;
+}
+
+void	*safe_realloc(t_ctx *ctx, void *ptr, size_t new_size, t_alloc_type type)
+{
+	void	*new_ptr;
+
+	new_ptr = malloc(new_size);
+	if (!new_ptr)
+		return (NULL);
+	ft_memcpy(new_ptr, ptr, new_size);
+	safe_free(ctx, ptr);
+	register_alloc(ctx, new_ptr, type);
+	return (new_ptr);
 }

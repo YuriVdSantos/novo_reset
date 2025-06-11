@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 23:23:43 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/09 22:28:09 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/10 21:47:20 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	handle_word(t_token **tmp, t_cmd *current)
 	add_arg(current, (*tmp)->value);
 	*tmp = (*tmp)->next;
 }
+
 /*
 	alterar isso aqui, expando a variavel de ambiente
 */
@@ -57,8 +58,7 @@ void	handle_dquote(t_ctx *ctx, t_token **tmp, t_cmd *current)
 {
 	char	*content;
 
-	content = 
-	safe_strtrim(ctx, (*tmp)->value, "\"");
+	content = expand_dquotes(ctx, (*tmp)->value);
 	add_arg(current, content);
 	*tmp = (*tmp)->next;
 }
