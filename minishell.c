@@ -6,7 +6,7 @@
 /*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 15:09:55 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/10 00:52:09 by yurivieirad      ###   ########.fr       */
+/*   Updated: 2025/06/10 20:19:48 by yurivieirad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int	main(int argc, char **argv, char **env)
 	exit_status = ctx->exit_status;
 	free_context(ctx);
 	rl_clear_history();
-	ft_putstr_fd(ft_itoa(ctx->exit_status), STDIN_FILENO);
 	return (exit_status);
 }
 

@@ -76,6 +76,7 @@ SRCS =  minishell.c \
         \
         srcs/11.redirects/redirects.c \
         srcs/11.redirects/redirect_utils.c \
+        srcs/11.redirects/here_doc.c \
         \
         srcs/12.handle_new_env/assignment_handler.c \
         srcs/12.handle_new_env/create_new_env.c \

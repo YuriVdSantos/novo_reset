@@ -33,10 +33,10 @@ int	is_empty(char *str)
 
 void	print_error_msg(char *command, char *msg)
 {
-	ft_putstr_fd("minishell: ", STDERR_FILENO);
-	ft_putstr_fd(command, STDERR_FILENO);
-	ft_putstr_fd(": ", STDERR_FILENO);
+	// ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd(msg, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putstr_fd(command, STDERR_FILENO);
 	ft_putstr_fd("\n", STDERR_FILENO);
 }
 

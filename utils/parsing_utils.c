@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 23:26:04 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/04 22:31:59 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/11 00:22:08 by yurivieirad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	add_redir(t_cmd *cmd, t_redir_type type, char *file)
 	new_redir->type = type;
 	new_redir->filename = ft_strdup(file);
 	new_redir->next = NULL;
+	new_redir->was_heredoc = (type == REDIR_HEREDOC);
 	if (!cmd->redirections)
 	{
 		cmd->redirections = new_redir;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_ctx.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 19:15:54 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/09 16:56:59 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/10 20:13:08 by yurivieirad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	free_context(t_ctx *ctx)
 {
 	if (ctx)
 	{
-		free_all_allocations(ctx);
+		super_free(ctx);
 		if (ctx->pwd)
 			free(ctx->pwd);
 		if (ctx->oldpwd)
@@ -46,7 +46,13 @@ void	free_all_allocations(t_ctx *ctx)
 	while (alloc)
 	{
 		next = alloc->next;
-		if (alloc->type == ALLOC_TYPE_CMD)
+		if(!alloc->ptr)
+		{
+			free(alloc);
+			alloc = next;
+			continue ;
+		}
+		else if (alloc->type == ALLOC_TYPE_CMD)
 			free_cmd_list(alloc->ptr);
 		else if (alloc->type == ALLOC_TYPE_REDIR)
 			free_redir_list(alloc->ptr);

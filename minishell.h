@@ -6,7 +6,7 @@
 /*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 15:10:26 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/10 16:49:07 by yurivieirad      ###   ########.fr       */
+/*   Updated: 2025/06/11 00:22:33 by yurivieirad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ typedef struct s_redir {
 	t_redir_type	type;
 	char			*filename;
 	int				fd;
+	bool			was_heredoc;
 	struct s_redir	*next;
 }	t_redir;
 
@@ -345,7 +346,7 @@ int	ft_unset(char **args, t_env **minienv);
 int	ft_pwd(void);
 int	ft_export(char **args, t_ctx *ctx);
 int	fits_in_long_long(char *str);
-int ft_exit(char **args);
+int	ft_exit(char **args, t_ctx *ctx);
 int	ft_env(t_ctx *ctx);
 int	is_only_n(const char *str);
 int	ft_echo(char **args, t_ctx *ctx);
@@ -371,6 +372,8 @@ void	redirect_fd(int fd_to_redirect, int fd_location);
 void	restore_original_fds(int original_fds[2]);
 void	save_original_fd_in(int original_fds[2]);
 void	save_original_fd_out(int original_fds[2]);
+int		process_heredocs(t_cmd *cmd_list, t_ctx *ctx);
+void	cleanup_heredocs(t_cmd *cmd_list);
 
 
 // =============================================================================

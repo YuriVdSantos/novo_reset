@@ -6,7 +6,7 @@
 /*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 18:54:45 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/10 00:37:37 by yurivieirad      ###   ########.fr       */
+/*   Updated: 2025/06/11 00:20:13 by yurivieirad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,11 @@ void	process_input(t_ctx *ctx, const char **input)
 	if (!ast)
 	{
 		ctx->exit_status = 258;
+		return ;
+	}
+	if (process_heredocs(ast, ctx) == FAILED)
+	{
+		ctx->exit_status = 1;
 		return ;
 	}
 	return (execute_cmd(ast, ctx));
