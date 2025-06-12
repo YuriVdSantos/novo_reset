@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_ctx.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
+/*   By: yvieira- <yvieira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 19:15:54 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/10 20:13:08 by yurivieirad      ###   ########.fr       */
+/*   Updated: 2025/06/11 20:27:01 by yvieira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ void	free_all_allocations(t_ctx *ctx)
 			alloc = next;
 			continue ;
 		}
-		else if (alloc->type == ALLOC_TYPE_CMD)
-			free_cmd_list(alloc->ptr);
+		// else if (alloc->type == ALLOC_TYPE_CMD)
+		// 	free_cmd_list(alloc->ptr);
 		else if (alloc->type == ALLOC_TYPE_REDIR)
 			free_redir_list(alloc->ptr);
 		else if (alloc->type == ALLOC_TYPE_STR)

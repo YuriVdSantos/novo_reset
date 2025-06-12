@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
+/*   By: yvieira- <yvieira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 17:01:45 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/10 23:50:23 by yurivieirad      ###   ########.fr       */
+/*   Updated: 2025/06/11 20:46:41 by yvieira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int	ft_exit(char **args, t_ctx *ctx)
 		exit_status = 0;
 	else
 		exit_status = ft_atodbl(args[1]);
-	free_string_array(args);
+	// free_string_array(args);
+	// free_context(ctx);
 	exit(exit_status);
 }
