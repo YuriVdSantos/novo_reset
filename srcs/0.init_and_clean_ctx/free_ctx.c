@@ -15,12 +15,11 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 void	free_context(t_ctx *ctx)
 {
 	if (ctx)
 	{
-		super_free(ctx);
+		free_all_allocations(ctx);
 		if (ctx->pwd)
 			free(ctx->pwd);
 		if (ctx->oldpwd)
@@ -40,16 +39,15 @@ void	free_context(t_ctx *ctx)
 	}
 	ctx = NULL;
 }
-
 void	free_all_allocations(t_ctx *ctx)
 {
 	t_allocation	*alloc;
 	t_allocation	*next;
-
 	alloc = ctx->allocations;
 	while (alloc)
 	{
 		next = alloc->next;
+<<<<<<< HEAD
 <<<<<<< HEAD
 		if(!alloc->ptr)
 =======
@@ -67,6 +65,10 @@ void	free_all_allocations(t_ctx *ctx)
 		else if (alloc->type == ALLOC_TYPE_CMD)
 			free_cmd_list(alloc->ptr);
 >>>>>>> main
+=======
+		if (alloc->type == ALLOC_TYPE_CMD)
+			free_cmd_list(alloc->ptr);
+>>>>>>> 3e01c7c29c8130706a0534f9e555a25fffa7981f
 		else if (alloc->type == ALLOC_TYPE_REDIR)
 			free_redir_list(alloc->ptr);
 		else if (alloc->type == ALLOC_TYPE_STR)
@@ -84,12 +86,10 @@ void	free_all_allocations(t_ctx *ctx)
 	}
 	ctx->allocations = NULL;
 }
-
 void	super_free(t_ctx *ctx)
 {
 	t_cmd		*cmd_list;
 	t_token		*token_list;
-
 	cmd_list = ctx->cmd_list;
 	token_list = ctx->token_list;
 	free_cmd_list(cmd_list);
@@ -101,12 +101,10 @@ void	super_free(t_ctx *ctx)
 	// }
 	free_all_allocations(ctx);
 }
-
 void	safe_free(t_ctx *ctx, void *ptr)
 {
 	t_allocation	*current;
 	t_allocation	*prev;
-
 	if (!ptr || !ctx || !ctx->allocations)
 		return ;
 	current = ctx->allocations;

@@ -30,6 +30,4 @@ void	token_handle_env_var(t_ctx *ctx, const char **input, t_token **tokens)
 	(*input)++;
 	define_substring(&str, input, type);
 	ft_lstadd_back(tokens, new_token(ctx, type, str));
-	if (str)
-		free(str);
 }
