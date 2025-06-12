@@ -6,7 +6,11 @@
 /*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:45:49 by jhualves          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/06/10 19:59:38 by yurivieirad      ###   ########.fr       */
+=======
+/*   Updated: 2025/06/10 23:16:50 by jhualves         ###   ########.fr       */
+>>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,86 +24,57 @@
 // }
 char	*get_env_value(t_ctx *ctx, const char *key)
 {
-	t_env	*env_node;
+	t_env	*node;
 
-	env_node = find_env_var(ctx->env_list, key);
-	if (env_node)
-		return (env_node->value);
-	else if (ft_strcmp(key, "?") == 0)
+	if (!key)
+		return ("");
+	if (ft_strcmp(key, "?") == 0)
 		return (ft_itoa(ctx->exit_status));
-	else if (ft_strcmp(key, "$") == 0)
+	if (ft_strcmp(key, "$") == 0)
 		return (ft_itoa(getpid()));
-	return (ft_strdup(""));
+	node = find_env_var(ctx->env_list, key);
+	if (node && node->value)
+		return (node->value);
+	return ("");
 }
 
-char	*expand_env_var(t_ctx *ctx, const char *input)
+char	*expand_env_var(t_ctx *ctx, const char *input, int *len)
 {
-	char	var_name[256];
-	char	*value;
-	int		len;
+	char	name[256];
+	char	*raw;
+	char	*copy;
+	int		i;
 
-	len = 0;
-	if (input[0] == '{') // Caso ${VAR}
+	i = 0;
+	if (input[0] == '{')
 	{
 		input++;
-		while (input[len] && input[len] != '}')
-			len++;
-		ft_strlcpy(var_name, input, len + 1);
-		input += len + 1; // Avança o '}'
+		while (input[i] && input[i] != '}' && i < 255)
+			name[i++] = input[i];
+		name[i] = '\0';
+		*len = i + 2;
 	}
-	else // Caso $VAR ou $1 etc
+	else if (input[0] == '?' || input[0] == '$')
 	{
-		while (input[len] && (ft_isalnum(input[len]) || input[len] == '_'))
-			len++;
-		ft_strlcpy(var_name, input, len + 1);
-		input += len;
-	}
-	value = get_env_value(ctx, var_name);
-	return (value);
-}
-
-char	*expand_string(t_ctx *ctx, const char *input)
-{
-	char	*result;
-	char	*var_value;
-	char	*buffer;
-
-	result = safe_malloc(ctx, BUFFER_SIZE, ALLOC_TYPE_STRING);
-	buffer = result;
-	while (*input)
-	{
-		if (*input == '$' && (ft_isalnum(input[1]) || \
-		input[1] == '{' || input[1] == '?' || input[1] == '$'))
-		{
-			var_value = expand_env_var(ctx, input + 1);
-			ft_strlcpy(buffer, var_value, BUFFER_SIZE - (buffer - result));
-			buffer += ft_strlen(var_value);
-			input += var_name_length(input + 1) + 1; // Função auxiliar para calcular tamanho
-			safe_free(ctx, var_value);
-		}
-		else
-			*buffer++ = *input++;
-	}
-	*buffer = '\0';
-	return (result);
-}
-
-int	var_name_length(const char *input)
-{
-	int	len;
-
-	len = 0;
-	if (*input == '{')
-	{
-		input++;
-		while (input[len] && input[len] != '}')
-			len++;
-		return (len + 2);
+		name[0] = input[0];
+		name[1] = '\0';
+		*len = 1;
 	}
 	else
 	{
-		while (input[len] && (ft_isalnum(input[len]) || input[len] == '_'))
-			len++;
-		return (len + 1);
+		while ((ft_isalnum(input[i]) || input[i] == '_') && i < 255)
+			name[i++] = input[i];
+		name[i] = '\0';
+		*len = i;
 	}
+	raw = get_env_value(ctx, name);
+	copy = safe_strdup(ctx, raw);
+	if (name[0] == '?' || name[0] == '$')
+		free(raw);
+	return (copy);
+}
+
+int	is_valid_dollar(char c)
+{
+	return (ft_isalnum(c) || c == '{' || c == '?' || c == '$' || c == '_');
 }

@@ -6,7 +6,11 @@
 /*   By: yvieira- <yvieira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 19:15:54 by jhualves          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/06/11 20:27:01 by yvieira-         ###   ########.fr       */
+=======
+/*   Updated: 2025/06/10 19:43:16 by jhualves         ###   ########.fr       */
+>>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +50,23 @@ void	free_all_allocations(t_ctx *ctx)
 	while (alloc)
 	{
 		next = alloc->next;
+<<<<<<< HEAD
 		if(!alloc->ptr)
+=======
+		if (!alloc->ptr)
+>>>>>>> main
 		{
 			free(alloc);
 			alloc = next;
 			continue ;
 		}
+<<<<<<< HEAD
 		// else if (alloc->type == ALLOC_TYPE_CMD)
 		// 	free_cmd_list(alloc->ptr);
+=======
+		else if (alloc->type == ALLOC_TYPE_CMD)
+			free_cmd_list(alloc->ptr);
+>>>>>>> main
 		else if (alloc->type == ALLOC_TYPE_REDIR)
 			free_redir_list(alloc->ptr);
 		else if (alloc->type == ALLOC_TYPE_STR)

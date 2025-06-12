@@ -6,7 +6,11 @@
 /*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 15:10:26 by jhualves          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/06/11 00:22:33 by yurivieirad      ###   ########.fr       */
+=======
+/*   Updated: 2025/06/10 23:24:55 by jhualves         ###   ########.fr       */
+>>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,9 +220,9 @@ t_token	*new_token(t_ctx *ctx, t_token_type type, const char *str);
 
 // srcs/3.syntax_validation/syntax_validation.c
 bool	validate_syntax(t_ctx *ctx, t_token *tokens);
-// static bool	check_pipes(t_ctx *ctx, t_token *tokens); // Static
-// static bool	check_redirections(t_ctx *ctx, t_token *tokens); // Static
-// static bool	check_quotes(t_ctx *ctx, t_token *tokens); // Static
+bool	check_pipes(t_ctx *ctx, t_token *tokens);
+bool	check_redirections(t_ctx *ctx, t_token *tokens);
+
 
 // =============================================================================
 // srcs/4.parser/
@@ -270,6 +274,9 @@ void	define_heredoc_signals(int child_pid);
 // srcs/7.memory_mgmt/safe_malloc.c
 void	*safe_malloc(t_ctx *ctx, size_t size, t_alloc_type type);
 void	safe_free_all(t_ctx *ctx);
+void	*safe_realloc(t_ctx *ctx, void *ptr, size_t new_size, \
+		t_alloc_type type);
+
 
 // =============================================================================
 // srcs/8.error_mgmt/
@@ -419,6 +426,7 @@ char	*safe_strnstr(t_ctx *ctx, const char *haystack, \
 		const char *needle, size_t len);
 char	*safe_strtrim(t_ctx *ctx, char const *s1, char const *set);
 char	*safe_strjoin(t_ctx *ctx, char const *s1, char const *s2);
+char	*safe_itoa(t_ctx *ctx, long n);
 
 // utils/tokenizer_utils.c
 int		define_substring(char **str, const char **input, t_token_type type);

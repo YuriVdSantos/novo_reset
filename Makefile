@@ -40,6 +40,7 @@ SRCS =  minishell.c \
         srcs/3.syntax_validation/syntax_validation.c \
         \
         srcs/4.parser/parsing.c \
+		  srcs/3.syntax_validation/syntax_validation_utils.c \
         srcs/4.parser/handle_cmd.c \
         srcs/4.parser/handle_cmd_1.c \
         \
@@ -100,6 +101,12 @@ RESET = \033[0m
 
 all: $(NAME)
 
+# Rule to build Libft
+$(LIBFT):
+	@echo "Making Libft..."
+	@$(MAKE) -C $(LIBFT_DIR)
+
+# Rule to build the main program
 $(NAME): $(OBJS) $(LIBFT)
 	@echo "$(GREEN)Linking $(NAME)...$(RESET)"
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(LFLAGS) -o $(NAME)

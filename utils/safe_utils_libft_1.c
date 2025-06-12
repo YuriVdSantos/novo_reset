@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 15:48:45 by jhualves          #+#    #+#             */
-/*   Updated: 2025/05/26 01:30:16 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/10 23:04:27 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,17 @@ char	*safe_strjoin(t_ctx *ctx, char const *s1, char const *s2)
 	if (joined == NULL)
 		return (NULL);
 	return (safe_strdup(ctx, joined));
+}
+
+char	*safe_itoa(t_ctx *ctx, long n)
+{
+	char	*tmp;
+	char	*result;
+
+	tmp = ft_itoa(n);
+	if (!tmp)
+		return (NULL);
+	result = safe_strdup(ctx, tmp);
+	free(tmp);
+	return (result);
 }

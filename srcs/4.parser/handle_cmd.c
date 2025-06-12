@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   handle_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
+/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 23:23:43 by jhualves          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/06/10 19:59:51 by yurivieirad      ###   ########.fr       */
+=======
+/*   Updated: 2025/06/10 21:47:20 by jhualves         ###   ########.fr       */
+>>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +55,15 @@ void	handle_word(t_token **tmp, t_cmd *current)
 	*tmp = (*tmp)->next;
 }
 
+/*
+	alterar isso aqui, expando a variavel de ambiente
+*/
 void	handle_dquote(t_ctx *ctx, t_token **tmp, t_cmd *current)
 {
 	char	*content;
 
-	content = safe_strtrim(ctx, (*tmp)->value, "\"");
-	add_arg(current, safe_strjoin(ctx, "\"", content));
+	content = expand_dquotes(ctx, (*tmp)->value);
+	add_arg(current, content);
 	*tmp = (*tmp)->next;
 }
 
