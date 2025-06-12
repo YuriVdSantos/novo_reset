@@ -1,27 +1,7 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   var_expander.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/24 17:45:49 by jhualves          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/06/10 19:59:38 by yurivieirad      ###   ########.fr       */
-=======
-/*   Updated: 2025/06/10 23:16:50 by jhualves         ###   ########.fr       */
->>>>>>> main
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
 #define BUFFER_SIZE 2025
-// if (var[0] == '?') {
-//     char *exit_code = ft_itoa(ctx->current_exit_status);
-//     expanded_var = safe_strdup(ctx, exit_code);
-//     free(exit_code);
-// }
+
 char	*get_env_value(t_ctx *ctx, const char *key)
 {
 	t_env	*node;
@@ -50,7 +30,10 @@ char	*expand_env_var(t_ctx *ctx, const char *input, int *len)
 	{
 		input++;
 		while (input[i] && input[i] != '}' && i < 255)
-			name[i++] = input[i];
+		{
+			name[i] = input[i];
+			i++;
+		}
 		name[i] = '\0';
 		*len = i + 2;
 	}
@@ -63,7 +46,10 @@ char	*expand_env_var(t_ctx *ctx, const char *input, int *len)
 	else
 	{
 		while ((ft_isalnum(input[i]) || input[i] == '_') && i < 255)
-			name[i++] = input[i];
+		{
+			name[i] = input[i];
+			i++;
+		}
 		name[i] = '\0';
 		*len = i;
 	}

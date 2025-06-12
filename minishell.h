@@ -1,18 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/24 15:10:26 by jhualves          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/06/11 00:22:33 by yurivieirad      ###   ########.fr       */
-=======
-/*   Updated: 2025/06/10 23:24:55 by jhualves         ###   ########.fr       */
->>>>>>> main
-/*                                                                            */
-/* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -248,16 +233,15 @@ t_cmd	*parse_tokens(t_ctx *ctx, t_token **tokens);
 // =============================================================================
 
 // srcs/5.expander/quotes_expánder.c
-char	*expand_dquotes(t_ctx *ctx, const char *input);
-void	expand_all_command_lists(t_ctx *ctx, t_cmd *cmd_list);
-char	*expand_string(t_ctx *ctx, const char *input);
+char    *expand_dquotes(t_ctx *ctx, const char *input);
+void    expand_all_command_lists(t_ctx *ctx, t_cmd *cmd_list);
+char    *expand_string(t_ctx *ctx, const char *input);
 
 // srcs/5.expander/var_expander.c
-char	*expand_env_var(t_ctx *ctx, const char *input);
-char	*get_env_value(t_ctx *ctx, const char *key);
-char	*expand_string(t_ctx *ctx, const char *input);
-int		var_name_length(const char *input);
-
+char    *expand_env_var(t_ctx *ctx, const char *input, int *len);
+char    *get_env_value(t_ctx *ctx, const char *key);
+int     is_valid_dollar(char c); // Protótipo adicionado
+int     var_name_length(const char *input);
 
 // =============================================================================
 // srcs/6.signals/

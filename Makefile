@@ -46,6 +46,7 @@ SRCS =  minishell.c \
         \
         srcs/5.expander/var_expander.c \
         srcs/5.expander/quotes_expander.c \
+        srcs/5.expander/string_expander.c\
         \
         srcs/6.signals/signals.c \
         \

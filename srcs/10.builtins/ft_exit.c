@@ -34,7 +34,7 @@ static void exit_with_error(char *command, char *msg, int error)
 }
 
 
-static void	handle_exit_errors(char **args, t_ctx *ctx)
+static void	handle_exit_errors(char **args)
 {
     if (!args || !args[1])
     {

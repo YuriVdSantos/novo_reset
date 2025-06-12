@@ -3,67 +3,84 @@
 /*                                                        :::      ::::::::   */
 /*   safe_malloc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 16:04:12 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/10 23:24:15 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/12 00:44:10 by yurivieirad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	*safe_malloc(t_ctx *ctx, size_t size, t_alloc_type type)
+void    *safe_malloc(t_ctx *ctx, size_t size, t_alloc_type type)
 {
-	void			*ptr;
-	t_allocation	*new_alloc;
+    void            *ptr;
+    t_allocation    *new_alloc;
 
-	ptr = malloc(size);
-	if (!ptr)
-	{
-		ctx->last_error_message = safe_strdup(ctx, "Memory allocation failed");
-		ctx->current_exit_status = 1;
-		return (NULL);
-	}
-	new_alloc = malloc(sizeof(t_allocation));
-	if (!new_alloc)
-	{
-		free(ptr);
-		ctx->last_error_message = safe_strdup(ctx, "Memory allocation failed");
-		ctx->current_exit_status = 1;
-		return (NULL);
-	}
-	new_alloc->ptr = ptr;
-	new_alloc->type = type;
-	new_alloc->next = ctx->allocations;
-	ctx->allocations = new_alloc;
-	return (ptr);
+    ptr = malloc(size);
+    if (!ptr)
+    {
+        ctx->last_error_message = safe_strdup(ctx, "Memory allocation failed");
+        ctx->current_exit_status = 1;
+        return (NULL);
+    }
+    new_alloc = malloc(sizeof(t_allocation));
+    if (!new_alloc)
+    {
+        free(ptr);
+        ctx->last_error_message = safe_strdup(ctx, "Memory allocation failed");
+        ctx->current_exit_status = 1;
+        return (NULL);
+    }
+    new_alloc->ptr = ptr;
+    new_alloc->type = type;
+    new_alloc->next = ctx->allocations;
+    ctx->allocations = new_alloc;
+    return (ptr);
 }
 
-void	safe_free_all(t_ctx *ctx)
+void    safe_free_all(t_ctx *ctx)
 {
-	t_allocation	*current;
-	t_allocation	*next;
+    t_allocation    *current;
+    t_allocation    *next;
 
-	current = ctx->allocations;
-	while (current)
-	{
-		next = current->next;
-		free(current->ptr);
-		free(current);
-		current = next;
-	}
-	ctx->allocations = NULL;
+    current = ctx->allocations;
+    while (current)
+    {
+        next = current->next;
+        free(current->ptr);
+        free(current);
+        current = next;
+    }
+    ctx->allocations = NULL;
 }
 
-void	*safe_realloc(t_ctx *ctx, void *ptr, size_t new_size, t_alloc_type type)
+void    register_alloc(t_ctx *ctx, void  *ptr, t_alloc_type type)
 {
-	void	*new_ptr;
+    t_allocation    *new_alloc;
 
-	new_ptr = malloc(new_size);
-	if (!new_ptr)
-		return (NULL);
-	ft_memcpy(new_ptr, ptr, new_size);
-	safe_free(ctx, ptr);
-	register_alloc(ctx, new_ptr, type);
-	return (new_ptr);
+    new_alloc = malloc(sizeof(t_allocation));
+    if (!new_alloc)
+    {
+        ctx->last_error_message = safe_strdup(ctx, "Memory allocation failed");
+        ctx->exit_status = 1;
+        return ;
+    }
+    new_alloc->ptr = ptr;
+    new_alloc->type = type;
+    new_alloc->next = ctx->allocations;
+    ctx->allocations = new_alloc;
+}
+
+void    *safe_realloc(t_ctx *ctx, void *ptr, size_t new_size, t_alloc_type type)
+{
+    void    *new_ptr;
+
+    new_ptr = malloc(new_size);
+    if (!new_ptr)
+        return (NULL);
+    ft_memcpy(new_ptr, ptr, new_size);
+    safe_free(ctx, ptr);
+    register_alloc(ctx, new_ptr, type);
+    return (new_ptr);
 }
