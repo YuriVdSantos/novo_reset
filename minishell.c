@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 15:09:55 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/09 16:44:14 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/10 20:19:48 by yurivieirad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

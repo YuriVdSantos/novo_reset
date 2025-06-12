@@ -31,8 +31,8 @@
       "type": "lldb",
       "request": "launch",
       "args": [],
-      "cwd": "/Users/yurivieiradossantos/novo_reset_minishell",
-      "program": "/Users/yurivieiradossantos/novo_reset_minishell/build/Debug/outDebug"
+      "cwd": "/nfs/homes/yvieira-/novo_reset",
+      "program": "/nfs/homes/yvieira-/novo_reset/minishell"
     }
   ]
 }

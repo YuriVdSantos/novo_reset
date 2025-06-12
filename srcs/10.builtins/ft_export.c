@@ -2,8 +2,12 @@
 
 static void	print_env_variable(t_env *env_var)
 {
+    char *name;
+
     ft_putstr_fd("declare -x ", STDOUT_FILENO);
-    ft_putstr_fd(name_only(env_var->key), STDOUT_FILENO);
+    name = name_only(env_var->key);
+    ft_putstr_fd(name, STDOUT_FILENO);
+    free(name);
     if (ft_strchr(env_var->key, '='))
     {
         ft_putstr_fd("=", STDOUT_FILENO);
@@ -36,7 +40,7 @@ static int	process_argument(char *key_pair, t_ctx *ctx)
     status = EXIT_SUCCESS;
     if (!is_valid_varname(varname) || str_equal(key_pair, "="))
     {
-        print_error_msg("export", key_pair);
+        print_error_msg(varname, "not valid in this context:");
         status = EXIT_FAILURE;
     }
     else if (ctx->env_list->next)

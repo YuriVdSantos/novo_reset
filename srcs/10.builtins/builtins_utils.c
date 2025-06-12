@@ -2,7 +2,7 @@
 
 int	is_varname(char c)
 {
-    return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_' || c == '-');
+    return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_');
 }
 
 void	minienv_update(char *name, char *value, t_env *minienv)

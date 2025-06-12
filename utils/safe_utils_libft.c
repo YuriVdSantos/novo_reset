@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   safe_utils_libft.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 15:48:45 by jhualves          #+#    #+#             */
-/*   Updated: 2025/05/26 01:25:06 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/09 23:07:04 by yurivieirad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

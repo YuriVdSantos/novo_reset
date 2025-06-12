@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_env_var.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 20:12:27 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/04 18:33:17 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/10 19:13:48 by yurivieirad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

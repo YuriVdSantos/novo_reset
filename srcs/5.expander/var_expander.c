@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   var_expander.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:45:49 by jhualves          #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2025/06/10 19:59:38 by yurivieirad      ###   ########.fr       */
+=======
 /*   Updated: 2025/06/10 23:16:50 by jhualves         ###   ########.fr       */
+>>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 

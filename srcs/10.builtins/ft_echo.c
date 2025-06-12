@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/09 20:51:03 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/09 20:51:19 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/10 00:27:13 by yurivieirad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,13 @@ int	is_only_n(const char *str)
 	return (1);
 }
 
-int	ft_echo(char **args)
+int	ft_echo(char **args, t_ctx *ctx)
 {
 	int	i;
 	int	new_line;
-
+	
+	//printf("Exit Status: %d\n", ctx->exit_status);
+	//printf("Executing echo with args: %s\n", args[1]);
 	new_line = 1;
 	i = 1;
 	while (args[i] && ft_strncmp(args[i], "-n", 2) == 0 && is_only_n(args[i]))
@@ -40,6 +42,22 @@ int	ft_echo(char **args)
 	}
 	while (args[i])
 	{
+		//printf("Executing echo with args: %s\n", args[i]);
+		//Se Args[i] for igual a '?', imprimir o exit status
+		if (args[i][0] == '?' && args[i][1] == '\0')
+		{
+			ft_putnbr_fd(ctx->exit_status, STDOUT_FILENO);
+			if (args[i + 1])
+				ft_putstr_fd(" ", STDOUT_FILENO);
+			i++;
+			continue;
+		}
+/* 		if (args[i] == '?')
+		{
+			ft_putnbr_fd(ctx->exit_status, STDOUT_FILENO);
+			i++;
+			continue;
+		} */
 		ft_putstr_fd(args[i], STDOUT_FILENO);
 		if (args[i + 1])
 			ft_putstr_fd(" ", STDOUT_FILENO);

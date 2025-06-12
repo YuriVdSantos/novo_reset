@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/10 17:01:45 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/10 17:11:22 by jhualves         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
 int	fits_in_long_long(char *str)
@@ -48,26 +36,23 @@ static void exit_with_error(char *command, char *msg, int error)
 
 static void	handle_exit_errors(char **args, t_ctx *ctx)
 {
-	if (!args || !args[1])
-	{
-		if (args)
-			free_string_array(args);
-		close_all_fds();
-		free_context(ctx);
-		exit(EXIT_SUCCESS);
-	}
-	if (!fits_in_long_long(args[1]))
-	{
-		free_string_array(args);
-		free_context(ctx);
-		exit_with_error("exit", "numeric argument required", BUILTIN_MISUSE);
-	}
-	if (args[2] != NULL)
-	{
-		free_string_array(args);
-		free_context(ctx);
-		exit_with_error("exit", "too many arguments", EXIT_FAILURE);
-	}
+    if (!args || !args[1])
+    {
+        if (args)
+            free_string_array(args);
+        close_all_fds();
+        exit(EXIT_SUCCESS);
+    }
+    if (!fits_in_long_long(args[1]))
+    {
+        free_string_array(args);
+        exit_with_error("exit", "numeric argument required", BUILTIN_MISUSE);
+    }
+    if (args[2] != NULL)
+    {
+        free_string_array(args);
+        exit_with_error("exit", "too many arguments", EXIT_FAILURE);
+    }
 }
 
 int	ft_exit(char **args, t_ctx *ctx)
@@ -75,11 +60,12 @@ int	ft_exit(char **args, t_ctx *ctx)
 {
 	int	exit_status;
 
-	rl_clear_history();
-	ft_putstr_fd("exit\n", STDOUT_FILENO);
-	handle_exit_errors(args, ctx);
-	close_all_fds();
-	exit_status = ft_atodbl(args[1]);
-	free_string_array(args);
-	exit(exit_status);
+    rl_clear_history();
+    free_env_list(ctx->env_list);
+    ft_putstr_fd("exit\n", STDOUT_FILENO);
+    handle_exit_errors(args);
+    close_all_fds();
+    exit_status = ft_atodbl(args[1]);
+    free_string_array(args);
+    exit(exit_status);
 }
