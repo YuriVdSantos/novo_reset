@@ -136,3 +136,9 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re
+
+# Target para teste com flags de debug (-g)
+debug: CFLAGS += -g
+debug: re
+
+.PHONY: debug

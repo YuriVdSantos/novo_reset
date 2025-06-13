@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   execute_builtin.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 17:02:38 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/10 17:09:01 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/13 13:36:44 by yurivieirad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int	execute_forked_builtin(char **args, t_ctx *ctx, t_env **minienv)
+int	execute_forked_builtin(char **args, t_ctx *ctx)
 {
 	int	exit_status;
 
-	exit_status = execute_builtin(args, ctx, minienv);
+	exit_status = execute_builtin(args, ctx);
 	exit(exit_status);
 }
 
-int	execute_builtin(char **args, t_ctx *ctx, t_env **minienv)
+int	execute_builtin(char **args, t_ctx *ctx)
 {
 	char	*command;
 
@@ -34,7 +34,7 @@ int	execute_builtin(char **args, t_ctx *ctx, t_env **minienv)
 	if (str_equal(command, "export"))
 		return (ft_export(args, ctx));
 	if (str_equal(command, "unset"))
-		return (ft_unset(args, minienv));
+		return (ft_unset(args, ctx));
 	if (str_equal(command, "cd"))
 		return (ft_cd(args, ctx));
 	if (str_equal(command, "exit"))

@@ -30,7 +30,7 @@ int	execute_one_command(t_cmd *command, t_ctx *ctx)
 	}
 	args = command->args;
 	if (is_builtin(args[0]))
-		exit_status = execute_builtin(args, ctx, &ctx->env_list);
+		exit_status = execute_builtin(args, ctx);
 	else
 		exit_status = execute_forked_external(args, ctx);
 	restore_original_fds(original_fds);

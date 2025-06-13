@@ -8,7 +8,7 @@ static void	child_process_logic(t_cmd *cmd, t_ctx *ctx)
 	if (apply_redirections(cmd, original_fds) == FAILED)
 		exit(EXIT_FAILURE);
 	if (is_builtin(cmd->args[0]))
-		exit(execute_builtin(cmd->args, ctx, &ctx->env_list));
+		exit(execute_builtin(cmd->args, ctx));
 	else
 		execute_external(cmd->args, ctx->env_list, ctx);
 }
