@@ -13,8 +13,8 @@ void	free_context(t_ctx *ctx)
 			free(ctx->input);
 		if (ctx->last_error_message)
 			free(ctx->last_error_message);
-		if (ctx->env_list)
-			free_env_list(ctx->env_list);
+		// if (ctx->env_list)
+		// 	free_env_list(ctx->env_list);
 		ctx->pwd = NULL;
 		ctx->oldpwd = NULL;
 		ctx->input = NULL;
@@ -43,6 +43,8 @@ void	free_all_allocations(t_ctx *ctx)
 			else if (alloc->type == ALLOC_TYPE_STR)
 				free_string_array(alloc->ptr);
 			else if (alloc->type == ALLOC_TYPE_STRING || alloc->type == ALLOC_TYPE_GENERIC)
+				free(alloc->ptr);
+			else if (alloc->type == ALLOC_TYPE_ENV_NODE)
 				free(alloc->ptr);
 			alloc->ptr = NULL;
 		}

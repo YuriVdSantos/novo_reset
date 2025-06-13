@@ -18,7 +18,7 @@ all: $(NAME)
 $(NAME): $(OBJS)
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -I $(HEADER) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 	ar rc $(NAME) $@
 
 clean: 

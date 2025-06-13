@@ -17,6 +17,13 @@ if [ ! -f ./minishell ]; then
     exit 1
 fi
 
+# Verifica se o arquivo de supressão existe
+if [ ! -f ./readline.supp ]; then
+    echo -e "${RED}Arquivo de supressão 'readline.supp' não encontrado. Abortando teste.${NC}"
+    exit 1
+fi
+
+
 echo -e "\n--- ${GREEN}Iniciando testes com Valgrind para memory leaks e double frees${NC} ---\n"
 
 # Array de comandos para testar
@@ -46,7 +53,8 @@ declare -a commands=(
 # Executa cada comando com Valgrind
 for cmd in "${commands[@]}"; do
     echo -e "\n--- Testando comando: ${GREEN}${cmd}${NC} ---"
-    echo "${cmd}" | valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --log-file="valgrind_report.txt" ./minishell > /dev/null 2>&1
+    # ATUALIZADO: Adicionada a flag --suppressions
+    echo "${cmd}" | valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --suppressions=./readline.supp --log-file="valgrind_report.txt" ./minishell > /dev/null 2>&1
 
     # Analisa o relatório do Valgrind
     if grep -q "All heap blocks were freed -- no leaks are possible" valgrind_report.txt && ! grep -q "Invalid read" valgrind_report.txt && ! grep -q "Invalid write" valgrind_report.txt && ! grep -q "double free" valgrind_report.txt; then

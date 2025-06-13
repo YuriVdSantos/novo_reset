@@ -61,11 +61,11 @@ int	ft_exit(char **args, t_ctx *ctx)
 	int	exit_status;
 
     rl_clear_history();
-    free_env_list(ctx->env_list);
+    // free_env_list(ctx->env_list);
     ft_putstr_fd("exit\n", STDOUT_FILENO);
     handle_exit_errors(args);
     close_all_fds();
     exit_status = ft_atodbl(args[1]);
-    // free_string_array(args);
+	free_context(ctx);
     exit(exit_status);
 }

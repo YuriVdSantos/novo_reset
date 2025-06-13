@@ -96,6 +96,7 @@ t_ctx	*init_ctx(t_ctx *ctx, char **env_array)
 		ft_putstr_fd("minishell: initialization error\n", 2);
 		return (NULL);
 	}
+	ft_bzero(ctx->allocations, sizeof(t_allocation));
 	ctx->pwd = NULL;
 	ctx->oldpwd = NULL;
 	ctx->is_interactive = isatty(STDIN_FILENO);
