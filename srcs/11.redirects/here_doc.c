@@ -6,7 +6,7 @@
 /*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:59:18 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/13 12:46:59 by yurivieirad      ###   ########.fr       */
+/*   Updated: 2025/06/13 14:30:16 by yurivieirad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int handle_single_heredoc(t_redir *redir, t_ctx *ctx)
 		{
 			char *expanded_line = expand_string(ctx, line);
 			ft_putendl_fd(expanded_line, temp_fd);
-			free(expanded_line);
+			// free(expanded_line);
 		}
 		else
 			ft_putendl_fd(line, temp_fd);
