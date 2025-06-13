@@ -70,13 +70,9 @@ int	ft_export(char **args, t_ctx *ctx)
     return (exit_status);
 }
 
-
-#include "minishell.h"
-
-
-** Verifica se uma string é um identificador válido para variáveis de shell.
-** (Começa com letra ou underscore, seguido por letras, números ou underscores)
 */
+
+
 #include "minishell.h"
 
 static int	is_valid_identifier(const char *name)
@@ -114,10 +110,6 @@ static int	print_export_env(t_env *env_list)
 	return (EXIT_SUCCESS);
 }
 
-/*
-** Extrai a parte da chave de uma string de atribuição "CHAVE=valor".
-** Retorna uma string recém-alocada que deve ser liberada.
-*/
 static char	*get_key_from_assignment(const char *assignment)
 {
 	const char *equal_pos;
@@ -128,10 +120,6 @@ static char	*get_key_from_assignment(const char *assignment)
 	return (ft_strndup(assignment, equal_pos - assignment));
 }
 
-/*
-** Define ou atualiza variáveis de ambiente.
-** Lida com `export VAR=valor`, `export VAR`, e `export` sem argumentos.
-*/
 int	ft_export(char **args, t_ctx *ctx)
 {
 	int		exit_status;
@@ -156,11 +144,8 @@ int	ft_export(char **args, t_ctx *ctx)
 		{
 			set_env_var(ctx, args[i]);
 		}
-		// Se for `export VAR` e VAR não existir, devemos adicioná-la com um valor NULL.
-		// Isto cria uma variável que é exportada mas não tem valor atribuído.
 		else if (!find_env_var(ctx->env_list, key))
 		{
-			// Passamos uma chave duplicada e um valor NULL. A função add_new_env_var assume a posse.
 			add_new_env_var(ctx, &ctx->env_list, ft_strdup(key), NULL);
 		}
 		free(key);

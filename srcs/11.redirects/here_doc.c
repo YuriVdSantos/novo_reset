@@ -6,7 +6,7 @@
 /*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:59:18 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/13 14:30:16 by yurivieirad      ###   ########.fr       */
+/*   Updated: 2025/06/13 14:32:23 by yurivieirad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ static char	*create_temp_filename(void)
 	return (filename);
 }
 
-// Em srcs/11.redirects/here_doc.c
-
 static int handle_single_heredoc(t_redir *redir, t_ctx *ctx)
 {
 	int		temp_fd;
@@ -38,7 +36,7 @@ static int handle_single_heredoc(t_redir *redir, t_ctx *ctx)
 	expand = !ft_strchr(delimiter, '\'') && !ft_strchr(delimiter, '\"');
 
 	temp_filename = create_temp_filename();
-	if (!temp_filename) // Adicionar verificação de falha de alocação
+	if (!temp_filename)
 		return (FAILED);
 		
 	temp_fd = open(temp_filename, O_WRONLY | O_CREAT | O_TRUNC, 0600);
@@ -64,8 +62,8 @@ static int handle_single_heredoc(t_redir *redir, t_ctx *ctx)
 		free(line);
 	}
 	close(temp_fd);
-	free(redir->filename); // Libera a memória do delimitador antigo
-	redir->filename = temp_filename; // Atribui o novo nome de arquivo temporário
+	free(redir->filename);
+	redir->filename = temp_filename;
 	redir->type = REDIR_INPUT;
 	return (SUCCESS);
 }

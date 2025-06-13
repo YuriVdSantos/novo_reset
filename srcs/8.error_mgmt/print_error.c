@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   print_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 16:09:46 by jhualves          #+#    #+#             */
-/*   Updated: 2025/05/26 01:29:21 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/13 14:33:40 by yurivieirad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// talvez nem precise
 char	*get_error_message(int error_code)
 {
 	if (error_code == 0)
@@ -56,13 +55,11 @@ bool	handle_error(t_ctx *ctx, char *msg, int errnum, int exit_status)
 	return (false);
 }
 
-// Versão para erros de sintaxe
 bool	syntax_error(t_ctx *ctx, char *msg)
 {
 	return (handle_error(ctx, msg, -1, 2));
 }
 
-// Versão para erros gerais
 void	print_error(t_ctx *ctx, char *msg, int errnum, int exit_status)
 {
 	handle_error(ctx, msg, errnum, exit_status);
