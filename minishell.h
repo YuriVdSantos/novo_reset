@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 15:10:26 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/13 16:57:16 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/13 17:46:54 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ typedef struct s_ctx {
 	t_cmd					*cmd_list;
 	t_token					*token_list;
 	char					*input;
+	t_env					*env_list_str;
 	int						exit_status;
 	int						previous_exit_status;
 	int						current_exit_status;

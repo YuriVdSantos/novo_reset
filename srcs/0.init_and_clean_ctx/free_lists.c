@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_lists.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
+/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 19:15:54 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/10 22:57:49 by yurivieirad      ###   ########.fr       */
+/*   Updated: 2025/06/13 17:45:42 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@ void	free_redir_list(t_redir *redir)
 
 	while (redir)
 	{
-		next = redir->next;
-		free(redir->filename);
+		if (redir->filename)
+			free(redir->filename);
 		redir->filename = NULL;
+		next = redir->next;
 		free(redir);
 		redir = next;
 	}
@@ -33,12 +34,16 @@ void	free_cmd_list(t_cmd *cmd)
 
 	while (cmd)
 	{
-		next = cmd->next;
-		free(cmd->args);
+		free_string_array(cmd->args);
 		cmd->args = NULL;
-		free(cmd->cmd_path);
-		cmd->cmd_path = NULL;
-		free_redir_list(cmd->redirections);
+		if (cmd->cmd_path)
+		{
+			free(cmd->cmd_path);
+			cmd->cmd_path = NULL;
+		}
+		if (cmd->redirections)
+			free_redir_list(cmd->redirections);
+		next = cmd->next;
 		free(cmd);
 		cmd = next;
 	}

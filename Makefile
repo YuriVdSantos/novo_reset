@@ -116,9 +116,6 @@ $(NAME): $(OBJS) $(LIBFT)
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(LFLAGS) -o $(NAME)
 	@echo "$(GREEN)$(NAME) successfully compiled!$(RESET)"
 
-$(LIBFT):
-	@make -C $(LIBFT_DIR)
-
 $(OBJS_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
 	@echo "$(YELLOW)Compiling $<...$(RESET)"
