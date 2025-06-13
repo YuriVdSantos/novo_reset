@@ -3,16 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
+/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 15:10:26 by jhualves          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/06/11 00:22:33 by yurivieirad      ###   ########.fr       */
-=======
-/*   Updated: 2025/06/10 23:24:55 by jhualves         ###   ########.fr       */
->>>>>>> main
+/*   Updated: 2025/06/13 16:57:16 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -237,7 +234,7 @@ void	handle_squote(t_ctx *ctx, t_token **tmp, t_cmd *current);
 
 // srcs/4.parser/handle_cmd_1.c
 void	handle_assignment_var(t_ctx *ctx, t_token **tmp, t_cmd *current);
-void	handle_env_var(t_token **tmp, t_cmd *current);
+void	handle_env_var(t_ctx *ctx, t_token **tmp, t_cmd *current);
 void	handle_parse_error(t_ctx *ctx, t_token **tmp);
 
 // srcs/4.parser/parsing.c
@@ -247,16 +244,12 @@ t_cmd	*parse_tokens(t_ctx *ctx, t_token **tokens);
 // srcs/5.expander/
 // =============================================================================
 
-// srcs/5.expander/quotes_expánder.c
+// srcs/5.expander/quotes_expander.c
 char	*expand_dquotes(t_ctx *ctx, const char *input);
-void	expand_all_command_lists(t_ctx *ctx, t_cmd *cmd_list);
-char	*expand_string(t_ctx *ctx, const char *input);
-
-// srcs/5.expander/var_expander.c
-char	*expand_env_var(t_ctx *ctx, const char *input);
 char	*get_env_value(t_ctx *ctx, const char *key);
-char	*expand_string(t_ctx *ctx, const char *input);
 int		var_name_length(const char *input);
+char	*expand_env_var(t_ctx *ctx, const char *input, int *len);
+
 
 
 // =============================================================================
@@ -276,6 +269,8 @@ void	*safe_malloc(t_ctx *ctx, size_t size, t_alloc_type type);
 void	safe_free_all(t_ctx *ctx);
 void	*safe_realloc(t_ctx *ctx, void *ptr, size_t new_size, \
 		t_alloc_type type);
+void	register_alloc(t_ctx *ctx, void *ptr, t_alloc_type type);
+
 
 
 // =============================================================================
@@ -381,7 +376,7 @@ void	save_original_fd_in(int original_fds[2]);
 void	save_original_fd_out(int original_fds[2]);
 int		process_heredocs(t_cmd *cmd_list, t_ctx *ctx);
 void	cleanup_heredocs(t_cmd *cmd_list);
-
+char	*expand_string(t_ctx *ctx, char *line);
 
 // =============================================================================
 // srcs/12.handle_new_env/

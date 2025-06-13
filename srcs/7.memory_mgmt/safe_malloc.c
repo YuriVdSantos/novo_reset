@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 16:04:12 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/10 23:24:15 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/13 16:44:57 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,20 @@ void	*safe_realloc(t_ctx *ctx, void *ptr, size_t new_size, t_alloc_type type)
 	safe_free(ctx, ptr);
 	register_alloc(ctx, new_ptr, type);
 	return (new_ptr);
+}
+void	register_alloc(t_ctx *ctx, void *ptr, t_alloc_type type)
+{
+	t_allocation	*new_alloc;
+
+	new_alloc = malloc(sizeof(t_allocation));
+	if (!new_alloc)
+	{
+		ctx->last_error_message = safe_strdup(ctx, "Memory allocation failed");
+		ctx->current_exit_status = 1;
+		return ;
+	}
+	new_alloc->ptr = ptr;
+	new_alloc->type = type;
+	new_alloc->next = ctx->allocations;
+	ctx->allocations = new_alloc;
 }

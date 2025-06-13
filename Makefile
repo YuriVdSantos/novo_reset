@@ -44,7 +44,6 @@ SRCS =  minishell.c \
         srcs/4.parser/handle_cmd.c \
         srcs/4.parser/handle_cmd_1.c \
         \
-        srcs/5.expander/var_expander.c \
         srcs/5.expander/quotes_expander.c \
         \
         srcs/6.signals/signals.c \

@@ -3,16 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   free_ctx.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yvieira- <yvieira-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 19:15:54 by jhualves          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/06/11 20:27:01 by yvieira-         ###   ########.fr       */
-=======
-/*   Updated: 2025/06/10 19:43:16 by jhualves         ###   ########.fr       */
->>>>>>> main
+/*   Updated: 2025/06/13 16:42:55 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 void	free_context(t_ctx *ctx)
@@ -43,32 +40,21 @@ void	free_all_allocations(t_ctx *ctx)
 {
 	t_allocation	*alloc;
 	t_allocation	*next;
+
 	alloc = ctx->allocations;
 	while (alloc)
 	{
 		next = alloc->next;
-<<<<<<< HEAD
-<<<<<<< HEAD
-		if(!alloc->ptr)
-=======
 		if (!alloc->ptr)
->>>>>>> main
 		{
 			free(alloc);
 			alloc = next;
 			continue ;
 		}
-<<<<<<< HEAD
-		// else if (alloc->type == ALLOC_TYPE_CMD)
-		// 	free_cmd_list(alloc->ptr);
-=======
 		else if (alloc->type == ALLOC_TYPE_CMD)
 			free_cmd_list(alloc->ptr);
->>>>>>> main
-=======
 		if (alloc->type == ALLOC_TYPE_CMD)
 			free_cmd_list(alloc->ptr);
->>>>>>> 3e01c7c29c8130706a0534f9e555a25fffa7981f
 		else if (alloc->type == ALLOC_TYPE_REDIR)
 			free_redir_list(alloc->ptr);
 		else if (alloc->type == ALLOC_TYPE_STR)

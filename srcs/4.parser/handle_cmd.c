@@ -6,13 +6,10 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 23:23:43 by jhualves          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/06/10 19:59:51 by yurivieirad      ###   ########.fr       */
-=======
-/*   Updated: 2025/06/10 21:47:20 by jhualves         ###   ########.fr       */
->>>>>>> main
+/*   Updated: 2025/06/13 16:38:32 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "minishell.h"
 
@@ -55,14 +52,11 @@ void	handle_word(t_token **tmp, t_cmd *current)
 	*tmp = (*tmp)->next;
 }
 
-/*
-	alterar isso aqui, expando a variavel de ambiente
-*/
 void	handle_dquote(t_ctx *ctx, t_token **tmp, t_cmd *current)
 {
 	char	*content;
 
-	content = expand_dquotes(ctx, (*tmp)->value);
+	content = safe_strdup(ctx, expand_dquotes(ctx, (*tmp)->value));
 	add_arg(current, content);
 	*tmp = (*tmp)->next;
 }
@@ -70,8 +64,11 @@ void	handle_dquote(t_ctx *ctx, t_token **tmp, t_cmd *current)
 void	handle_squote(t_ctx *ctx, t_token **tmp, t_cmd *current)
 {
 	char	*content;
+	char	*tmp_value;
 
-	content = safe_strtrim(ctx, (*tmp)->value, "'");
+	tmp_value = ft_strtrim((*tmp)->value, "'");
+	content = safe_strdup(ctx, tmp_value);
 	add_arg(current, content);
+	free(tmp_value);
 	*tmp = (*tmp)->next;
 }

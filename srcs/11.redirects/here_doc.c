@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
+/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:59:18 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/11 00:17:44 by yurivieirad      ###   ########.fr       */
+/*   Updated: 2025/06/13 16:57:08 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,4 +109,27 @@ void	cleanup_heredocs(t_cmd *cmd_list)
 		}
 		current_cmd = current_cmd->next;
 	}
+}
+
+char	*expand_string(t_ctx *ctx, char *line)
+{
+	char	*expanded_line;
+	int		len;
+
+	if (!line || !*line)
+		return (safe_strdup(ctx, ""));
+	len = var_name_length(line);
+	if (len > 0 && line[0] == '$')
+	{
+		expanded_line = expand_env_var(ctx, line + 1, &len);
+		if (!expanded_line)
+			return (NULL);
+	}
+	else
+	{
+		expanded_line = safe_strdup(ctx, line);
+		if (!expanded_line)
+			return (NULL);
+	}
+	return (expanded_line);
 }
