@@ -6,7 +6,7 @@
 /*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:59:18 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/13 09:19:09 by yurivieirad      ###   ########.fr       */
+/*   Updated: 2025/06/13 12:46:59 by yurivieirad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ static char	*create_temp_filename(void)
 	return (filename);
 }
 
-static int	handle_single_heredoc(t_redir *redir, t_ctx *ctx)
+// Em srcs/11.redirects/here_doc.c
+
+static int handle_single_heredoc(t_redir *redir, t_ctx *ctx)
 {
 	int		temp_fd;
 	char	*line;
@@ -36,6 +38,9 @@ static int	handle_single_heredoc(t_redir *redir, t_ctx *ctx)
 	expand = !ft_strchr(delimiter, '\'') && !ft_strchr(delimiter, '\"');
 
 	temp_filename = create_temp_filename();
+	if (!temp_filename) // Adicionar verificação de falha de alocação
+		return (FAILED);
+		
 	temp_fd = open(temp_filename, O_WRONLY | O_CREAT | O_TRUNC, 0600);
 	if (temp_fd == -1)
 		return (free(temp_filename), FAILED);
@@ -59,8 +64,8 @@ static int	handle_single_heredoc(t_redir *redir, t_ctx *ctx)
 		free(line);
 	}
 	close(temp_fd);
-	// free(redir->filename);
-	redir->filename = temp_filename;
+	free(redir->filename); // Libera a memória do delimitador antigo
+	redir->filename = temp_filename; // Atribui o novo nome de arquivo temporário
 	redir->type = REDIR_INPUT;
 	return (SUCCESS);
 }

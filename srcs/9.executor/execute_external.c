@@ -24,8 +24,12 @@ static void	handle_execve_errors(char **args, const char *path, char **envp)
         error_code = NOT_EXECUTABLE;
     else
 		error_code = EXIT_FAILURE;
-	free_string_array(envp);
-	free_string_array(args);
+	(void)envp;
+	(void)args;
+
+
+	// free_string_array(envp);
+	// free_string_array(args);
 
     exit(error_code);
 }
@@ -36,7 +40,8 @@ void	external_exit(char **args, t_env *minienv, int exit_status)
 		print_error_msg(args[0], NOT_EXECUTABLE_MSG);
 	if (exit_status == CMD_NOT_FOUND)
 		print_error_msg(args[0], CMD_NOT_FOUND_MSG);
-	free_env_list(minienv);
+	(void)minienv;
+	// free_env_list(minienv);
 	close_all_fds();
 	exit(exit_status);
 }

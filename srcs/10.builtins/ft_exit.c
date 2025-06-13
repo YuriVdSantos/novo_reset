@@ -38,19 +38,19 @@ static void	handle_exit_errors(char **args)
 {
     if (!args || !args[1])
     {
-        if (args)
-            free_string_array(args);
+        // if (args)
+            // free_string_array(args);
         close_all_fds();
         exit(EXIT_SUCCESS);
     }
     if (!fits_in_long_long(args[1]))
     {
-        free_string_array(args);
+        // free_string_array(args);
         exit_with_error("exit", "numeric argument required", BUILTIN_MISUSE);
     }
     if (args[2] != NULL)
     {
-        free_string_array(args);
+        // free_string_array(args);
         exit_with_error("exit", "too many arguments", EXIT_FAILURE);
     }
 }
@@ -66,6 +66,6 @@ int	ft_exit(char **args, t_ctx *ctx)
     handle_exit_errors(args);
     close_all_fds();
     exit_status = ft_atodbl(args[1]);
-    free_string_array(args);
+    // free_string_array(args);
     exit(exit_status);
 }

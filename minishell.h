@@ -333,7 +333,7 @@ t_env	*minienv_node(char *name, t_env *minienv);
 // srcs/10.builtins/
 // =============================================================================
 
-int	ft_unset(char **args, t_env **minienv);
+int	ft_unset(char **args, t_ctx *ctx);
 int	ft_pwd(void);
 int	ft_export(char **args, t_ctx *ctx);
 int	fits_in_long_long(char *str);

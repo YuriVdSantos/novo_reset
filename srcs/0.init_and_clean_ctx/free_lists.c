@@ -6,7 +6,7 @@
 /*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 19:15:54 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/10 22:57:49 by yurivieirad      ###   ########.fr       */
+/*   Updated: 2025/06/13 13:26:33 by yurivieirad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	free_cmd_list(t_cmd *cmd)
 	while (cmd)
 	{
 		next = cmd->next;
-		free(cmd->args);
+		free_string_array(cmd->args);
 		cmd->args = NULL;
 		free(cmd->cmd_path);
 		cmd->cmd_path = NULL;

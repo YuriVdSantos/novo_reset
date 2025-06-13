@@ -30,16 +30,16 @@ void	clean_after_execute(int *children_pid)
     if (children_pid)
     {
         close_extra_fds();
-        free(children_pid);
+        // free(children_pid);
     }
 }
 
 void	quit_child(char **commands, t_ctx *ctx)
 {
     if (commands)
-        free_string_array(commands);
+        // free_string_array(commands);
     if (ctx->env_list)
-        free_env_list(ctx->env_list);
+        // free_env_list(ctx->env_list);
     close_all_fds();
     rl_clear_history();
     exit(EXIT_FAILURE);

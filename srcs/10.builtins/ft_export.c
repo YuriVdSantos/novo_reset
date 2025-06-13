@@ -1,3 +1,5 @@
+/*
+
 #include "minishell.h"
 
 static void	print_env_variable(t_env *env_var)
@@ -47,7 +49,7 @@ static int	process_argument(char *key_pair, t_ctx *ctx)
         minienv_update(varname, value_only(key_pair), ctx->env_list);
     else
         list_append(key_pair, &ctx->env_list);
-    free(varname);
+    // free(varname);
     return (status);
 }
 
@@ -66,4 +68,103 @@ int	ft_export(char **args, t_ctx *ctx)
         args++;
     }
     return (exit_status);
+}
+
+
+#include "minishell.h"
+
+
+** Verifica se uma string é um identificador válido para variáveis de shell.
+** (Começa com letra ou underscore, seguido por letras, números ou underscores)
+*/
+#include "minishell.h"
+
+static int	is_valid_identifier(const char *name)
+{
+	if (!name || (!ft_isalpha(*name) && *name != '_'))
+		return (0);
+	name++;
+	while (*name)
+	{
+		if (!ft_isalnum(*name) && *name != '_')
+			return (0);
+		name++;
+	}
+	return (1);
+}
+
+static int	print_export_env(t_env *env_list)
+{
+	t_env	*current;
+
+	current = env_list;
+	while (current)
+	{
+		ft_putstr_fd("declare -x ", STDOUT_FILENO);
+		ft_putstr_fd(current->key, STDOUT_FILENO);
+		if (current->value != NULL)
+		{
+			ft_putstr_fd("=\"", STDOUT_FILENO);
+			ft_putstr_fd(current->value, STDOUT_FILENO);
+			ft_putstr_fd("\"", STDOUT_FILENO);
+		}
+		ft_putstr_fd("\n", STDOUT_FILENO);
+		current = current->next;
+	}
+	return (EXIT_SUCCESS);
+}
+
+/*
+** Extrai a parte da chave de uma string de atribuição "CHAVE=valor".
+** Retorna uma string recém-alocada que deve ser liberada.
+*/
+static char	*get_key_from_assignment(const char *assignment)
+{
+	const char *equal_pos;
+
+	equal_pos = ft_strchr(assignment, '=');
+	if (!equal_pos)
+		return (ft_strdup(assignment));
+	return (ft_strndup(assignment, equal_pos - assignment));
+}
+
+/*
+** Define ou atualiza variáveis de ambiente.
+** Lida com `export VAR=valor`, `export VAR`, e `export` sem argumentos.
+*/
+int	ft_export(char **args, t_ctx *ctx)
+{
+	int		exit_status;
+	int		i;
+	char	*key;
+
+	exit_status = EXIT_SUCCESS;
+	i = 1;
+	if (!args[1])
+		return (print_export_env(ctx->env_list));
+	while (args[i])
+	{
+		key = get_key_from_assignment(args[i]);
+		if (!is_valid_identifier(key))
+		{
+			ft_putstr_fd("minishell: export: `", STDERR_FILENO);
+			ft_putstr_fd(args[i], STDERR_FILENO);
+			ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
+			exit_status = EXIT_FAILURE;
+		}
+		else if (ft_strchr(args[i], '='))
+		{
+			set_env_var(ctx, args[i]);
+		}
+		// Se for `export VAR` e VAR não existir, devemos adicioná-la com um valor NULL.
+		// Isto cria uma variável que é exportada mas não tem valor atribuído.
+		else if (!find_env_var(ctx->env_list, key))
+		{
+			// Passamos uma chave duplicada e um valor NULL. A função add_new_env_var assume a posse.
+			add_new_env_var(ctx, &ctx->env_list, ft_strdup(key), NULL);
+		}
+		free(key);
+		i++;
+	}
+	return (exit_status);
 }

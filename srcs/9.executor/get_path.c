@@ -38,12 +38,13 @@ static char	*search_in_path_env(char *command, char *path_env)
         construct_path(current_path, *paths, "/", command);
         if (access(current_path, F_OK) == 0)
         {
-            free_string_array(paths_start);
+            // free_string_array(paths_start);
             return (ft_strdup(current_path));
         }
         paths++;
     }
-    free_string_array(paths_start);
+    (void)paths_start;
+    // free_string_array(paths_start);
     return (NULL);
 }
 
