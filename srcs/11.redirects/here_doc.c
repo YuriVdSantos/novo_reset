@@ -6,7 +6,7 @@
 /*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:59:18 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/11 00:17:44 by yurivieirad      ###   ########.fr       */
+/*   Updated: 2025/06/13 09:19:09 by yurivieirad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int	handle_single_heredoc(t_redir *redir, t_ctx *ctx)
 		free(line);
 	}
 	close(temp_fd);
-	free(redir->filename);
+	// free(redir->filename);
 	redir->filename = temp_filename;
 	redir->type = REDIR_INPUT;
 	return (SUCCESS);

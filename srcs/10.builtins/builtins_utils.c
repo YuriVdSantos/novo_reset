@@ -20,7 +20,7 @@ void	minienv_update(char *name, char *value, t_env *minienv)
 		free(new_keypair);
 		return ;
 	}
-	free(aux->key);
+	// free(aux->key);
 	size = ft_strlen(name) + ft_strlen(value) + 2;
 	new_keypair = malloc(size * sizeof(char));
 	i = 0;
