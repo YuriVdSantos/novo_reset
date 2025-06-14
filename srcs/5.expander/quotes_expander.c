@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:15:27 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/13 21:42:10 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/13 22:00:38 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*expand_dquotes(t_ctx *ctx, const char *input)
 			env_value = expand_env_var(ctx, input, &len);
 			result = ft_strjoin_free(ctx, result, env_value);
 			input += len;
-			free(env_value);
+			// free(env_value);
 		}
 		else
 			result = ft_strjoin_free(ctx, result, (char []){*input++, '\0'});
@@ -51,9 +51,9 @@ char	*get_env_value(t_ctx *ctx, const char *key)
 	pid_str = NULL;
 	if (!key)
 		return ("");
-	if (ft_strcmp(key, "?"))
+	if (ft_strcmp(key, "?") == 0)
 		return (safe_itoa(ctx, ctx->exit_status));
-	if (ft_strcmp(key, "$"))
+	if (ft_strcmp(key, "$") == 0)
 	{
 		get_pid_var(&pid_str);
 		return (pid_str);

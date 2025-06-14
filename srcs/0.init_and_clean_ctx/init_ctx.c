@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:55:10 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/13 21:23:48 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/13 22:12:14 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,20 @@ static void	handle_with_equal(t_ctx *ctx, t_env *new_node, const char *env_str)
 	char	*equals_pos;
 	size_t	key_len;
 
+	(void)ctx;
 	equals_pos = ft_strchr(env_str, '=');
 	key_len = equals_pos - env_str;
-	new_node->key = safe_malloc(ctx, key_len + 1, ALLOC_TYPE_STRING);
+	new_node->key = malloc(key_len + 1);
 	ft_strlcpy(new_node->key, env_str, key_len + 1);
-	new_node->value = safe_strdup(ctx, equals_pos + 1);
+	new_node->value = ft_strdup(equals_pos + 1);
 }
 
 static void	handle_without_equal(t_ctx *ctx, t_env *new_node, \
 	const char *env_str)
 {
-	new_node->key = safe_strdup(ctx, env_str);
-	new_node->value = safe_strdup(ctx, "");
+	(void)ctx;
+	new_node->key = ft_strdup(env_str);
+	new_node->value = ft_strdup("");
 }
 
 void	add_env_node(t_ctx *ctx, t_env **list_head, const char *env_str)
@@ -36,7 +38,7 @@ void	add_env_node(t_ctx *ctx, t_env **list_head, const char *env_str)
 	t_env	*new_node;
 	t_env	*current;
 
-	new_node = safe_malloc(ctx, sizeof(t_env), ALLOC_TYPE_ENV_NODE);
+	new_node = malloc(sizeof(t_env));
 	if (!new_node)
 		return ;
 	if (ft_strchr(env_str, '='))
@@ -69,15 +71,15 @@ void	init_environment(t_ctx *ctx, char **env_array)
 	cwd = getcwd(NULL, 0);
 	if (cwd)
 	{
-		ctx->pwd = safe_strdup(ctx, cwd);
+		ctx->pwd = ft_strdup(cwd);
 		free(cwd);
 	}
 	else
 	{
-		ctx->pwd = safe_strdup(ctx, "");
+		ctx->pwd = ft_strdup("");
 		print_error(ctx, "getcwd failed", errno, 1);
 	}
-	ctx->oldpwd = safe_strdup(ctx, "");
+	ctx->oldpwd = ft_strdup("");
 }
 
 t_ctx	*init_ctx(t_ctx *ctx, char **env_array)
