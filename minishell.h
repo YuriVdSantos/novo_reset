@@ -223,7 +223,7 @@ void	handle_squote(t_ctx *ctx, t_token **tmp, t_cmd *current);
 
 // srcs/4.parser/handle_cmd_1.c
 void	handle_assignment_var(t_ctx *ctx, t_token **tmp, t_cmd *current);
-void	handle_env_var(t_token **tmp, t_cmd *current);
+void	handle_env_var(t_ctx *ctx, t_token **tmp, t_cmd *current);
 void	handle_parse_error(t_ctx *ctx, t_token **tmp);
 
 // srcs/4.parser/parsing.c
@@ -234,15 +234,16 @@ t_cmd	*parse_tokens(t_ctx *ctx, t_token **tokens);
 // =============================================================================
 
 // srcs/5.expander/quotes_expánder.c
-char    *expand_dquotes(t_ctx *ctx, const char *input);
-void    expand_all_command_lists(t_ctx *ctx, t_cmd *cmd_list);
-char    *expand_string(t_ctx *ctx, const char *input);
+char	*expand_dquotes(t_ctx *ctx, const char *input);
+char	*get_env_value(t_ctx *ctx, const char *key);
+int		var_name_length(const char *input);
+char	*expand_env_var(t_ctx *ctx, const char *input, int *len);
+// srcs/5.expander/string_expander.c
+int		is_valid_dollar(char c);
+char	*expand_string(t_ctx *ctx, const char *input);
 
-// srcs/5.expander/var_expander.c
-char    *expand_env_var(t_ctx *ctx, const char *input, int *len);
-char    *get_env_value(t_ctx *ctx, const char *key);
-int     is_valid_dollar(char c); // Protótipo adicionado
-int     var_name_length(const char *input);
+// static int	ft_isalpha_upper(int c); // Static prototype
+
 
 // =============================================================================
 // srcs/6.signals/

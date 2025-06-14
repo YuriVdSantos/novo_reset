@@ -40,14 +40,11 @@ void	handle_word(t_token **tmp, t_cmd *current)
 	*tmp = (*tmp)->next;
 }
 
-/*
-	alterar isso aqui, expando a variavel de ambiente
-*/
 void	handle_dquote(t_ctx *ctx, t_token **tmp, t_cmd *current)
 {
 	char	*content;
 
-	content = expand_dquotes(ctx, (*tmp)->value);
+	content = safe_strdup(ctx, expand_dquotes(ctx, (*tmp)->value));
 	add_arg(current, content);
 	*tmp = (*tmp)->next;
 }
@@ -55,8 +52,11 @@ void	handle_dquote(t_ctx *ctx, t_token **tmp, t_cmd *current)
 void	handle_squote(t_ctx *ctx, t_token **tmp, t_cmd *current)
 {
 	char	*content;
+	char	*tmp_value;
 
-	content = safe_strtrim(ctx, (*tmp)->value, "'");
+	tmp_value = ft_strtrim((*tmp)->value, "'");
+	content = safe_strdup(ctx, tmp_value);
 	add_arg(current, content);
+	free(tmp_value);
 	*tmp = (*tmp)->next;
 }

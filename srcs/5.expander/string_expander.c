@@ -31,3 +31,7 @@ char	*expand_string(t_ctx *ctx, const char *input)
 	*cursor = '\0';
 	return (safe_strdup(ctx, result));
 }
+int	is_valid_dollar(char c)
+{
+	return (ft_isalnum(c) || c == '{' || c == '?' || c == '$' || c == '_');
+}

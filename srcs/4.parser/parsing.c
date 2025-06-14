@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:14:35 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/04 22:19:21 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:41:12 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	handle_variables(t_ctx *ctx, t_token **tmp, t_cmd *current)
 {
 	if ((*tmp)->type == ENV_VAR)
-		handle_env_var(tmp, current);
+		handle_env_var(ctx, tmp, current);
 	else if ((*tmp)->type == ASSIGNMENT_VAR)
 		handle_assignment_var(ctx, tmp, current);
 }
