@@ -136,6 +136,7 @@ typedef struct s_ctx {
 	int						exit_status;
 	int						previous_exit_status;
 	int						current_exit_status;
+	char					**env_list_str;
 	char					*last_error_message;
 	t_allocation			*allocations;
 	bool					is_interactive;
@@ -387,6 +388,7 @@ void	process_assignments(t_ctx *ctx, t_cmd *cmd);
 // utils/main_utils.c
 void	no_input(void);
 void	input_null(t_ctx *ctx, char **input);
+char	**dup_mtz(char **mtz);
 
 // utils/parsing_utils.c
 void	add_arg(t_cmd *cmd, char *value);

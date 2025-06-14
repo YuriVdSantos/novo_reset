@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 19:32:53 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/09 16:30:50 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:09:32 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,4 +24,31 @@ void	input_null(t_ctx *ctx, char **input)
 	free_all_allocations(ctx);
 	exit(ctx->exit_status);
 	free(*input);
+}
+char	**dup_mtz(char **mtz)
+{
+	int		i;
+	char	**dup;
+
+	if (!mtz)
+		return (NULL);
+	i = 0;
+	while (mtz[i])
+		i++;
+	dup = malloc(sizeof(char *) * (i + 1));
+	if (!dup)
+		return (NULL);
+	i = 0;
+	while (mtz[i])
+	{
+		dup[i] = ft_strdup(mtz[i]);
+		if (!dup[i])
+		{
+			free_string_array(dup);
+			return (NULL);
+		}
+		i++;
+	}
+	dup[i] = NULL;
+	return (dup);
 }

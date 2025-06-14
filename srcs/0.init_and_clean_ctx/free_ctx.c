@@ -4,7 +4,7 @@ void	free_context(t_ctx *ctx)
 {
 	if (ctx)
 	{
-		free_all_allocations(ctx);
+		super_free(ctx);
 		if (ctx->pwd)
 			free(ctx->pwd);
 		if (ctx->oldpwd)
@@ -13,8 +13,10 @@ void	free_context(t_ctx *ctx)
 			free(ctx->input);
 		if (ctx->last_error_message)
 			free(ctx->last_error_message);
-		// if (ctx->env_list)
-		// 	free_env_list(ctx->env_list);
+		if (ctx->env_list)
+			free_env_list(ctx->env_list);
+		if (ctx->env_list_str)
+			free_string_array(ctx->env_list_str);
 		ctx->pwd = NULL;
 		ctx->oldpwd = NULL;
 		ctx->input = NULL;
@@ -34,19 +36,16 @@ void	free_all_allocations(t_ctx *ctx)
 	while (alloc)
 	{
 		next = alloc->next;
-		if (alloc->ptr) // Apenas tenta liberar se o ponteiro não for nulo
+		if (alloc->ptr)
 		{
-			if (alloc->type == ALLOC_TYPE_CMD)
-				free_cmd_list(alloc->ptr);
-			else if (alloc->type == ALLOC_TYPE_REDIR)
-				free_redir_list(alloc->ptr);
-			else if (alloc->type == ALLOC_TYPE_STR)
+			if (alloc->type == ALLOC_TYPE_STR)
 				free_string_array(alloc->ptr);
-			else if (alloc->type == ALLOC_TYPE_STRING || alloc->type == ALLOC_TYPE_GENERIC)
-				free(alloc->ptr);
-			else if (alloc->type == ALLOC_TYPE_ENV_NODE)
-				free(alloc->ptr);
-			alloc->ptr = NULL;
+			else
+			{
+				if (alloc->ptr)
+					free(alloc->ptr);
+				alloc->ptr = NULL;
+			}
 		}
 		free(alloc);
 		alloc = next;
@@ -57,12 +56,9 @@ void	free_all_allocations(t_ctx *ctx)
 void	super_free(t_ctx *ctx)
 {
 	t_cmd		*cmd_list;
-	t_token		*token_list;
 
 	cmd_list = ctx->cmd_list;
-	token_list = ctx->token_list;
 	free_cmd_list(cmd_list);
-	free_token_list(token_list);
 	free_all_allocations(ctx);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:55:10 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/04 20:39:37 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:23:48 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,19 +88,15 @@ t_ctx	*init_ctx(t_ctx *ctx, char **env_array)
 	ctx->input = NULL;
 	ctx->exit_status = 0;
 	ctx->previous_exit_status = 0;
-	ctx->current_exit_status = 0;
 	ctx->last_error_message = NULL;
+	ctx->env_list_str = dup_mtz(env_array);
 	ctx->allocations = malloc(sizeof(t_allocation));
 	if (!ctx->allocations)
 	{
 		ft_putstr_fd("minishell: initialization error\n", 2);
 		return (NULL);
 	}
-	ft_bzero(ctx->allocations, sizeof(t_allocation));
-	ctx->pwd = NULL;
-	ctx->oldpwd = NULL;
 	ctx->is_interactive = isatty(STDIN_FILENO);
 	init_environment(ctx, env_array);
-	//setup_signals();
 	return (ctx);
 }

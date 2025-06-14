@@ -13,7 +13,11 @@ int	execute_forked_external(char **args, t_ctx *ctx)
 		return (EXIT_FAILURE);
 	}
 	if (child_pid == 0)
+	{
+		// printf("%d\n", child_pid);
 		execute_external(args, ctx->env_list, ctx);
+	}
+	// printf("%d\n", child_pid);
 	return (wait_for_child(child_pid, TRUE, ctx));
 }
 

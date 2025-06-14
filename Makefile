@@ -22,7 +22,6 @@ LFLAGS = -L$(READLINE_PATH)/lib -lreadline
 
 # --- Arquivos Fonte (.c) ---
 SRCS =  minishell.c \
-        \
         srcs/0.init_and_clean_ctx/free_ctx.c \
         srcs/0.init_and_clean_ctx/free_env_list.c \
         srcs/0.init_and_clean_ctx/free_lists.c \
