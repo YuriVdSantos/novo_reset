@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 21:10:41 by jhualves          #+#    #+#             */
-/*   Updated: 2025/05/26 03:13:36 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/13 23:05:30 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ void	add_new_env_var(t_ctx *ctx, t_env **env_list, char *key, char *value)
 	t_env	*new_node;
 	t_env	*current;
 
-	new_node = safe_malloc(ctx, sizeof(t_env), ALLOC_TYPE_ENV_NODE);
+	(void)ctx;
+	new_node = malloc(sizeof(t_env));
 	new_node->key = key;
 	new_node->value = value;
 	new_node->next = NULL;
@@ -58,16 +59,27 @@ void	set_env_var(t_ctx *ctx, const char *assignment)
 	char	*key;
 	char	*value;
 	t_env	*existing_var;
+	size_t	key_len;
 
 	equal_pos = safe_strchr(ctx, assignment, '=');
 	if (!equal_pos || equal_pos == assignment)
 		return ;
-	key = ft_safe_strndup(ctx, assignment, equal_pos - assignment);
+	while (assignment[key_len] && assignment[key_len] != '=')
+		key_len++;
+	if (key_len == 0)
+		return ;
+	key = ft_safe_strndup(ctx, assignment, key_len);
 	value = safe_strdup(ctx, equal_pos + 1);
 	existing_var = find_env_var(ctx->env_list, key);
 	if (existing_var)
+	{
 		update_existing_var(ctx, existing_var, value);
+		// atualizar no array de env_list_str
+	}
 	else
+	{
 		add_new_env_var(ctx, &ctx->env_list, key, value);
+		//adicionar no array de env_list_str
+	}	
 	safe_free(ctx, key);
 }

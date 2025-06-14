@@ -59,6 +59,9 @@ void	super_free(t_ctx *ctx)
 
 	cmd_list = ctx->cmd_list;
 	free_cmd_list(cmd_list);
+	ctx->cmd_list = NULL;
+	free_token_list(ctx->token_list);
+	ctx->token_list = NULL;
 	free_all_allocations(ctx);
 }
 
