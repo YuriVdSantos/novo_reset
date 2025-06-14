@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yvieira- <yvieira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 15:09:55 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/13 21:24:51 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:35:09 by yvieira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ int	main(int argc, char **argv, char **env)
 	if (!ctx)
 		return (ft_putstr_fd("memory allocation error\n", 2), EXIT_FAILURE);
 	ctx = init_ctx(ctx, env);
-	if(ctx->is_interactive)
-		printf("ctx Interative: TRUE");
 	if (!ctx)
 		return (ft_putstr_fd("minishell: initialization error\n", 2), \
 				EXIT_FAILURE);
