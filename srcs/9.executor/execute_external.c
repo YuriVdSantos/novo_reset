@@ -126,10 +126,13 @@ int	execute_external(char **args, t_env *minienv, t_ctx *ctx)
 	close_extra_fds();
 	// printf("socorro\n");
 	tmp = minienv;
-	while (tmp && tmp->next)
+	if (!tmp)
 	{
-		// printf("Key: %s, Value: %s\n", tmp->key, tmp->value);
-		tmp = tmp->next;
+		while (tmp && tmp->next)
+		{
+			// printf("Key: %s, Value: %s\n", tmp->key, tmp->value);
+			tmp = tmp->next;
+		}
 	}
 	// envp = convert_env_list_to_array(minienv);
 	envp = ctx->env_list_str;
