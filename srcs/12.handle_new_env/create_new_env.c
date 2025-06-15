@@ -6,11 +6,13 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 21:10:41 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/15 19:33:11 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/15 20:11:24 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	error_invalid_var(t_ctx *ctx, char *key);
 
 t_env	*find_env_var(t_env *env_list, const char *key)
 {
@@ -93,6 +95,8 @@ void	set_env_var(t_ctx *ctx, const char *assignment)
 	if (key_len == 0)
 		return ;
 	key = ft_strndup(assignment, key_len);
+	if (!key || !is_valid_env_identifier(key))
+		return (error_invalid_var(ctx, key));
 	value = ft_strdup(equal_pos + 1);
 	existing_var = find_env_var(ctx->env_list, key);
 	if (existing_var)
@@ -101,28 +105,9 @@ void	set_env_var(t_ctx *ctx, const char *assignment)
 		add_new_env_var(ctx, key, value, assignment);
 }
 
-void	unset_env_var(t_ctx *ctx, const char *key)
+static void	error_invalid_var(t_ctx *ctx, char *key)
 {
-	t_env	*current;
-	t_env	*prev;
-
-	current = ctx->env_list;
-	prev = NULL;
-	while (current)
-	{
-		if (ft_strcmp(current->key, key) == 0)
-		{
-			if (prev)
-				prev->next = current->next;
-			else
-				ctx->env_list = current->next;
-			free(current->key);
-			free(current->value);
-			free(current);
-			break ;
-		}
-		prev = current;
-		current = current->next;
-	}
-	unset_string_env_var(ctx, key);
+	handle_error(ctx, "Invalid identifier in environment variable.", 12, 1);
+	free(key);
+	return ;
 }

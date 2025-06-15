@@ -348,6 +348,8 @@ int	ft_echo(char **args, t_ctx *ctx);
 int	ft_cd(char **args, t_ctx *ctx);
 int	cd_error(void);
 
+int	is_valid_env_identifier(const char *name);
+
 //utils builtins
 void	move_one_forward(char *str);
 int		str_equal(const char *str1, const char *str2);

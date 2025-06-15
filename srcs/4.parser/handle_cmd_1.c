@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 23:23:43 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/15 19:32:44 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/15 20:23:04 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	handle_env_var(t_ctx *ctx, t_token **tmp, t_cmd *current)
 {
 	char	*env_value;
 
+	//se for unset tem que mandar a key não o o valor
 	env_value = safe_strdup(ctx, get_env_value(ctx, (*tmp)->value));
 	add_arg(current, env_value);
 	current->type = CMD_BUILTIN;
