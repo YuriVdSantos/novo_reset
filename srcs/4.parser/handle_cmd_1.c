@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 23:23:43 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/13 21:40:20 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/15 19:32:44 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,15 @@
 
 void	handle_assignment_var(t_ctx *ctx, t_token **tmp, t_cmd *current)
 {
+	char	*value;
+	int		i;
+
+	i = 0;
+	while ((*tmp)->value && (*tmp)->value[i] && (*tmp)->value[i] != '=')
+		i++;
+	value = ft_strdup((*tmp)->value + i + 1);
+	add_arg(current, value);
 	set_env_var(ctx, (*tmp)->value);
-	add_arg(current, (*tmp)->value);
 	*tmp = (*tmp)->next;
 }
 

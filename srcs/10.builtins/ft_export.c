@@ -146,7 +146,7 @@ int	ft_export(char **args, t_ctx *ctx)
 		}
 		else if (!find_env_var(ctx->env_list, key))
 		{
-			add_new_env_var(ctx, &ctx->env_list, ft_strdup(key), NULL);
+			add_new_env_var(ctx, ft_strdup(key), NULL, args[i]);
 		}
 		free(key);
 		i++;

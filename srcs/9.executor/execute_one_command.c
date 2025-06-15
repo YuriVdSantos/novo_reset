@@ -13,11 +13,7 @@ int	execute_forked_external(char **args, t_ctx *ctx)
 		return (EXIT_FAILURE);
 	}
 	if (child_pid == 0)
-	{
-		// printf("%d\n", child_pid);
 		execute_external(args, ctx->env_list, ctx);
-	}
-	// printf("%d\n", child_pid);
 	return (wait_for_child(child_pid, TRUE, ctx));
 }
 
@@ -33,7 +29,9 @@ int	execute_one_command(t_cmd *command, t_ctx *ctx)
 		return (EXIT_FAILURE);
 	}
 	args = command->args;
-	if (is_builtin(args[0]))
+	if (only_var_assignments(&ctx->token_list))
+		exit_status = 0;
+	else if (is_builtin(args[0]))
 		exit_status = execute_builtin(args, ctx);
 	else
 		exit_status = execute_forked_external(args, ctx);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_env_list.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
+/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 01:28:41 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/10 20:13:19 by yurivieirad      ###   ########.fr       */
+/*   Updated: 2025/06/15 19:22:54 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

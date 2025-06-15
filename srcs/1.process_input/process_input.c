@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   process_input.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
+/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 18:54:45 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/11 00:20:13 by yurivieirad      ###   ########.fr       */
+/*   Updated: 2025/06/15 16:37:00 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,16 @@ void	process_input(t_ctx *ctx, const char **input)
 		ctx->exit_status = 258;
 		return ;
 	}
-	if (process_heredocs(ast, ctx) == FAILED)
-	{
-		ctx->exit_status = 1;
-		return ;
-	}
 	return (execute_cmd(ast, ctx));
 }
 
 static void	execute_cmd(t_cmd *cmd, t_ctx *ctx)
 {
+	if (process_heredocs(cmd, ctx) == FAILED)
+	{
+		ctx->exit_status = 1;
+		return ;
+	}
 	if (ctx->cmd_list && ctx->cmd_list->next)
 		ctx->exit_status = execute_multiple_commands(cmd, ctx);
 	else

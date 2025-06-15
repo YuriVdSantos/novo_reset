@@ -78,6 +78,7 @@ typedef enum e_token_type {
 	ENV_VAR,
 	ASSIGNMENT_VAR,
 	END,
+	PASS,
 	ERROR
 }	t_token_type;
 
@@ -228,6 +229,8 @@ void	handle_parse_error(t_ctx *ctx, t_token **tmp);
 
 // srcs/4.parser/parsing.c
 t_cmd	*parse_tokens(t_ctx *ctx, t_token **tokens);
+int		only_var_assignments(t_token **tokens);
+void	set_type_word(t_token **tokens);
 
 // =============================================================================
 // srcs/5.expander/
@@ -375,11 +378,13 @@ void	cleanup_heredocs(t_cmd *cmd_list);
 // srcs/12.handle_new_env/create_new_env.c
 t_env	*find_env_var(t_env *env_list, const char *key);
 void	set_env_var(t_ctx *ctx, const char *assignment);
+void	add_new_env_var(t_ctx *ctx, char *key, char *value, \
+	const char *assignment);
 void	update_existing_var(t_ctx *ctx, t_env *var, const char *value);
-void	add_new_env_var(t_ctx *ctx, t_env **env_list, char *key, char *value);
 
 // srcs/12.handle_new_env/assignment_handler.c
 void	process_assignments(t_ctx *ctx, t_cmd *cmd);
+void	unset_string_env_var(t_ctx *ctx, const char *key);
 // static void	process_single_assignment(t_ctx *ctx, char *arg); // Static
 
 // =============================================================================
