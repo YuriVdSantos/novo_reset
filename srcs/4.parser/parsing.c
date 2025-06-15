@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:14:35 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/15 20:19:14 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/15 20:46:52 by yurivieirad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_cmd	*parse_tokens(t_ctx *ctx, t_token **tokens)
 	return (head);
 }
 
-int	only_var_assignments(t_token **tokens)
+int	only_var_assignments(t_token *tokens)
 {
 	t_token	*current;
 
