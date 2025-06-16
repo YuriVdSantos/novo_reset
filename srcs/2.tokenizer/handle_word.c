@@ -46,8 +46,9 @@ void	token_handle_word(t_ctx *ctx, const char **input, t_token **tokens)
 
 	len = 0;
 	is_assignment = is_assignment_var(*input, &len);
-	if (!is_assignment)
+	if (is_assignment != 1)
 	{
+		len = 0;
 		while ((*input)[len] && !ft_strchr(" |<>&$\'\"", (*input)[len]))
 			len++;
 	}
@@ -56,9 +57,7 @@ void	token_handle_word(t_ctx *ctx, const char **input, t_token **tokens)
 	str = ft_safe_strndup(ctx, *input, len);
 	if (is_assignment == 1)
 		ft_lstadd_back(tokens, new_token(ctx, ASSIGNMENT_VAR, str));
-	else if (is_assignment == 0)
+	else
 		ft_lstadd_back(tokens, new_token(ctx, WORD, str));
-	else if (is_assignment == -1)
-		handle_error(ctx, "Invalid variable name", -1, 2);
 	*input += len;
 }

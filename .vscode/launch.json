@@ -31,8 +31,8 @@
       "type": "lldb",
       "request": "launch",
       "args": [],
-      "cwd": "/nfs/homes/yvieira-/novo_reset",
-      "program": "/nfs/homes/yvieira-/novo_reset/minishell"
+      "cwd": "/workspaces/novo_reset",
+      "program": "/workspaces/novo_reset/minishell"
     }
   ]
 }
