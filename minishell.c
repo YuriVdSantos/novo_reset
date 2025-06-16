@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yvieira- <yvieira-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 15:09:55 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/13 21:35:09 by yvieira-         ###   ########.fr       */
+/*   Updated: 2025/06/16 14:02:43 by yurivieirad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,31 +54,20 @@ void	main_loop(t_ctx *ctx)
 {
 	char	*prompt;
 	char	*input;
-	char	*free_input;
 
 	while (1)
 	{
 		define_signals();
 		prompt = get_prompt(ctx);
         if (ctx->is_interactive)
+        {
             input = readline(prompt);
+        }
 		else
 		{
-            char buffer[1024];
-            int bytes_read = read(STDIN_FILENO, buffer, 1023);
-            if (bytes_read > 0)
-            {
-                buffer[bytes_read] = '\0';
-                if (buffer[bytes_read - 1] == '\n')
-                    buffer[bytes_read - 1] = '\0';
-                input = ft_strdup(buffer);
-            }
-            else
-            {
-                input = NULL;
-            }
+            input = get_next_line_simplified(STDIN_FILENO);
         }
-		free_input = input;
+
 		if (input == NULL)
 		{
 			input_null(ctx, &input);
@@ -92,6 +81,7 @@ void	main_loop(t_ctx *ctx)
 		add_history(input);
 		process_input(ctx, (const char **)&input);
 		super_free(ctx);
-		free(free_input);
+		free(input);
 	}
 }
+

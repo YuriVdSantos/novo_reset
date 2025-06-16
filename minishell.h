@@ -820,6 +820,8 @@ void	unset_string_env_var(t_ctx *ctx, const char *key);
 // utils/
 // =============================================================================
 
+char	*get_next_line_simplified(int fd);
+
 // utils/main_utils.c
 void	no_input(void);
 void	input_null(t_ctx *ctx, char **input);
