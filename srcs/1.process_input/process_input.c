@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static void	execute_cmd(t_cmd *cmd, t_ctx *ctx);
+static int	execute_cmd(t_cmd *cmd, t_ctx *ctx);
 
 void	process_input(t_ctx *ctx, const char **input)
 {
@@ -38,6 +38,7 @@ void	process_input(t_ctx *ctx, const char **input)
 		ctx->exit_status = 258;
 		return ;
 	}
+	
 	return (execute_cmd(ast, ctx));
 }
 

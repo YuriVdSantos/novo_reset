@@ -89,8 +89,7 @@ void	main_loop(t_ctx *ctx)
 			free(input);
 			continue ;
 		}
-		if (input && *input && ctx->is_interactive)
-			add_history(input);
+		add_history(input);
 		process_input(ctx, (const char **)&input);
 		super_free(ctx);
 		free(free_input);
