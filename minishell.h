@@ -230,7 +230,7 @@ void	handle_parse_error(t_ctx *ctx, t_token **tmp);
 // srcs/4.parser/parsing.c
 t_cmd	*parse_tokens(t_ctx *ctx, t_token **tokens);
 int		only_var_assignments(t_token *tokens);
-void	set_type_word(t_token **tokens);
+void	set_type_word(t_token *tokens);
 
 // =============================================================================
 // srcs/5.expander/

@@ -29,7 +29,7 @@ int	execute_one_command(t_cmd *command, t_ctx *ctx)
 		return (EXIT_FAILURE);
 	}
 	args = command->args;
-	if (only_var_assignments(&ctx->token_list))
+	if (only_var_assignments(ctx->token_list))
 		exit_status = 0;
 	else if (is_builtin(args[0]))
 		exit_status = execute_builtin(args, ctx);

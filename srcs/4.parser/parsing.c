@@ -64,7 +64,7 @@ int	only_var_assignments(t_token *tokens)
 {
 	t_token	*current;
 
-	current = *tokens;
+	current = tokens;
 	while (current && current->type != END)
 	{
 		if (current->type != ASSIGNMENT_VAR && current->type != ENV_VAR)
@@ -77,11 +77,11 @@ int	only_var_assignments(t_token *tokens)
 	return (1);
 }
 
-void	set_type_word(t_token **tokens)
+void	set_type_word(t_token *tokens)
 {
 	t_token	*current;
 
-	current = *tokens;
+	current = tokens;
 	if (current->type == ASSIGNMENT_VAR || current->type == ENV_VAR)
 	{
 		current->type = PASS;
