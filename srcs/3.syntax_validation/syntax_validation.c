@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 15:27:25 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/10 21:33:48 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/15 23:22:27 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static bool	check_redir_position(t_ctx *ctx, t_token *tokens);
 static bool	check_empty_commands(t_ctx *ctx, t_token *tokens);
 static bool	check_consecutive_ops(t_ctx *ctx, t_token *tokens);
 static bool	check_heredoc_delimiters(t_ctx *ctx, t_token *tokens);
-
 
 bool	validate_syntax(t_ctx *ctx, t_token *tokens)
 {
@@ -112,7 +111,6 @@ static bool	check_consecutive_ops(t_ctx *ctx, t_token *tokens)
 	}
 	return (true);
 }
-
 
 static bool	check_heredoc_delimiters(t_ctx *ctx, t_token *tokens)
 {

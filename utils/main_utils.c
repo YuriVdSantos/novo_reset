@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 19:32:53 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/13 21:09:32 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/15 23:39:19 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	input_null(t_ctx *ctx, char **input)
 	exit(ctx->exit_status);
 	free(*input);
 }
+
 char	**dup_mtz(char **mtz)
 {
 	int		i;

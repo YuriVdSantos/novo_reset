@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 15:48:45 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/13 22:02:50 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/15 23:39:01 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ char	*ft_strjoin_free(t_ctx *ctx, char *s1, char *s2)
 
 	result = ft_strjoin(s1, s2);
 	free(s1);
-	// free(s2);
 	return (safe_strdup(ctx, result));
 }
 

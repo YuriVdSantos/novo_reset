@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/15 23:16:58 by jhualves          #+#    #+#             */
+/*   Updated: 2025/06/15 23:17:49 by jhualves         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -17,8 +28,8 @@
 # include <signal.h>
 # include <fcntl.h>
 # include <stdbool.h>
-# include <sys/stat.h> 
-# include <signal.h> 
+# include <sys/stat.h>
+# include <signal.h>
 # include <sys/types.h>
 
 # define ERR_SUCCESS_MSG "Success"
@@ -37,7 +48,7 @@
 //For Execute
 # define INTERRUPT 128
 # define FORK_ERROR -1
-# define TRUE 1	
+# define TRUE 1
 # define FALSE 0
 # define IN 0
 # define OUT 1
@@ -195,7 +206,6 @@ void	token_handle_redir(t_ctx *ctx, const char **input, t_token **tokens);
 void	token_handle_word(t_ctx *ctx, const char **input, t_token **tokens);
 int		is_valid_var_char(char c);
 
-
 // srcs/2.tokenizer/tokenizer.c
 t_token	*tokenize_input(t_ctx *ctx, const char **input);
 void	ft_lstadd_back(t_token **head, t_token *new_node);
@@ -209,7 +219,6 @@ t_token	*new_token(t_ctx *ctx, t_token_type type, const char *str);
 bool	validate_syntax(t_ctx *ctx, t_token *tokens);
 bool	check_pipes(t_ctx *ctx, t_token *tokens);
 bool	check_redirections(t_ctx *ctx, t_token *tokens);
-
 
 // =============================================================================
 // srcs/4.parser/
@@ -247,14 +256,12 @@ char	*expand_string(t_ctx *ctx, const char *input);
 
 // static int	ft_isalpha_upper(int c); // Static prototype
 
-
 // =============================================================================
 // srcs/6.signals/
 // =============================================================================
 void	define_execute_signals(int child_pid);
 void	define_signals(void);
 void	define_heredoc_signals(int child_pid);
-
 
 // =============================================================================
 // srcs/7.memory_mgmt/
@@ -265,7 +272,6 @@ void	*safe_malloc(t_ctx *ctx, size_t size, t_alloc_type type);
 void	safe_free_all(t_ctx *ctx);
 void	*safe_realloc(t_ctx *ctx, void *ptr, size_t new_size, \
 		t_alloc_type type);
-
 
 // =============================================================================
 // srcs/8.error_mgmt/
@@ -330,28 +336,26 @@ int		redirect_input(char *command);
 char	**minienv_to_envp(t_env *minienv);
 t_env	*minienv_node(char *name, t_env *minienv);
 
-
 // File srcs/9.executor/executor.c was not found or accessible.
 
 // =============================================================================
 // srcs/10.builtins/
 // =============================================================================
 
-int	ft_unset(char **args, t_ctx *ctx);
-int	ft_pwd(void);
-int	ft_export(char **args, t_ctx *ctx);
-int	fits_in_long_long(char *str);
-int	ft_exit(char **args, t_ctx *ctx);
-int	ft_env(t_ctx *ctx);
-int	is_only_n(const char *str);
-int	ft_echo(char **args, t_ctx *ctx);
-int	ft_cd(char **args, t_ctx *ctx);
-int	cd_error(void);
+int		ft_unset(char **args, t_ctx *ctx);
+int		ft_pwd(void);
+int		ft_export(char **args, t_ctx *ctx);
+int		fits_in_long_long(char *str);
+int		ft_exit(char **args, t_ctx *ctx);
+int		ft_env(t_ctx *ctx);
+int		is_only_n(const char *str);
+int		ft_echo(char **args, t_ctx *ctx);
+int		ft_cd(char **args, t_ctx *ctx);
+int		cd_error(void);
 
 int		is_valid_env_identifier(const char *name);
 void	unset_env_var(t_ctx *ctx, const char *key);
 void	unset_string_env_var(t_ctx *ctx, const char *key);
-
 
 //utils builtins
 void	move_one_forward(char *str);
@@ -374,7 +378,6 @@ void	save_original_fd_in(int original_fds[2]);
 void	save_original_fd_out(int original_fds[2]);
 int		process_heredocs(t_cmd *cmd_list, t_ctx *ctx);
 void	cleanup_heredocs(t_cmd *cmd_list);
-
 
 // =============================================================================
 // srcs/12.handle_new_env/

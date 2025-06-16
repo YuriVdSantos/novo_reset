@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:14:35 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/15 21:49:25 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/15 23:21:29 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ int	only_var_assignments(t_token **tokens)
 	{
 		if (current->type != ASSIGNMENT_VAR && current->type != ENV_VAR)
 		{
-			// set_type_word(tokens);
 			return (0);
 		}
 		current = current->next;

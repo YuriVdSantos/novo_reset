@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:15:27 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/13 22:00:38 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/15 23:27:59 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ char	*expand_dquotes(t_ctx *ctx, const char *input)
 			env_value = expand_env_var(ctx, input, &len);
 			result = ft_strjoin_free(ctx, result, env_value);
 			input += len;
-			// free(env_value);
 		}
 		else
 			result = ft_strjoin_free(ctx, result, (char []){*input++, '\0'});
