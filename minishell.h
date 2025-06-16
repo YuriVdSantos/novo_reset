@@ -263,8 +263,7 @@
 // // srcs/7.memory_mgmt/safe_malloc.c
 // void	*safe_malloc(t_ctx *ctx, size_t size, t_alloc_type type);
 // void	safe_free_all(t_ctx *ctx);
-// void	*safe_realloc(t_ctx *ctx, void *ptr, size_t new_size, \
-// 		t_alloc_type type);
+// void	*safe_realloc(t_ctx *ctx, void *ptr, size_t new_size, t_alloc_type type);
 
 
 // // =============================================================================
@@ -380,8 +379,7 @@
 // // srcs/12.handle_new_env/create_new_env.c
 // t_env	*find_env_var(t_env *env_list, const char *key);
 // void	set_env_var(t_ctx *ctx, const char *assignment);
-// void	add_new_env_var(t_ctx *ctx, char *key, char *value, \
-// 	const char *assignment);
+// void	add_new_env_var(t_ctx *ctx, char *key, char *value, const char *assignment);
 // void	update_existing_var(t_ctx *ctx, t_env *var, const char *value);
 
 // // srcs/12.handle_new_env/assignment_handler.c
@@ -415,8 +413,7 @@
 // char	*safe_substr(t_ctx *ctx, char const *s, unsigned int start, size_t len);
 // char	*safe_strchr(t_ctx *ctx, const char *s, int c);
 // char	*safe_strrchr(t_ctx *ctx, const char *s, int c);
-// char	*safe_strnstr(t_ctx *ctx, const char *haystack, \
-// 		const char *needle, size_t len);
+// char	*safe_strnstr(t_ctx *ctx, const char *haystack, const char *needle, size_t len);
 // char	*safe_strtrim(t_ctx *ctx, char const *s1, char const *set);
 // char	*safe_strjoin(t_ctx *ctx, char const *s1, char const *s2);
 // char	*safe_itoa(t_ctx *ctx, long n);
