@@ -72,13 +72,6 @@
 #include "minishell.h"
 #include <stdbool.h>
 
-/*
-** static bool is_n_flag(char *arg)
-**
-** Verifica se um argumento é uma flag '-n' válida.
-** O bash considera qualquer string que comece com '-' seguida apenas por 'n's
-** como uma flag válida. Ex: -n, -nn, -nnn.
-*/
 static bool	is_n_flag(char *arg)
 {
 	int	i;
@@ -92,62 +85,32 @@ static bool	is_n_flag(char *arg)
 			return (false);
 		i++;
 	}
-	// A função só retorna true se o argumento tiver pelo menos um 'n' após o '-'
 	return (i > 1);
 }
 
-/*
-** int ft_echo(char **args)
-**
-** Implementação do builtin 'echo'.
-**
-** Argumentos:
-** args: Um array de strings representando o comando e seus argumentos.
-** Espera-se que args[0] seja "echo".
-**
-** Comportamento:
-** 1. Verifica a presença de uma ou mais flags '-n'. Se encontradas,
-** nenhuma nova linha será impressa no final.
-** 2. Imprime todos os argumentos subsequentes separados por um espaço.
-** 3. Retorna sempre 0, indicando sucesso.
-*/
 int	ft_echo(char **args)
 {
 	int		i;
 	bool	newline;
 
-	// 1. Inicialização
-	// Começamos o índice em 1 para pular o nome do comando ("echo").
-	// A flag 'newline' é verdadeira por padrão.
 	i = 1;
 	newline = true;
 
-	// 2. Processamento da flag -n
-	// Percorre os argumentos para encontrar todas as flags '-n' no início.
-	// O loop para no primeiro argumento que não é uma flag '-n'.
 	while (args[i] && is_n_flag(args[i]))
 	{
 		newline = false;
 		i++;
 	}
 
-	// 3. Impressão dos argumentos
-	// Percorre o resto dos argumentos a partir do índice 'i'.
 	while (args[i])
 	{
 		ft_putstr_fd(args[i], STDOUT_FILENO);
-		// Adiciona um espaço se não for o último argumento a ser impresso.
 		if (args[i + 1])
 			ft_putstr_fd(" ", STDOUT_FILENO);
 		i++;
 	}
 
-	// 4. Impressão da nova linha
-	// Se a flag 'newline' permaneceu verdadeira, imprime o caractere de nova linha.
 	if (newline)
 		ft_putchar_fd('\n', STDOUT_FILENO);
-	
-	// 5. Retorno
-	// O echo no bash sempre retorna 0.
 	return (0);
 }

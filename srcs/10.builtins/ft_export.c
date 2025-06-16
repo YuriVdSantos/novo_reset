@@ -101,7 +101,6 @@ static int	print_export_env(t_env *env_list)
 	t_env	*current;
 
 	current = env_list;
-	// NOTA: Para ser 100% como o bash, a lista deveria ser ordenada alfabeticamente.
 	while (current)
 	{
 		ft_putstr_fd("declare -x ", STDOUT_FILENO);
@@ -118,7 +117,6 @@ static int	print_export_env(t_env *env_list)
 	return (EXIT_SUCCESS);
 }
 
-// Extrai a chave de uma atribuição (ex: "KEY=value" -> "KEY").
 static char	*get_key_from_assignment(const char *assignment)
 {
 	const char	*equal_pos;
@@ -129,7 +127,6 @@ static char	*get_key_from_assignment(const char *assignment)
 	return (ft_strndup(assignment, equal_pos - assignment));
 }
 
-// Lógica principal do `export`.
 int	ft_export(char **args, t_ctx *ctx)
 {
 	int		exit_status;
@@ -154,7 +151,6 @@ int	ft_export(char **args, t_ctx *ctx)
 			set_env_var(ctx, args[i]);
 		else if (!find_env_var(ctx->env_list, key))
 		{
-			// Exporta uma variável sem valor.
 			add_new_env_var(ctx, ft_strdup(key), NULL, args[i]);
 		}
 		free(key);
