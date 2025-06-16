@@ -348,7 +348,10 @@ int	ft_echo(char **args, t_ctx *ctx);
 int	ft_cd(char **args, t_ctx *ctx);
 int	cd_error(void);
 
-int	is_valid_env_identifier(const char *name);
+int		is_valid_env_identifier(const char *name);
+void	unset_env_var(t_ctx *ctx, const char *key);
+void	unset_string_env_var(t_ctx *ctx, const char *key);
+
 
 //utils builtins
 void	move_one_forward(char *str);

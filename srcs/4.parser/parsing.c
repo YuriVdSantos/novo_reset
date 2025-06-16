@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:14:35 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/15 20:19:14 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/15 21:49:25 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	handle_variables(t_ctx *ctx, t_token **tmp, t_cmd *current)
 {
-	if (only_var_assignments(ctx->token_list))
+	if (only_var_assignments(&ctx->token_list))
 	{
 		if ((*tmp)->type == ENV_VAR)
 			handle_env_var(ctx, tmp, current);
@@ -69,7 +69,7 @@ int	only_var_assignments(t_token **tokens)
 	{
 		if (current->type != ASSIGNMENT_VAR && current->type != ENV_VAR)
 		{
-			set_type_word(tokens);
+			// set_type_word(tokens);
 			return (0);
 		}
 		current = current->next;

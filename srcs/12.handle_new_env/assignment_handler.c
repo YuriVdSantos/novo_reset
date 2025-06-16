@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 01:16:01 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/15 16:05:27 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/15 22:55:05 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ void	unset_string_env_var(t_ctx *ctx, const char *key)
 {
 	int		i;
 	char	**temp;
+	int		j;
+	int		len;
 
 	i = 0;
 	while (ctx->env_list_str && ctx->env_list_str[i])
@@ -47,17 +49,17 @@ void	unset_string_env_var(t_ctx *ctx, const char *key)
 	if (!temp)
 		handle_error(ctx, "Memory allocation failed.", 12, 1);
 	i = 0;
+	j = 0;
+	len = ft_strlen(key);
 	while (ctx->env_list_str && ctx->env_list_str[i])
 	{
-		if (ft_strncmp(ctx->env_list_str[i], key, ft_strlen(key)) != 0)
-			temp[i] = ft_strdup(ctx->env_list_str[i]);
+		if (ft_strncmp(ctx->env_list_str[i], key, len) != 0)
+			temp[j++] = ft_strdup(ctx->env_list_str[i]);
 		else
-		{
 			ctx->env_list_str[i] = NULL;
-			i++;
-		}
 		i++;
 	}
+	temp[j] = NULL;
 	free_string_array(ctx->env_list_str);
 	ctx->env_list_str = temp;
 }	
