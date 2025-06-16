@@ -1,18 +1,8 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   process_input.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/24 18:54:45 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/15 16:37:00 by jhualves         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	execute_cmd(t_cmd *cmd, t_ctx *ctx);
+// Protótipo da função corrigido para retornar void
+static void	execute_cmd(t_cmd *cmd, t_ctx *ctx);
 
 void	process_input(t_ctx *ctx, const char **input)
 {
@@ -38,8 +28,7 @@ void	process_input(t_ctx *ctx, const char **input)
 		ctx->exit_status = 258;
 		return ;
 	}
-	
-	return (execute_cmd(ast, ctx));
+	execute_cmd(ast, ctx);
 }
 
 static void	execute_cmd(t_cmd *cmd, t_ctx *ctx)
@@ -49,7 +38,7 @@ static void	execute_cmd(t_cmd *cmd, t_ctx *ctx)
 		ctx->exit_status = 1;
 		return ;
 	}
-	if (ctx->cmd_list && ctx->cmd_list->next)
+	if (cmd && cmd->next)
 		ctx->exit_status = execute_multiple_commands(cmd, ctx);
 	else
 		ctx->exit_status = execute_one_command(cmd, ctx);
