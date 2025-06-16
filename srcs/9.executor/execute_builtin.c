@@ -26,7 +26,7 @@ int	execute_builtin(char **args, t_ctx *ctx)
 
 	command = args[0];
 	if (str_equal(command, "echo"))
-		return (ft_echo(args, ctx));
+		return (ft_echo(args));
 	if (str_equal(command, "pwd"))
 		return (ft_pwd());
 	if (str_equal(command, "env"))

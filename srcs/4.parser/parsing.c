@@ -98,18 +98,6 @@
 // }
 
 
-/* ************************************************************************** */
-/* */
-/* :::      ::::::::   */
-/* parsing.c                                          :+:      :+:    :+:   */
-/* +:+ +:+         +:+     */
-/* By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
-/* +#+#+#+#+#+   +#+           */
-/* Created: 2025/05/25 18:14:35 by jhualves          #+#    #+#             */
-/* Updated: 2025/06/15 22:05:01 by jhualves         ###   ########.fr       */
-/* */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
 // Função para remover aspas de uma string. Retorna uma nova string alocada.
@@ -185,6 +173,12 @@ t_cmd	*parse_tokens(t_ctx *ctx, t_token **tokens)
 			handle_redir(ctx, &tmp, current);
 		else if (tmp->type == WORD)
 			process_word_token(ctx, &tmp, current);
+		else if (tmp->type == DQUOTE)
+             handle_dquote(ctx, &tmp, current);
+        else if (tmp->type == SQUOTE)
+             handle_squote(ctx, &tmp, current);
+        else if (tmp->type == ENV_VAR)
+             handle_env_var(ctx, &tmp, current);
 		else
 		{
 			handle_error(ctx, "Parsing error: token type not handled", -1, 2);

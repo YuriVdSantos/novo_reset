@@ -770,7 +770,7 @@ int	fits_in_long_long(char *str);
 int	ft_exit(char **args, t_ctx *ctx);
 int	ft_env(t_ctx *ctx);
 int	is_only_n(const char *str);
-int	ft_echo(char **args, t_ctx *ctx);
+int	ft_echo(char **args);
 int	ft_cd(char **args, t_ctx *ctx);
 int	cd_error(void);
 

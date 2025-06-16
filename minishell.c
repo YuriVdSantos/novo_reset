@@ -43,7 +43,10 @@ int	main(int argc, char **argv, char **env)
 	main_loop(ctx);
 	exit_status = ctx->exit_status;
 	free_context(ctx);
-	rl_clear_history();
+    if (ctx->is_interactive)
+    {
+        rl_clear_history();
+    }
 	return (exit_status);
 }
 
@@ -57,7 +60,24 @@ void	main_loop(t_ctx *ctx)
 	{
 		define_signals();
 		prompt = get_prompt(ctx);
-		input = readline(prompt);
+        if (ctx->is_interactive)
+            input = readline(prompt);
+		else
+		{
+            char buffer[1024];
+            int bytes_read = read(STDIN_FILENO, buffer, 1023);
+            if (bytes_read > 0)
+            {
+                buffer[bytes_read] = '\0';
+                if (buffer[bytes_read - 1] == '\n')
+                    buffer[bytes_read - 1] = '\0';
+                input = ft_strdup(buffer);
+            }
+            else
+            {
+                input = NULL;
+            }
+        }
 		free_input = input;
 		if (input == NULL)
 		{
@@ -69,7 +89,8 @@ void	main_loop(t_ctx *ctx)
 			free(input);
 			continue ;
 		}
-		add_history(input);
+		if (input && *input && ctx->is_interactive)
+			add_history(input);
 		process_input(ctx, (const char **)&input);
 		super_free(ctx);
 		free(free_input);
