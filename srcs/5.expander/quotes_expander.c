@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_expander.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 18:15:27 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/13 22:00:38 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/16 23:24:25 by yurivieirad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ char	*expand_dquotes(t_ctx *ctx, const char *input)
 			input++;
 			len = var_name_length(input);
 			env_value = expand_env_var(ctx, input, &len);
-			result = ft_strjoin_free(ctx, result, env_value);
+			result = safe_strjoin(ctx, result, env_value);
 			input += len;
 			// free(env_value);
 		}
 		else
-			result = ft_strjoin_free(ctx, result, (char []){*input++, '\0'});
+			result = safe_strjoin(ctx, result, (char []){*input++, '\0'});
 	}
 	if (result == NULL)
 	{

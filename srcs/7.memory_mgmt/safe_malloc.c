@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   safe_malloc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 16:04:12 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/13 21:43:57 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/17 00:09:23 by yurivieirad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	*safe_malloc(t_ctx *ctx, size_t size, t_alloc_type type)
 	t_allocation	*new_alloc;
 
 	ptr = malloc(size);
+	printf("DEBUG: safe_malloc() alocou [%p]\n", ptr);
 	if (!ptr)
 	{
 		ctx->last_error_message = safe_strdup(ctx, "Memory allocation failed");

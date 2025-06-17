@@ -103,3 +103,20 @@ char	*get_next_line_simplified(int fd)
 	}
 	return (line);
 }
+
+
+// Em um novo arquivo ou em um utils
+#include "minishell.h"
+#include <stdio.h>
+
+// É crucial usar #undef para evitar que a macro se chame a si mesma infinitamente
+#ifdef free
+#undef free
+#endif
+
+void my_free(void *ptr, const char *file, int line)
+{
+    // Esta linha imprimirá o endereço do ponteiro e DE ONDE ele está sendo liberado
+    printf("DEBUG: free() chamada em [%p] a partir de %s:%d\n", ptr, file, line);
+    free(ptr);
+}

@@ -432,6 +432,8 @@
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+// Em minishell.h
+#define free(ptr) my_free(ptr, __FILE__, __LINE__)
 
 # include "Libft42/libft.h"
 # include <stdio.h>
