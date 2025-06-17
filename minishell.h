@@ -433,6 +433,7 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 // Em minishell.h
+void my_free(void *ptr, const char *file, int line);
 #define free(ptr) my_free(ptr, __FILE__, __LINE__)
 
 # include "Libft42/libft.h"
