@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yvieira- <yvieira-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 23:30:24 by yvieira-          #+#    #+#             */
-/*   Updated: 2025/05/27 03:05:58 by yvieira-         ###   ########.fr       */
+/*   Updated: 2025/06/17 14:27:16 by yurivieirad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,26 +25,71 @@
 //     }
 // }
 
-int	ft_cd(char **args, t_ctx *ctx)
-{
-    const char	*path;
+/* ************************************************************************** */
+/* */
+/* :::      ::::::::   */
+/* ft_cd.c                                            :+:      :+:    :+:   */
+/* +:+ +:+         +:+     */
+/* By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/* +#+#+#+#+#+   +#+           */
+/* Created: 2025/05/26 23:30:24 by yvieira-          #+#    #+#             */
+/* Updated: 2025/06/17 14:15:00 by gemini           ###   ########.fr       */
+/* */
+/* ************************************************************************** */
 
-    if (args[1] && args[2])
-        return (cd_error());
-	else if (args[1])
-		path = args[1];
+#include "minishell.h"
+
+static void	update_pwd_vars(t_ctx *ctx)
+{
+	char	cwd[PATH_MAX];
+	char	*old_pwd_value;
+	char	*assignment;
+
+	old_pwd_value = get_env_value(ctx, "PWD");
+	if (old_pwd_value)
+	{
+		assignment = ft_strjoin("OLDPWD=", old_pwd_value);
+		if (assignment)
+		{
+			set_env_var(ctx, assignment);
+			free(assignment);
+		}
+	}
+
+	if (getcwd(cwd, sizeof(cwd)) != NULL)
+	{
+		assignment = ft_strjoin("PWD=", cwd);
+		if (assignment)
+		{
+			set_env_var(ctx, assignment);
+			free(assignment);
+		}
+	}
 	else
-		path = get_env_value(ctx, "HOME");
-	if (chdir(path) != 0)
-    {
-        print_error_msg("cd", args[1]);
-        return (EXIT_FAILURE);
-    }
-    return (EXIT_SUCCESS);
+		perror("minishell: cd: error retrieving current directory");
 }
 
-int	cd_error(void)
+int	ft_cd(char **args, t_ctx *ctx)
 {
-    print_error_msg("cd", "too many arguments");
-    return (EXIT_FAILURE);
+	const char	*path;
+
+	if (args[1] == NULL)
+	{
+		path = get_env_value(ctx, "HOME");
+		if (path == NULL || *path == '\0')
+		{
+			ft_putstr_fd("minishell: cd: HOME not set\n", STDERR_FILENO);
+			return (EXIT_FAILURE);
+		}
+	}
+	else
+		path = args[1];
+	if (chdir(path) != 0)
+	{
+		ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
+		perror(path);
+		return (EXIT_FAILURE);
+	}
+	update_pwd_vars(ctx);
+	return (EXIT_SUCCESS);
 }
