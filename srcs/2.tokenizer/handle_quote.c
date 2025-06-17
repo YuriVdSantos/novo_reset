@@ -33,6 +33,7 @@ void	token_handle_quote(t_ctx *ctx, const char **input, t_token **tokens)
 			type = SQUOTE;
 	}
 	ft_lstadd_back(tokens, new_token(ctx, type, str));
+	free(str);
 }
 
 static int	closed_quotation(t_ctx *ctx, const char **input, char c)
