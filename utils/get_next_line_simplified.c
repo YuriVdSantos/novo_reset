@@ -5,31 +5,39 @@
 # define GNL_BUFFER_SIZE 1024
 #endif
 
-// Função auxiliar para encontrar o primeiro '\n' ou '\0'
-static int	find_newline_or_null(char *s)
+// Função auxiliar para encontrar o primeiro '\n' em uma string.
+// Retorna o índice do '\n' ou -1 se não for encontrado.
+static int	find_newline(const char *s)
 {
 	int	i;
 
 	if (!s)
 		return (-1);
 	i = 0;
-	while (s[i] != '\n' && s[i] != '\0')
+	while (s[i])
+	{
+		if (s[i] == '\n')
+			return (i);
 		i++;
-	return (i);
+	}
+	return (-1);
 }
 
-// Função auxiliar para ler e acumular no buffer estático
+// Função auxiliar para ler e acumular no buffer estático.
+// Foi corrigida para ler corretamente mesmo quando o stash está vazio.
 static int	read_to_buffer(int fd, char **stash)
 {
 	char	*buffer;
 	int		bytes_read;
+	char	*temp;
 
 	buffer = (char *)malloc(sizeof(char) * (GNL_BUFFER_SIZE + 1));
 	if (!buffer)
 		return (-1); // Erro de alocação
 	bytes_read = 1;
-	// Correção: Comparação de int com size_t
-	while ((size_t)find_newline_or_null(*stash) == ft_strlen(*stash) && bytes_read != 0)
+	// O laço agora continuará lendo enquanto não encontrar um '\n' no stash
+	// e a leitura não tiver terminado (bytes_read != 0).
+	while (find_newline(*stash) == -1 && bytes_read != 0)
 	{
 		bytes_read = read(fd, buffer, GNL_BUFFER_SIZE);
 		if (bytes_read == -1)
@@ -41,8 +49,12 @@ static int	read_to_buffer(int fd, char **stash)
 		if (*stash == NULL)
 			*stash = ft_strdup(buffer);
 		else
-			*stash = ft_strjoin_free(NULL, *stash, buffer); // Reutilizando ft_strjoin_free, passando NULL para ctx
-		if (*stash == NULL) // Erro de alocação no ft_strjoin_free
+		{
+			temp = ft_strjoin(*stash, buffer);
+			free(*stash);
+			*stash = temp;
+		}
+		if (*stash == NULL) // Erro de alocação no strdup ou strjoin
 		{
 			free(buffer);
 			return (-1);
@@ -52,10 +64,11 @@ static int	read_to_buffer(int fd, char **stash)
 	return (bytes_read);
 }
 
-// Função simplificada para ler uma linha por vez de um fd
+// Função simplificada para ler uma linha por vez de um fd.
+// A lógica principal foi mantida, a correção está em read_to_buffer.
 char	*get_next_line_simplified(int fd)
 {
-	static char	*stash[1024]; // Um stash por FD. Usando um array grande para evitar complexidade de hash map.
+	static char	*stash[1024];
 	char		*line;
 	int			newline_pos;
 	char		*temp;
@@ -73,50 +86,33 @@ char	*get_next_line_simplified(int fd)
 		}
 		return (NULL);
 	}
-	if (stash[fd] == NULL || stash[fd][0] == '\0') // Nada para ler ou EOF
+	if (stash[fd] == NULL || stash[fd][0] == '\0')
 	{
-		if (stash[fd]) // Se havia uma string vazia, liberte-a.
+		if (stash[fd])
 		{
 			free(stash[fd]);
 			stash[fd] = NULL;
 		}
 		return (NULL);
 	}
-	newline_pos = find_newline_or_null(stash[fd]);
-	if (stash[fd][newline_pos] == '\n') // Encontrou um newline
+	newline_pos = find_newline(stash[fd]);
+	if (newline_pos != -1) // Encontrou um newline
 	{
-		line = ft_strndup(stash[fd], newline_pos + 1); // Incluir o '\n'
+		line = ft_strndup(stash[fd], newline_pos + 1);
 		temp = ft_strdup(stash[fd] + newline_pos + 1);
 		free(stash[fd]);
 		stash[fd] = temp;
-		if (stash[fd][0] == '\0') // Se o restante for vazio, liberar
+		if (stash[fd][0] == '\0')
 		{
 			free(stash[fd]);
 			stash[fd] = NULL;
 		}
 	}
-	else // Não encontrou newline (última linha ou linha sem '\n')
+	else // Não encontrou newline (última linha)
 	{
 		line = ft_strdup(stash[fd]);
 		free(stash[fd]);
 		stash[fd] = NULL;
 	}
 	return (line);
-}
-
-
-// Em um novo arquivo ou em um utils
-#include "minishell.h"
-#include <stdio.h>
-
-// É crucial usar #undef para evitar que a macro se chame a si mesma infinitamente
-#ifdef free
-#undef free
-#endif
-
-void my_free(void *ptr, const char *file, int line)
-{
-    // Esta linha imprimirá o endereço do ponteiro e DE ONDE ele está sendo liberado
-    printf("DEBUG: free() chamada em [%p] a partir de %s:%d\n", ptr, file, line);
-    free(ptr);
 }

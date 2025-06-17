@@ -6,7 +6,7 @@
 /*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 15:09:55 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/17 00:44:36 by yurivieirad      ###   ########.fr       */
+/*   Updated: 2025/06/17 02:15:35 by yurivieirad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,13 +75,13 @@ void	main_loop(t_ctx *ctx)
 		}
 		if (input[0] == '\0')
 		{
-			// free(input);
+			free(input);
 			continue ;
 		}
 		add_history(input);
 		process_input(ctx, (const char **)&input);
 		super_free(ctx);
-		free(input);
+		// free(input);
 	}
 }
 
