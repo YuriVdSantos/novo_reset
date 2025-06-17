@@ -6,7 +6,7 @@
 /*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 19:34:30 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/10 23:01:17 by yurivieirad      ###   ########.fr       */
+/*   Updated: 2025/06/17 02:45:03 by yurivieirad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,13 @@ t_token	*tokenize_input(t_ctx *ctx, const char **input)
 			token_handle_redir(ctx, input, &tokens);
 		else if (**input == '\'' || **input == '\"')
 			token_handle_quote(ctx, input, &tokens);
-		else if (**input == '$')
-			token_handle_env_var(ctx, input, &tokens);
 		else
 			token_handle_word(ctx, input, &tokens);
 		if (!token_error_check(ctx, &tokens))
 			return (free_token_list(tokens), NULL);
 	}
 	ft_lstadd_back(&tokens, new_token(
-		ctx, END, "NULL"));
+			ctx, END, "NULL"));
 	return (tokens);
 }
 

@@ -1,52 +1,45 @@
 
 #include "minishell.h"
 
-static int	closed_quotation(t_ctx *ctx, const char **input, char c);
+static int	closed_quotation(t_ctx *ctx, const char *input, char c)
+{
+	const char	*start;
+
+	start = input;
+	while (*start && *start != c)
+		start++;
+	if (*start == c)
+		return (1);
+	syntax_error(ctx, "Syntax_error: Unclosed quotation");
+	return (0);
+}
 
 void	token_handle_quote(t_ctx *ctx, const char **input, t_token **tokens)
 {
 	t_token_type	type;
 	char			*str;
-	char			c;
+	const char		*start;
+	int				len;
+	char			quote_char;
 
-	type = ERROR;
-	str = NULL;
-	c = **input;
+	quote_char = **input;
 	(*input)++;
-	if (!closed_quotation(ctx, input, c))
-		type = ERROR;
-	else if (**input != c)
+	if (!closed_quotation(ctx, *input, quote_char))
 	{
-		if (c == '"')
-			type = DQUOTE;
-		else if (c == '\'')
-			type = SQUOTE;
-		define_substring(&str, input, type);
+		ft_lstadd_back(tokens, new_token(ctx, ERROR, NULL));
+		while (**input)
+			(*input)++;
+		return ;
 	}
-	else if (**input == c)
-	{
-		str = ft_strdup("");
-		(*input)++;
-		if (c == '"')
-			type = DQUOTE;
-		else if (c == '\'')
-			type = SQUOTE;
-	}
+	start = *input;
+	len = 0;
+	while (start[len] && start[len] != quote_char)
+		len++;
+	str = ft_safe_strndup(ctx, start, len);
+	if (quote_char == '\'')
+		type = SQUOTE;
+	else
+		type = DQUOTE;
 	ft_lstadd_back(tokens, new_token(ctx, type, str));
-	free(str);
-}
-
-static int	closed_quotation(t_ctx *ctx, const char **input, char c)
-{
-	int		i;
-
-	i = 1;
-	while ((*input)[i] && (*input)[i] != '\0' && (*input)[i] != '\n')
-	{
-		if ((*input)[i] == c)
-			return (1);
-		i++;
-	}
-	syntax_error(ctx, "Syntax_error: Unclosed quotation");
-	return (0);
+	*input += len + 1;
 }
