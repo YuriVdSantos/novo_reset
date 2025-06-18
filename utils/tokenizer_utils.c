@@ -6,11 +6,12 @@
 /*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 20:17:26 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/18 01:00:56 by yurivieirad      ###   ########.fr       */
+/*   Updated: 2025/06/18 12:46:51 by yurivieirad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 
 void	get_pid_var(t_ctx *ctx, char **str)
 {
