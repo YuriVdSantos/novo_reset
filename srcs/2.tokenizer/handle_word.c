@@ -62,29 +62,13 @@
 // 	*input += len;
 // }
 
-
-/* ************************************************************************** */
-/* */
-/* :::      ::::::::   */
-/* handle_word.c                                      :+:      :+:    :+:   */
-/* +:+ +:+         +:+     */
-/* By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
-/* +#+#+#+#+#+   +#+           */
-/* Created: 2025/05/24 19:37:26 by jhualves          #+#    #+#             */
-/* Updated: 2025/06/15 21:55:11 by jhualves         ###   ########.fr       */
-/* */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
-// Função auxiliar para verificar se o caractere é um metacaractere ou espaço.
 static int	is_metachar(char c)
 {
 	return (ft_isspace(c) || c == '|' || c == '<' || c == '>');
 }
 
-// Função para lidar com palavras que podem conter aspas.
-// Em vez de quebrar a palavra, as aspas são tratadas como parte dela.
 void	token_handle_word(t_ctx *ctx, const char **input, t_token **tokens)
 {
 	const char	*start;
@@ -95,14 +79,13 @@ void	token_handle_word(t_ctx *ctx, const char **input, t_token **tokens)
 	len = 0;
 	while (start[len] && !is_metachar(start[len]))
 	{
-		// Se encontrar uma aspa, avança até a aspa correspondente.
 		if (start[len] == '\'' || start[len] == '\"')
 		{
 			quote_char = start[len];
 			len++;
 			while (start[len] && start[len] != quote_char)
 				len++;
-			if (start[len] == quote_char) // Avança para depois da aspa de fecho.
+			if (start[len] == quote_char)
 				len++;
 		}
 		else
@@ -113,10 +96,7 @@ void	token_handle_word(t_ctx *ctx, const char **input, t_token **tokens)
 	if (len > 0)
 	{
 		char *word = ft_safe_strndup(ctx, start, len);
-		// A verificação de ASSIGNMENT_VAR pode ser feita aqui ou no parser.
-		// Por simplicidade, vamos manter como WORD por enquanto.
 		ft_lstadd_back(tokens, new_token(ctx, WORD, word));
-		// free(word); // new_token faz ft_strdup, então podemos libertar este.
 	}
 	*input += len;
 }

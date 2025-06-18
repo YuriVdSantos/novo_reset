@@ -52,7 +52,7 @@
 // # define BUILTIN_MISUSE 2
 // # define FORK_ERROR -1
 // # define CMD_NOT_FOUND_MSG	"command not found"
-// # define NOT_EXECUTABLE_MSG "Is a directory"
+// # define NOT_EXECUTABLE_MSG "is a directory"
 // // # define PATH_MAX    4096
 
 // typedef enum e_alloc_type {
@@ -440,7 +440,6 @@
 # include <errno.h>
 # include <limits.h>
 # include <sys/fcntl.h>
-# include <string.h>
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
@@ -481,7 +480,7 @@
 # define OUT_OF_RANGE 255
 # define BUILTIN_MISUSE 2
 # define CMD_NOT_FOUND_MSG	"command not found"
-# define NOT_EXECUTABLE_MSG "Is a directory"
+# define NOT_EXECUTABLE_MSG "is a directory"
 // # define PATH_MAX    4096
 
 typedef enum e_alloc_type {
@@ -734,7 +733,7 @@ int		wait_for_child(int child_pid, int is_last_child, t_ctx *ctx);
 int		wait_for_children(int children_pid[1024], t_ctx *ctx);
 
 // redirects
-void	redirect_fd(int fd_to_redirect, int fd_location);
+int		redirect_fd(int fd_to_redirect, int fd_location);
 void	redirect_fds(int fd_in, int fd_out);
 char	get_next_redirect(char *cmd);
 void	close_all_fds(void);
@@ -791,7 +790,6 @@ char	*create_keypair(char *name, char *value);
 // =============================================================================
 
 int		apply_redirections(t_cmd *cmd, int original_fds[2]);
-void	redirect_fd(int fd_to_redirect, int fd_location);
 void	restore_original_fds(int original_fds[2]);
 void	save_original_fd_in(int original_fds[2]);
 void	save_original_fd_out(int original_fds[2]);
@@ -849,8 +847,10 @@ char	*safe_strjoin(t_ctx *ctx, char const *s1, char const *s2);
 char	*safe_itoa(t_ctx *ctx, long n);
 
 // utils/tokenizer_utils.c
-int		define_substring(char **str, const char **input, t_token_type type);
-void	get_pid_var(char **str);
+int	define_substring(t_ctx *ctx, char **str, const char **input, t_token_type type);
+void	get_pid_var(t_ctx *ctx, char **str);
+char	*get_var_value(t_ctx *ctx, const char *var_name, int *len); // ADICIONE ESTA LINHA
+
 
 // =============================================================================
 // minishell.c (main program file)

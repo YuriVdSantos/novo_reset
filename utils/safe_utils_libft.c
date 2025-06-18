@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   safe_utils_libft.c                                 :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/24 15:48:45 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/16 23:07:31 by yurivieirad      ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
 char	*safe_strdup(t_ctx *ctx, const char *s)
@@ -26,8 +14,9 @@ char	*ft_strjoin_free(t_ctx *ctx, char *s1, char *s2)
 	char	*result;
 
 	result = ft_strjoin(s1, s2);
-	free(s1);
-	// free(s2);
+	// CORREÇÃO: Usar safe_free para liberar s1 e removê-lo das alocações rastreadas
+	safe_free(ctx, s1); //
+	// free(s2); // Esta linha permanece comentada, s2 não é liberado aqui.
 	return (safe_strdup(ctx, result));
 }
 

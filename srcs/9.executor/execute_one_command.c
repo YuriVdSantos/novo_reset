@@ -38,5 +38,3 @@ int	execute_one_command(t_cmd *command, t_ctx *ctx)
 	restore_original_fds(original_fds);
 	return (exit_status);
 }
-
-

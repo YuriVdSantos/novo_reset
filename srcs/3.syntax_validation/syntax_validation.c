@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   syntax_validation.c                                :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/25 15:27:25 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/10 21:33:48 by jhualves         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -20,11 +9,11 @@ static bool	check_heredoc_delimiters(t_ctx *ctx, t_token *tokens);
 
 bool	validate_syntax(t_ctx *ctx, t_token *tokens)
 {
-	if (!check_pipes(ctx, tokens) || \
-		!check_redirections(ctx, tokens) || \
-		!check_consecutive_ops(ctx, tokens) || \
-		!check_heredoc_delimiters(ctx, tokens) || \
-		!check_redir_position(ctx, tokens) || \
+	if (!check_pipes(ctx, tokens) ||
+		!check_redirections(ctx, tokens) ||
+		!check_consecutive_ops(ctx, tokens) ||
+		!check_heredoc_delimiters(ctx, tokens) ||
+		!check_redir_position(ctx, tokens) ||
 		!check_empty_commands(ctx, tokens))
 	{
 		return (false);
@@ -95,17 +84,21 @@ static bool	check_consecutive_ops(t_ctx *ctx, t_token *tokens)
 	{
 		if (previous)
 		{
-			if ((previous->type >= REDIR_IN && previous->type <= APPEND) && \
+			if ((previous->type >= REDIR_IN && previous->type <= APPEND) &&
 				(current->type >= REDIR_IN && current->type <= APPEND))
 			{
-				return (syntax_error(ctx, \
+				return (syntax_error(ctx,
 					"syntax error: consecutive redirects"));
 			}
-			if (previous->type == PIPE \
-				&& (current->type >= REDIR_IN && current->type <= APPEND))
+            // Removed the specific check for pipe followed by redirection.
+            // This allows syntax like `command | > file`, which is valid in bash.
+			/*
+			if (previous->type == PIPE //
+				&& (current->type >= REDIR_IN && current->type <= APPEND)) //
 			{
-				return (syntax_error(ctx, "syntax error near redirect"));
+				return (syntax_error(ctx, "syntax error near redirect")); //
 			}
+            */
 		}
 		previous = current;
 		current = current->next;

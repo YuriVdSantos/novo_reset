@@ -35,11 +35,15 @@ int	execute_multiple_commands(t_cmd *cmd_list, t_ctx *ctx)
 		if (children_pid[i] == 0)
 		{
 			if (prev_pipe_read_end != STDIN_FILENO)
+			{
 				redirect_fd(prev_pipe_read_end, STDIN_FILENO);
+				close(prev_pipe_read_end);
+			}
 			if (current->next != NULL)
 			{
 				close(fds[0]);
 				redirect_fd(fds[1], STDOUT_FILENO);
+				close(fds[1]);
 			}
 			child_process_logic(current, ctx);
 		}

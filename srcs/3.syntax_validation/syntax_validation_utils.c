@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   syntax_validation copy.c                           :+:      :+:    :+:   */
+/*   syntax_validation_utils.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 15:27:25 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/10 21:33:27 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/17 17:51:21 by yurivieirad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,11 @@ bool	check_pipes(t_ctx *ctx, t_token *tokens)
 	return (true);
 }
 
+static bool	is_valid_filename_token(t_token_type type)
+{
+	return (type == WORD || type == SQUOTE || type == DQUOTE);
+}
+
 bool	check_redirections(t_ctx *ctx, t_token *tokens)
 {
 	t_token	*current;
@@ -42,7 +47,7 @@ bool	check_redirections(t_ctx *ctx, t_token *tokens)
 	{
 		if (current->type >= REDIR_IN && current->type <= APPEND)
 		{
-			if (!current->next || current->next->type != WORD)
+			if (!current->next || !is_valid_filename_token(current->next->type))
 				return (syntax_error(ctx, "syntax error near redirection"));
 		}
 		current = current->next;

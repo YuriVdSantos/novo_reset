@@ -1,41 +1,20 @@
+// novo_reset_minishell/srcs/9.executor/execute_external.c
+
 #include "../../minishell.h"
 
-static int	is_folder(const char *command)
+// Removida a função is_folder, pois sua lógica é tratada em get_path.
+
+static void	handle_execve_errors(char **args, const char *path, t_ctx *ctx) // Adicionado t_ctx *ctx
 {
-	struct stat	statbuf;
-
-	if (stat(command, &statbuf) == 0)
-	{
-		return (S_ISDIR(statbuf.st_mode));
-	}
-	return (FALSE);
-}
-
-static void	handle_execve_errors(char **args, const char *path)
-{
-	int	error_code;
-
-	(void)path;
-	print_error_msg(args[0], strerror(errno));
-	if (errno == ENOENT)
-		error_code = CMD_NOT_FOUND;
-	else if (errno == EACCES)
-		error_code = NOT_EXECUTABLE;
-	else
-		error_code = EXIT_FAILURE;
+	(void)path; // path pode ser NULL
+	// Usa print_error, que é o manipulador de erros central.
+	// errno é definido pela falha de execve ou por get_path.
+	print_error(ctx, args[0], errno, ctx->exit_status);
 	close_all_fds();
-	exit(error_code);
+	exit(ctx->exit_status); // Sai com o status já definido em ctx
 }
 
-void	external_exit(char **args, int exit_status)
-{
-	if (exit_status == NOT_EXECUTABLE)
-		print_error_msg(args[0], NOT_EXECUTABLE_MSG);
-	else if (exit_status == CMD_NOT_FOUND)
-		print_error_msg(args[0], CMD_NOT_FOUND_MSG);
-	close_all_fds();
-	exit(exit_status);
-}
+// Removida a função external_exit. Sua lógica agora está integrada em handle_execve_errors e execute_external.
 
 int	execute_external(char **args, t_env *minienv, t_ctx *ctx)
 {
@@ -45,19 +24,40 @@ int	execute_external(char **args, t_env *minienv, t_ctx *ctx)
 
 	(void)minienv;
 	command = args[0];
+
 	if (is_empty(command))
-		external_exit(args, EXIT_SUCCESS);
-	if (is_folder(command))
-		external_exit(args, NOT_EXECUTABLE);
-	path = get_path(command, ctx);
-	if (path == NULL)
 	{
-		external_exit(args, CMD_NOT_FOUND);
+		close_all_fds();
+		exit(EXIT_SUCCESS);
 	}
-	rl_clear_history();
-	close_extra_fds();
-	envp = ctx->env_list_str;
+
+	path = get_path(command, ctx); // get_path define ctx->exit_status e errno
+	if (path == NULL) // get_path retornou NULL, indicando um erro
+	{
+		// A mensagem de erro e o status de saída já estão definidos em ctx por get_path.
+		// Chama handle_execve_errors para imprimir e sair.
+		handle_execve_errors(args, path, ctx);
+	}
+
+	rl_clear_history(); // Limpa o histórico no processo filho
+	close_extra_fds();  // Fecha quaisquer descritores de arquivo extras herdados
+
+	envp = ctx->env_list_str; // Obtém variáveis de ambiente como char**
+
 	if (execve(path, args, envp) == -1)
-		handle_execve_errors(args, path);
+	{
+		// Se execve falhar, errno já está definido pela chamada do sistema.
+		// Determina o status de saída correto se não foi definido por get_path.
+		if (errno == ENOENT)
+			ctx->exit_status = 127;
+		else if (errno == EACCES)
+			ctx->exit_status = 126;
+		else // Outros erros de execve
+			ctx->exit_status = EXIT_FAILURE;
+
+		handle_execve_errors(args, path, ctx); // Imprime erro e sai
+	}
+
+	// Esta linha idealmente não deve ser alcançada se execve for bem-sucedido ou handle_execve_errors sair.
 	exit(EXIT_FAILURE);
 }
