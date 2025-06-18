@@ -1,41 +1,4 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_cd.c                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/26 23:30:24 by yvieira-          #+#    #+#             */
-/*   Updated: 2025/06/17 14:27:16 by yurivieirad      ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
-#include "minishell.h"
-
-// static void	update_env_vars(t_env *minienv)
-// {
-//     char	cwd[PATH_MAX];
-//     char	*pwd;
-
-//     pwd = minienv_value("PWD", minienv);
-//     if (pwd && *pwd)
-//     {
-//         minienv_update("OLDPWD", pwd, minienv);
-//         minienv_update("PWD", getcwd(cwd, PATH_MAX), minienv);
-//     }
-// }
-
-/* ************************************************************************** */
-/* */
-/* :::      ::::::::   */
-/* ft_cd.c                                            :+:      :+:    :+:   */
-/* +:+ +:+         +:+     */
-/* By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
-/* +#+#+#+#+#+   +#+           */
-/* Created: 2025/05/26 23:30:24 by yvieira-          #+#    #+#             */
-/* Updated: 2025/06/17 14:15:00 by gemini           ###   ########.fr       */
-/* */
-/* ************************************************************************** */
 
 #include "minishell.h"
 

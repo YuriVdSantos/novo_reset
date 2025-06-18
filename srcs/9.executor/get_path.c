@@ -25,7 +25,7 @@ static int	is_absolute_or_relative_path(const char *command)
             (command[0] == '.' && command[1] == '.' && command[2] == '/'));
 }
 
-static char	*search_in_path_env(char *command, char *path_env, t_ctx *ctx) // Adicionado t_ctx *ctx
+static char	*search_in_path_env(char *command, char *path_env, t_ctx *ctx)
 {
     char	**paths;
     char	**paths_start;
@@ -36,26 +36,26 @@ static char	*search_in_path_env(char *command, char *path_env, t_ctx *ctx) // Ad
     while (paths && *paths)
     {
         construct_path(current_path, *paths, "/", command);
-        if (access(current_path, F_OK) == 0) // Verifica se o arquivo existe
+        if (access(current_path, F_OK) == 0)
         {
             if (is_directory(current_path)) {
-                // É um diretório, não executável via PATH.
-            } else if (access(current_path, X_OK) == 0) { // Verifica permissão de execução
+            
+            } else if (access(current_path, X_OK) == 0) {
                 free_string_array(paths_start);
                 return (ft_strdup(current_path));
             } else {
-                // Arquivo existe, mas sem permissão de execução. errno já está definido por access().
-                ctx->exit_status = 126; // Define status de saída para Permissão Negada
+            
+                ctx->exit_status = 126;
                 free_string_array(paths_start);
-                return (NULL); // Indica erro.
+                return (NULL);
             }
         }
         paths++;
     }
     if (paths_start)
         free_string_array(paths_start);
-    ctx->exit_status = 127; // Comando não encontrado se não achou em PATH
-    errno = ENOENT; // Define errno para "No such file or directory"
+    ctx->exit_status = 127;
+    errno = ENOENT;
     return (NULL);
 }
 
@@ -63,37 +63,37 @@ char	*get_path(char *command, t_ctx *ctx)
 {
     char	*path_env;
 
-    // Lida com caminhos absolutos ou relativos
+
     if (is_absolute_or_relative_path(command))
 	{
 		if (is_directory(command))
 		{
-			ctx->exit_status = 126; // É um diretório
-            errno = EISDIR; // Define errno para "is a directory"
+			ctx->exit_status = 126;
+            errno = EISDIR;
 			return (NULL);
 		}
-		// Verifica se o arquivo existe e é executável
-		if (access(command, F_OK) == 0) { // Verifica existência
-            if (access(command, X_OK) == 0) // Verifica executabilidade
+	
+		if (access(command, F_OK) == 0) {
+            if (access(command, X_OK) == 0)
                 return (ft_strdup(command));
-            else { // Existe, mas não executável. errno já está definido por access().
-                ctx->exit_status = 126; // Permissão negada
+            else {
+                ctx->exit_status = 126;
                 return (NULL);
             }
-        } else { // Não existe
-            ctx->exit_status = 127; // No such file or directory
-            errno = ENOENT; // Define errno para "No such file or directory"
+        } else {
+            ctx->exit_status = 127;
+            errno = ENOENT;
             return (NULL);
         }
 	}
 
-    // Procura na variável de ambiente PATH
+
     path_env = get_env_value(ctx, "PATH");
     if (!path_env || *path_env == '\0')
 	{
-		ctx->exit_status = 127; // PATH não definido ou vazio, comando não encontrado
-        errno = ENOENT; // Define errno
+		ctx->exit_status = 127;
+        errno = ENOENT;
         return (NULL);
 	}
-    return (search_in_path_env(command, path_env, ctx)); // Passa ctx para search_in_path_env
+    return (search_in_path_env(command, path_env, ctx));
 }

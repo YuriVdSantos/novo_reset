@@ -6,7 +6,7 @@
 /*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 16:04:12 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/17 00:44:04 by yurivieirad      ###   ########.fr       */
+/*   Updated: 2025/06/18 00:58:40 by yurivieirad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	*safe_malloc(t_ctx *ctx, size_t size, t_alloc_type type)
 	t_allocation	*new_alloc;
 
 	ptr = malloc(size);
-	// printf("DEBUG: safe_malloc() alocou [%p]\n", ptr);
 	if (!ptr)
 	{
 		ctx->last_error_message = safe_strdup(ctx, "Memory allocation failed");

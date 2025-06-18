@@ -6,7 +6,7 @@
 /*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 20:12:27 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/17 17:51:28 by yurivieirad      ###   ########.fr       */
+/*   Updated: 2025/06/18 00:55:02 by yurivieirad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ void	token_handle_env_var(t_ctx *ctx, const char **input, t_token **tokens)
 		type = ENV_VAR;
 	else
 	{
-		type = ERROR; // Should ideally be handled with an actual error message
+		type = ERROR;
 		return ;
 	}
-	(*input)++; // Move past the '$' character
-	define_substring(ctx, &str, input, type); // Pass ctx to define_substring
+	(*input)++;
+	define_substring(ctx, &str, input, type);
 	ft_lstadd_back(tokens, new_token(ctx, type, str));
 }

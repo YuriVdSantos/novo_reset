@@ -4,43 +4,26 @@ static void	replace_spaces_with_placeholder(char *str, char delimiter);
 static void	restore_placeholder_to_spaces(char **exec_args);
 static int	has_quote_mark(char *str);
 static void	remove_all_quotes(char *str);
-// ft_strchr já existe na libft para verificar espaços
 
-// Adicionando t_ctx *ctx como parâmetro
 char	**split_args(t_ctx *ctx, char *command)
 {
     char	**exec_args;
 
-    // Se a string 'command' não contiver aspas (pois já foram removidas)
-    // E contiver espaços, isso indica que era originalmente uma única string
-    // entre aspas que não deve ser dividida em múltiplos argumentos.
-    // Neste caso, retorne-a como um único elemento no array.
     if (!has_quote_mark(command) && ft_strchr(command, ' '))
     {
-        // Aloca espaço para um array de um único ponteiro de string + NULL
-        // Corrigido: Adicionado o terceiro argumento 'TEMP' para safe_malloc
         exec_args = (char **)safe_malloc(ctx, sizeof(char *) * 2, 8);
-        if (!exec_args) return (NULL); // Tratamento de erro para alocação
-
-        // Duplica a string original para ser o único argumento
+        if (!exec_args) return (NULL);
         exec_args[0] = safe_strdup(ctx, command);
         if (!exec_args[0])
         {
-            free(exec_args); // Libera o array se a duplicação falhar
+            free(exec_args);
             return (NULL);
         }
-        exec_args[1] = NULL; // Termina o array com NULL
+        exec_args[1] = NULL;
         return (exec_args);
     }
-    
-    // Se a string não contiver aspas (e não contiver espaços, ou seja, é uma palavra simples)
-    // ou se ela ainda contiver aspas (indicando que é a linha de comando original com aspas),
-    // siga a lógica existente.
     if (!has_quote_mark(command))
         return (ft_split(command, ' '));
-    
-    // Esta parte do código deve ser atingida apenas se 'command' ainda contiver aspas,
-    // e for a linha de comando original bruta.
     replace_spaces_with_placeholder(command, '"');
     replace_spaces_with_placeholder(command, '\'');
     remove_all_quotes(command);
@@ -58,7 +41,7 @@ static void	restore_placeholder_to_spaces(char **exec_args)
         current_str = *exec_args;
         while (*current_str)
         {
-            if (*current_str == -1) // -1 é o placeholder para espaço
+            if (*current_str == -1)
                 *current_str = ' ';
             current_str++;
         }
@@ -98,7 +81,7 @@ static void	replace_spaces_with_placeholder(char *str, char delimiter)
             while (*str && *str != delimiter)
             {
                 if (*str == ' ')
-                    *str = -1; // -1 como placeholder
+                    *str = -1;
                 str++;
             }
         }

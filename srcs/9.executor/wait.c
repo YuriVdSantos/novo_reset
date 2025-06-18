@@ -31,7 +31,6 @@ int	wait_for_child(int child_pid, int is_last_child, t_ctx *ctx)
         char *pid_str = ft_itoa(child_pid);
         exit = ft_atoi(pid_str);
         print_error(ctx, "waitpid", 1, exit);
-        // free(pid_str);
         return (EXIT_FAILURE);
     }
     if (WIFSIGNALED(status))

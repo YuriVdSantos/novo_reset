@@ -1,7 +1,6 @@
 
 #include "minishell.h"
 
-// Protótipo da função corrigido para retornar void
 static void	execute_cmd(t_cmd *cmd, t_ctx *ctx);
 
 void	process_input(t_ctx *ctx, const char **input)

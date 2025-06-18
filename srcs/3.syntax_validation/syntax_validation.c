@@ -90,15 +90,6 @@ static bool	check_consecutive_ops(t_ctx *ctx, t_token *tokens)
 				return (syntax_error(ctx,
 					"syntax error: consecutive redirects"));
 			}
-            // Removed the specific check for pipe followed by redirection.
-            // This allows syntax like `command | > file`, which is valid in bash.
-			/*
-			if (previous->type == PIPE //
-				&& (current->type >= REDIR_IN && current->type <= APPEND)) //
-			{
-				return (syntax_error(ctx, "syntax error near redirect")); //
-			}
-            */
 		}
 		previous = current;
 		current = current->next;

@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   tokenizer.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/24 19:34:30 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/18 00:23:29 by yurivieirad      ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -27,8 +16,7 @@ t_token	*tokenize_input(t_ctx *ctx, const char **input)
 			token_handle_pipe(ctx, input, &tokens);
 		else if (**input == '<' || **input == '>')
 			token_handle_redir(ctx, input, &tokens);
-		else if (**input == '\'' || **input == '\"')
-			token_handle_quote(ctx, input, &tokens);
+	
 		else
 			token_handle_word(ctx, input, &tokens);
 		if (!token_error_check(ctx, &tokens))
