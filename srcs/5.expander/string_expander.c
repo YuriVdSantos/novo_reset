@@ -2,16 +2,19 @@
 
 #define EXPAND_BUFFER_SIZE 4096
 
+
 char	*get_var_value(t_ctx *ctx, const char *var_name, int *len)
 {
 	char	*val;
 	char	*key;
 
+    
 	if (var_name[0] == '?')
 	{
 		*len = 1;
 		return (safe_itoa(ctx, ctx->exit_status));
 	}
+    
 	if (var_name[0] == '$')
 	{
 		*len = 1;
@@ -19,11 +22,13 @@ char	*get_var_value(t_ctx *ctx, const char *var_name, int *len)
 		get_pid_var(ctx, &pid_str);
 		return (pid_str);
 	}
-	if (var_name[0] == '\0' || (!ft_isalpha(var_name[0]) && var_name[0] != '_'))
-	{
-		*len = 0;
-		return (safe_strdup(ctx, "$"));
-	}
+    
+    if (var_name[0] == '\0' || (!ft_isalpha(var_name[0]) && var_name[0] != '_'))
+    {
+        *len = 0; 
+        return (safe_strdup(ctx, "$")); 
+    }
+    
 	*len = 0;
 	while (ft_isalnum(var_name[*len]) || var_name[*len] == '_')
 		(*len)++;
@@ -31,10 +36,14 @@ char	*get_var_value(t_ctx *ctx, const char *var_name, int *len)
 	if (!key)
 		return (NULL);
 	val = get_env_value(ctx, key);
+	
+	
 	if (val)
 		return (safe_strdup(ctx, val));
 	return (safe_strdup(ctx, ""));
 }
+
+
 
 char	*expand_string(t_ctx *ctx, const char *input)
 {
@@ -49,6 +58,7 @@ char	*expand_string(t_ctx *ctx, const char *input)
 	quote_char = 0;
 	while (input[i])
 	{
+		
 		if (quote_char == 0 && (input[i] == '\'' || input[i] == '\"'))
 		{
 			quote_char = input[i];
@@ -61,6 +71,7 @@ char	*expand_string(t_ctx *ctx, const char *input)
 			i++;
 			continue ;
 		}
+		
 		if (input[i] == '$' && quote_char != '\'')
 		{
 			int len;
@@ -72,13 +83,10 @@ char	*expand_string(t_ctx *ctx, const char *input)
 					ft_strlcpy(cursor, var_value, EXPAND_BUFFER_SIZE - (cursor - result));
 					cursor += ft_strlen(var_value);
 				}
-				// Liberar a memória alocada por get_var_value
-				// Se get_var_value usar safe_malloc, a memória será liberada no final.
-				// Caso contrário, você precisará de um free aqui.
 			}
-			i += len + 1;
+			i += len + 1; 
 		}
-		else
+		else 
 		{
 			if (cursor - result < EXPAND_BUFFER_SIZE - 1)
 				*cursor++ = input[i];
