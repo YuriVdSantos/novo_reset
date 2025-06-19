@@ -601,7 +601,7 @@ void	add_env_node(t_ctx *ctx, t_env **list_head, const char *env_var);
 // =============================================================================
 
 // srcs/1.process_input/process_input.c
-void	process_input(t_ctx *ctx, const char **input);
+void	process_input(t_ctx *ctx, const char *input);
 
 // =============================================================================
 // srcs/2.tokenizer/

@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/24 15:09:55 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/19 11:43:11 by yurivieirad      ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -53,34 +42,31 @@ int	main(int argc, char **argv, char **env)
 void	main_loop(t_ctx *ctx)
 {
 	char	*prompt;
-	char	*input;
 
 	while (1)
 	{
 		define_signals();
 		prompt = get_prompt(ctx);
-        if (ctx->is_interactive)
-        {
-            input = readline(prompt);
-        }
+		if (ctx->is_interactive)
+			ctx->input = readline(prompt);
 		else
+			ctx->input = get_next_line_simplified(STDIN_FILENO);
+		if (ctx->input == NULL)
 		{
-            input = get_next_line_simplified(STDIN_FILENO);
-        }
-
-		if (input == NULL)
-		{
-			// input_null(ctx, &input);
+			ft_putstr_fd("exit\n", STDOUT_FILENO);
 			break ;
 		}
-		if (input[0] == '\0')
+		if (ctx->input[0] == '\0')
 		{
-			free(input);
+			free(ctx->input);
+			ctx->input = NULL;
 			continue ;
 		}
-		add_history(input);
-		process_input(ctx, (const char **)&input);
+		add_history(ctx->input);
+		process_input(ctx, ctx->input);
 		super_free(ctx);
-		// free(input);
+		if (ctx->input)
+			free(ctx->input);
+		ctx->input = NULL;
 	}
 }
