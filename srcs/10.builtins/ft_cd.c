@@ -4,7 +4,7 @@
 
 static void	update_pwd_vars(t_ctx *ctx)
 {
-	char	cwd[PATH_MAX];
+	char	cwd[4096];
 	char	*old_pwd_value;
 	char	*assignment;
 
