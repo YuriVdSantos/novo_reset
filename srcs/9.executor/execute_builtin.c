@@ -6,7 +6,7 @@
 /*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 17:02:38 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/13 13:36:44 by yurivieirad      ###   ########.fr       */
+/*   Updated: 2025/06/18 16:51:30 by yurivieirad      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	execute_builtin(char **args, t_ctx *ctx)
 
 	command = args[0];
 	if (str_equal(command, "echo"))
-		return (ft_echo(args));
+		return (ft_echo(args, ctx));
 	if (str_equal(command, "pwd"))
 		return (ft_pwd());
 	if (str_equal(command, "env"))

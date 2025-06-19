@@ -18,11 +18,12 @@ static bool	is_n_flag(char *arg)
 	return (i > 1);
 }
 
-int	ft_echo(char **args)
+int	ft_echo(char **args, t_ctx *ctx)
 {
 	int		i;
 	bool	newline;
 
+	(void)ctx;
 	i = 1;
 	newline = true;
 

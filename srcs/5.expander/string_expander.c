@@ -52,47 +52,60 @@ char	*expand_string(t_ctx *ctx, const char *input)
 	int		i;
 	char	quote_char;
 
+	// 1. Inicialização das variáveis
 	ft_bzero(result, EXPAND_BUFFER_SIZE);
 	cursor = result;
 	i = 0;
 	quote_char = 0;
-	while (input[i])
+
+	// 2. Loop principal para percorrer a string de entrada
+	while (input[i] != '\0')
 	{
-		
-		if (quote_char == 0 && (input[i] == '\'' || input[i] == '\"'))
+		// Caso A: Lida com a entrada ou saída de um estado de aspas
+		if ((input[i] == '\'' || input[i] == '\"') && quote_char == 0)
 		{
-			quote_char = input[i];
+			quote_char = input[i]; // Entra no modo de aspas
 			i++;
-			continue ;
 		}
-		if (quote_char != 0 && input[i] == quote_char)
+		else if (input[i] == quote_char && quote_char != 0)
 		{
-			quote_char = 0;
+			quote_char = 0; // Sai do modo de aspas
 			i++;
-			continue ;
 		}
-		
-		if (input[i] == '$' && quote_char != '\'')
+		// Caso B: Lida com a expansão de variáveis ($)
+		else if (input[i] == '$' && quote_char != '\'')
 		{
 			int len;
-			char *var_value = get_var_value(ctx, &input[i + 1], &len);
+			char *var_value;
+
+			len = 0;
+			var_value = get_var_value(ctx, &input[i + 1], &len);
 			if (var_value)
 			{
+				// Copia o valor da variável para o resultado, se houver espaço
 				if ((cursor - result) + ft_strlen(var_value) < EXPAND_BUFFER_SIZE)
 				{
 					ft_strlcpy(cursor, var_value, EXPAND_BUFFER_SIZE - (cursor - result));
 					cursor += ft_strlen(var_value);
 				}
 			}
-			i += len + 1; 
+			// Avança o índice para depois do nome da variável (ex: pula "$USER")
+			i += len + 1;
 		}
-		else 
+		// Caso C: Lida com todos os outros caracteres (copia literal)
+		else
 		{
+			// Copia o caractere atual para o resultado, se houver espaço
 			if (cursor - result < EXPAND_BUFFER_SIZE - 1)
-				*cursor++ = input[i];
+			{
+				*cursor = input[i];
+				cursor++;
+			}
 			i++;
 		}
 	}
+
+	// 3. Finaliza a string de resultado e a retorna
 	*cursor = '\0';
 	return (safe_strdup(ctx, result));
 }
