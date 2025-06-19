@@ -50,5 +50,5 @@ int	ft_exit(char **args, t_ctx *ctx)
 	}
 	rl_clear_history();
 	free_context(ctx);
-	exit(exit_status & 0xFF);
+	exit(ctx->exit_status = exit_status);
 }

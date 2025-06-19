@@ -45,6 +45,20 @@ int	ft_cd(char **args, t_ctx *ctx)
 			return (EXIT_FAILURE);
 		}
 	}
+	else if(args[2] != NULL)
+	{
+		ft_putstr_fd("minishell: cd: too many arguments\n", STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
+	else if (args[1][0] == '-' && args[1][1] == '\0')
+	{
+		path = get_env_value(ctx, "OLDPWD");
+		if (path == NULL || *path == '\0')
+		{
+			ft_putstr_fd("minishell: cd: OLDPWD not set\n", STDERR_FILENO);
+			return (EXIT_FAILURE);
+		}
+	}
 	else
 		path = args[1];
 	if (chdir(path) != 0)

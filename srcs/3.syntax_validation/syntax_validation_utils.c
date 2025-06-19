@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_validation_utils.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
+/*   By: yvieira- <yvieira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 15:27:25 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/17 17:51:21 by yurivieirad      ###   ########.fr       */
+/*   Updated: 2025/06/19 16:40:24 by yvieira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ bool	check_pipes(t_ctx *ctx, t_token *tokens)
 
 	current = tokens;
 	if (current->type == PIPE)
-		return (syntax_error(ctx, "syntax error near unexpected token `|'"));
+		return (syntax_error(ctx, "syntax error near `|'"));
 	while (current)
 	{
 		if (current->type == PIPE)
@@ -26,7 +26,7 @@ bool	check_pipes(t_ctx *ctx, t_token *tokens)
 			if (!current->next || current->next->type == PIPE || \
 				current->next->type == END)
 				return (syntax_error(ctx, \
-					"syntax error near unexpected token `|'"));
+					"syntax error near `|'"));
 		}
 		current = current->next;
 	}

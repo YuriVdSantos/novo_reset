@@ -31,11 +31,11 @@ int	main(int argc, char **argv, char **env)
 				EXIT_FAILURE);
 	main_loop(ctx);
 	exit_status = ctx->exit_status;
-	free_context(ctx);
     if (ctx->is_interactive)
     {
-        rl_clear_history();
+		rl_clear_history();
     }
+	free_context(ctx);
 	return (exit_status);
 }
 

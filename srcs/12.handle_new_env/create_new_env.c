@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_new_env.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yvieira- <yvieira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 21:10:41 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/15 20:11:24 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/19 16:34:36 by yvieira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ t_env	*find_env_var(t_env *env_list, const char *key)
 void	update_existing_var(t_ctx *ctx, t_env *var, const char *value)
 {
 	int		i;
-
+	char	*tmp;
+	
 	i = 0;
 	free(var->value);
 	var->value = ft_strdup(value);
@@ -40,11 +41,24 @@ void	update_existing_var(t_ctx *ctx, t_env *var, const char *value)
 			"Memory allocation failed for environment variable value.", 12, 1);
 	else
 	{
-		while (ctx->env_list_str[i] && ft_strncmp(ctx->env_list_str[i], \
-			var->key, ft_strlen(var->key)) != 0)
-			i++;
-		ctx->env_list_str[i] = ft_strjoin(var->key, "=");
-		ctx->env_list_str[i] = ft_strjoin(ctx->env_list_str[i], value);
+		if (!ctx->env_list_str)
+			while (ctx->env_list_str[i] && ft_strncmp(ctx->env_list_str[i], \
+				var->key, ft_strlen(var->key)) != 0)
+				i++;
+		if (ctx->env_list_str[i])
+		{
+			free(ctx->env_list_str[i]);
+			tmp = ft_strjoin(var->key, "=");
+
+			if(!tmp)
+				handle_error(ctx, "Memory allocation failed.", 12, 1);
+			ctx->env_list_str[i] = ft_strjoin(tmp, value);
+			free(tmp);
+		}
+		// ctx->env_list_str[i] = ft_strjoin(var->key, "=");
+		// ctx->env_list_str[i] = ft_strjoin(ctx->env_list_str[i], value);
+		// free(var->value);
+
 	}
 }
 
@@ -100,7 +114,11 @@ void	set_env_var(t_ctx *ctx, const char *assignment)
 	value = ft_strdup(equal_pos + 1);
 	existing_var = find_env_var(ctx->env_list, key);
 	if (existing_var)
+	{
 		update_existing_var(ctx, existing_var, value);
+		free(key);
+		free(value);
+	}
 	else
 		add_new_env_var(ctx, key, value, assignment);
 }

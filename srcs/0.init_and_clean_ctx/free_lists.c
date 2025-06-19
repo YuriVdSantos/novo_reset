@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_lists.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
+/*   By: yvieira- <yvieira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 19:15:54 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/17 20:59:40 by yurivieirad      ###   ########.fr       */
+/*   Updated: 2025/06/19 17:40:38 by yvieira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
