@@ -21,7 +21,8 @@ int	ft_exit(char **args, t_ctx *ctx)
 {
 	int	exit_status;
 
-	ft_putstr_fd("exit\n", STDOUT_FILENO);
+	if (!isatty(STDIN_FILENO))
+    	ft_putstr_fd("exit\n", STDOUT_FILENO);
 
 	if (args[1] && args[2])
 	{
@@ -49,5 +50,5 @@ int	ft_exit(char **args, t_ctx *ctx)
 	}
 	rl_clear_history();
 	free_context(ctx);
-	exit(exit_status & 255);
+	exit(exit_status & 0xFF);
 }

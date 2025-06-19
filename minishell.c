@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
+/*   By: yvieira- <yvieira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 15:09:55 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/17 02:15:35 by yurivieirad      ###   ########.fr       */
+/*   Updated: 2025/06/18 21:50:18 by yvieira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,35 +53,32 @@ int	main(int argc, char **argv, char **env)
 void	main_loop(t_ctx *ctx)
 {
 	char	*prompt;
-	char	*input;
 
 	while (1)
 	{
 		define_signals();
 		prompt = get_prompt(ctx);
-        if (ctx->is_interactive)
-        {
-            input = readline(prompt);
-        }
+		if (ctx->is_interactive)
+			ctx->input = readline(prompt);
 		else
+			ctx->input = get_next_line_simplified(STDIN_FILENO);
+		if (ctx->input == NULL)
 		{
-            input = get_next_line_simplified(STDIN_FILENO);
-        }
-
-		if (input == NULL)
-		{
-			// input_null(ctx, &input);
+			ft_putstr_fd("exit\n", STDOUT_FILENO);
 			break ;
 		}
-		if (input[0] == '\0')
+		if (ctx->input[0] == '\0')
 		{
-			free(input);
+			free(ctx->input);
+			ctx->input = NULL;
 			continue ;
 		}
-		add_history(input);
-		process_input(ctx, (const char **)&input);
+		add_history(ctx->input);
+		process_input(ctx, ctx->input);
 		super_free(ctx);
-		// free(input);
+		if (ctx->input)
+			free(ctx->input);
+		ctx->input = NULL;
 	}
 }
 

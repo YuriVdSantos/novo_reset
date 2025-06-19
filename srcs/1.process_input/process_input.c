@@ -3,12 +3,13 @@
 
 static void	execute_cmd(t_cmd *cmd, t_ctx *ctx);
 
-void	process_input(t_ctx *ctx, const char **input)
+void	process_input(t_ctx *ctx, const char *input)
 {
 	t_token	*tokens;
 	t_cmd	*ast;
+	const char *cursor = input;
 
-	tokens = tokenize_input(ctx, input);
+	tokens = tokenize_input(ctx, &cursor);
 	ctx->token_list = tokens;
 	if (!tokens)
 	{
