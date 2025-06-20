@@ -1,0 +1,40 @@
+Test 1: FAIL - Comando simples (ls)
+Test 2: FAIL - Comando com caminho absoluto
+Test 3: FAIL - Echo com argumentos
+Test 4: FAIL - Echo com opção -n
+Test 5: FAIL - Comando pwd
+Test 6: FAIL - Comando cd + pwd
+Test 7: PASS - Exit com código
+Test 8: FAIL - Redirecionamento de entrada (<)
+Test 9: FAIL - Redirecionamento de saída (>)
+Test 10: FAIL - Redirecionamento append (>>)
+Test 11: FAIL - Redirecionamento entrada e saída
+Test 12: FAIL - Redirecionamento para arquivo inexistente
+Test 13: FAIL - Pipe simples
+Test 14: FAIL - Pipe com grep
+Test 15: FAIL - Múltiplos pipes
+Test 16: FAIL - Pipe com comando falho
+Test 17: FAIL - Variável /home/codespace
+Test 18: FAIL - Variável /usr/local/rvm/gems/ruby-3.4.1/bin:/usr/local/rvm/gems/ruby-3.4.1@global/bin:/usr/local/rvm/rubies/ruby-3.4.1/bin:/vscode/bin/linux-x64/18e3a1ec544e6907be1e944a94c496e302073435/bin/remote-cli:/home/codespace/.local/bin:/home/codespace/.dotnet:/home/codespace/nvm/current/bin:/home/codespace/.php/current/bin:/home/codespace/.python/current/bin:/home/codespace/java/current/bin:/home/codespace/.ruby/current/bin:/home/codespace/.local/bin:/usr/local/python/current/bin:/usr/local/py-utils/bin:/usr/local/jupyter:/usr/local/oryx:/usr/local/go/bin:/go/bin:/usr/local/sdkman/bin:/usr/local/sdkman/candidates/java/current/bin:/usr/local/sdkman/candidates/gradle/current/bin:/usr/local/sdkman/candidates/maven/current/bin:/usr/local/sdkman/candidates/ant/current/bin:/usr/local/rvm/gems/default/bin:/usr/local/rvm/gems/default@global/bin:/usr/local/rvm/rubies/default/bin:/usr/local/share/rbenv/bin:/usr/local/php/current/bin:/opt/conda/bin:/usr/local/nvs:/usr/local/share/nvm/versions/node/v22.16.0/bin:/usr/local/hugo/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/share/dotnet:/home/codespace/.dotnet/tools:/usr/local/rvm/bin
+Test 19: FAIL - Variável inexistente
+Test 20: FAIL - Variável $? (exit status)
+Test 21: FAIL - Exportar variável
+Test 22: FAIL - Unset variável
+Test 23: FAIL - Built-in cd
+Test 24: FAIL - Built-in pwd
+Test 25: FAIL - Built-in export sem args
+Test 26: FAIL - Built-in env
+Test 27: FAIL - Built-in unset (PATH)
+Test 28: PASS - Built-in exit com código
+Test 29: MANUAL - Signal handling (Ctrl+C, Ctrl+D, Ctrl+\)
+Test 30: FAIL - Aspas duplas com expansão
+Test 31: FAIL - Aspas simples sem expansão
+Test 32: FAIL - Aspas aninhadas
+Test 33: FAIL - Aspas aninhadas
+Test 34: FAIL - Comando inexistente
+Test 35: FAIL - Arquivo inexistente
+Test 36: FAIL - Diretório inexistente
+Test 37: FAIL - Aspas não fechadas
+Test 38: FAIL - Pipe sem comandos
+Test 39: FAIL - Redirecionamento sem arquivo
+Memory leaks detected in test 
