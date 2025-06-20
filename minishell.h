@@ -573,6 +573,9 @@ typedef struct s_ctx {
 	char					*oldpwd;
 }	t_ctx;
 
+extern volatile sig_atomic_t	g_signal;
+
+
 // Protótipos de funções
 // =============================================================================
 // srcs/0.init_and clean_ctx/
@@ -756,6 +759,7 @@ int		redirect_output(char *command);
 int		redirect_input(char *command);
 char	**minienv_to_envp(t_env *minienv);
 t_env	*minienv_node(char *name, t_env *minienv);
+void	free_array(char **arr);
 
 
 // =============================================================================
