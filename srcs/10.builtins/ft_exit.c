@@ -21,8 +21,8 @@ int	ft_exit(char **args, t_ctx *ctx)
 {
 	int	exit_status;
 
-	if (!isatty(STDIN_FILENO))
-    	ft_putstr_fd("exit\n", STDOUT_FILENO);
+	// if (!isatty(STDIN_FILENO))
+    	// ft_putstr_fd("exit\n", STDOUT_FILENO);
 
 	if (args[1] && args[2])
 	{
@@ -50,5 +50,7 @@ int	ft_exit(char **args, t_ctx *ctx)
 	}
 	rl_clear_history();
 	free_context(ctx);
-	exit(ctx->exit_status = exit_status);
+	if (exit_status)
+		exit_status = ctx->exit_status;
+	exit(0);
 }
