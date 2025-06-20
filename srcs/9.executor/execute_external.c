@@ -1,63 +1,41 @@
+#include "minishell.h"
 
+// Adicionando o protótipo da função free_array, já que parece estar
+// faltando no escopo deste arquivo. O ideal seria ter este protótipo
+// em um arquivo de cabeçalho (como minishell.h ou um utils.h).
+void	free_array(char **arr);
 
-#include "../../minishell.h"
-
-
-
-static void	handle_execve_errors(char **args, const char *path, t_ctx *ctx) 
-{
-	(void)path; 
-	
-	
-	print_error(ctx, args[0], errno, ctx->exit_status);
-	close_all_fds();
-	exit(ctx->exit_status); 
-}
-
-
-
+/**
+ * @brief Executa um comando externo.
+ * @param args O array de argumentos (argv), onde args[0] é o comando.
+ * @param minienv A lista de variáveis de ambiente.
+ * @param ctx O contexto do minishell.
+ * @return Esta função não retorna em caso de sucesso, pois o processo é
+ * substituído. Retorna um código de erro em caso de falha antes do execve.
+ */
 int	execute_external(char **args, t_env *minienv, t_ctx *ctx)
 {
-	const char	*path;
-	char		*command;
-	char		**envp;
+	char	*path;
+	char	**envp;
 
-	(void)minienv;
-	command = args[0];
-
-	if (is_empty(command))
+	// 'get_path' precisa ser ajustado para receber 'ctx' também.
+	path = get_path(args[0], ctx);
+	if (!path)
 	{
-		close_all_fds();
-		exit(EXIT_SUCCESS);
+		print_error(ctx, args[0], CMD_NOT_FOUND, CMD_NOT_FOUND);
+		exit(CMD_NOT_FOUND);
 	}
-
-	path = get_path(command, ctx); 
-	if (path == NULL) 
+	envp = minienv_to_envp(minienv);
+	if (!envp)
 	{
-		
-		
-		handle_execve_errors(args, path, ctx);
+		free(path);
+		print_error(ctx, "fatal", -1, 1);
+		exit(1);
 	}
-
-	rl_clear_history(); 
-	close_extra_fds();  
-
-	envp = ctx->env_list_str; 
-
-	if (execve(path, args, envp) == -1)
-	{
-		
-		
-		if (errno == ENOENT)
-			ctx->exit_status = 127;
-		else if (errno == EACCES)
-			ctx->exit_status = 126;
-		else 
-			ctx->exit_status = EXIT_FAILURE;
-
-		handle_execve_errors(args, path, ctx); 
-	}
-
-	
-	exit(EXIT_FAILURE);
+	execve(path, args, envp);
+	// Se execve retornar, houve um erro.
+	free(path);
+	free_array(envp);
+	print_error(ctx, args[0], PERMISSION_DENIED, PERMISSION_DENIED);
+	exit(PERMISSION_DENIED);
 }

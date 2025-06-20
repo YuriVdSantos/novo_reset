@@ -1,66 +1,70 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   print_error.c                                      :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/24 16:09:46 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/13 14:33:40 by yurivieirad      ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minishell.h"
 
-char	*get_error_message(int error_code)
-{
-	if (error_code == 0)
-		return (ERR_SUCCESS_MSG);
-	else if (error_code == 1)
-		return (ERR_GENERAL_MSG);
-	else if (error_code == 2)
-		return (ERR_MISUSE_SHELL_MSG);
-	else if (error_code == 126)
-		return (ERR_CANT_EXECUTE_MSG);
-	else if (error_code == 127)
-		return (ERR_CMD_NOT_FOUND_MSG);
-	else if (error_code == 128)
-		return (ERR_EXIT_ARG_MSG);
-	else if (error_code == 130)
-		return (ERR_CTRL_C_MSG);
-	else if (error_code == 137)
-		return (ERR_KILL_9_MSG);
-	else if (error_code == 139)
-		return (ERR_SEGFAULT_MSG);
-	else if (error_code == 255)
-		return (ERR_EXIT_RANGE_MSG);
-	else
-		return (ERR_UNKNOWN_MSG);
-}
+// Declaração da variável global para que este arquivo saiba de sua existência.
+extern int	g_exit_status;
 
-bool	handle_error(t_ctx *ctx, char *msg, int errnum, int exit_status)
+/**
+ * @brief Imprime uma mensagem de erro padronizada no stderr.
+ * @param command O comando ou contexto que gerou o erro.
+ * @param msg A mensagem de erro específica.
+ */
+void	print_error_msg(char *command, char *msg)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
-	if (errnum != -1)
+	if (command)
 	{
-		if (errnum == 0)
-			perror(msg);
-		else
-			ft_putendl_fd(strerror(errnum), STDERR_FILENO);
+		ft_putstr_fd(command, STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
 	}
-	else
-		ft_putendl_fd(msg, STDERR_FILENO);
-	if (ctx && exit_status != -1)
+	ft_putendl_fd(msg, STDERR_FILENO);
+}
+
+/**
+ * @brief Função de erro mais completa.
+ * @param ctx O contexto.
+ * @param msg A mensagem de erro.
+ * @param errnum O número do erro (errno).
+ * @param exit_status O status de saída a ser definido.
+ */
+void	print_error(t_ctx *ctx, char *msg, int errnum, int exit_status)
+{
+	(void)errnum; // Pode ser usado com strerror no futuro.
+	print_error_msg(NULL, msg);
+	if (ctx)
 		ctx->exit_status = exit_status;
+	else
+		g_exit_status = exit_status;
+}
+
+/**
+ * @brief Handler de erro genérico.
+ * Define o status de saída e imprime a mensagem.
+ * @param ctx Contexto do minishell.
+ * @param msg Mensagem de erro.
+ * @param errnum Número do erro (se aplicável).
+ * @param exit_status Status de saída a ser definido.
+ * @return Sempre retorna `false` para sinalizar o erro.
+ */
+bool	handle_error(t_ctx *ctx, char *msg, int errnum, int exit_status)
+{
+	print_error(ctx, msg, errnum, exit_status);
 	return (false);
 }
 
+/**
+ * @brief Handler específico para erros de sintaxe.
+ * Imprime a mensagem de erro de sintaxe e define o status de saída.
+ * @param ctx Contexto do minishell.
+ * @param msg Mensagem específica do erro de sintaxe (geralmente o token).
+ * @return Sempre retorna `false`.
+ */
 bool	syntax_error(t_ctx *ctx, char *msg)
 {
-	return (handle_error(ctx, msg, -1, 2));
-}
+	char	*error_msg;
 
-void	print_error(t_ctx *ctx, char *msg, int errnum, int exit_status)
-{
-	handle_error(ctx, msg, errnum, exit_status);
+	error_msg = ft_strjoin("syntax error near unexpected token `", msg);
+	error_msg = ft_strjoin_free(NULL, error_msg, "'");
+	print_error(ctx, error_msg, 0, 2);
+	free(error_msg);
+	return (false);
 }

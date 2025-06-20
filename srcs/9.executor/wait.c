@@ -1,58 +1,62 @@
 #include "minishell.h"
 
-static int	is_signal(int status, int signal)
-{
-    return (WTERMSIG(status) == signal);
-}
+// Declaração da variável global para que este arquivo saiba de sua existência.
+// A definição real (int g_exit_status = 0;) está em minishell.c.
+// O ideal é colocar esta linha no seu arquivo minishell.h.
+extern int	g_exit_status;
 
-static void	handle_signal_output(int status, int is_last_child)
-{
-    if (is_signal(status, SIGINT))
-        ft_putstr_fd("\n", STDOUT_FILENO);
-    else if (is_signal(status, SIGQUIT) && is_last_child)
-        ft_putstr_fd("Quit\n", STDOUT_FILENO);
-}
-
-static int	handle_signal_interrupt(int status, int is_last_child)
-{
-    handle_signal_output(status, is_last_child);
-    return (INTERRUPT + WTERMSIG(status));
-}
-
+/**
+ * @brief Espera por um processo filho e define o status de saída global.
+ * @param child_pid O ID do processo a aguardar.
+ * @param is_last_child Flag para pipelines (não muito usado para um comando).
+ * @param ctx O contexto do minishell.
+ * @return O status de saída do processo filho.
+ */
 int	wait_for_child(int child_pid, int is_last_child, t_ctx *ctx)
 {
-    int	status;
-    int exit;
+	int	status;
 
-    if (child_pid == FORK_ERROR)
-        return (EXIT_FAILURE);
-    if (waitpid(child_pid, &status, 0) == -1)
-    {
-        char *pid_str = ft_itoa(child_pid);
-        exit = ft_atoi(pid_str);
-        print_error(ctx, "waitpid", 1, exit);
-        return (EXIT_FAILURE);
-    }
-    if (WIFSIGNALED(status))
-        return (handle_signal_interrupt(status, is_last_child));
-    if (WIFEXITED(status))
-        return (WEXITSTATUS(status));
-    return (EXIT_FAILURE);
+	(void)is_last_child; // Não usado em um comando único, mas mantém a assinatura.
+	(void)ctx; // Não usado diretamente, mas g_exit_status é global.
+	if (waitpid(child_pid, &status, 0) == -1)
+	{
+		perror("waitpid");
+		return (1);
+	}
+	if (WIFEXITED(status))
+	{
+		g_exit_status = WEXITSTATUS(status);
+	}
+	else if (WIFSIGNALED(status))
+	{
+		g_exit_status = 128 + WTERMSIG(status);
+		if (WTERMSIG(status) == SIGQUIT)
+			ft_putendl_fd("Quit: 3", STDERR_FILENO);
+		else if (WTERMSIG(status) == SIGINT)
+			ft_putstr_fd("\n", STDERR_FILENO);
+	}
+	return (g_exit_status);
 }
 
+/**
+ * @brief Espera por todos os processos filhos em um pipeline.
+ * @param children_pid Array com os PIDs dos filhos.
+ * @param ctx O contexto do minishell.
+ * @return O status de saída do último comando no pipeline.
+ */
 int	wait_for_children(int children_pid[1024], t_ctx *ctx)
 {
-    int	i;
-    int	exit_status;
+	int	i;
+	int	last_status;
 
-    i = 0;
-    exit_status = 0;
-    while (children_pid[i] != 0)
-    {
-        int is_last_child = (children_pid[i + 1] == 0);
-        exit_status = wait_for_child(children_pid[i], is_last_child, ctx);
-        i++;
-    }
-    clean_after_execute(children_pid);
-    return (exit_status);
+	i = 0;
+	last_status = 0;
+	while (children_pid && children_pid[i] != 0)
+	{
+		// O último pid no array é o do último comando.
+		int is_last = (children_pid[i + 1] == 0);
+		last_status = wait_for_child(children_pid[i], is_last, ctx);
+		i++;
+	}
+	return (last_status);
 }

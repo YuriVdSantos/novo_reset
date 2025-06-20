@@ -1,106 +1,71 @@
 #include "minishell.h"
 
-int	is_varname(char c)
+/**
+ * @brief Verifica se um comando é um dos built-ins do minishell.
+ * @param command O nome do comando a ser verificado.
+ * @return 1 se for um built-in, 0 caso contrário.
+ */
+int	is_builtin(char *command)
 {
-    return ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_');
+	if (!command)
+		return (0);
+	if (ft_strcmp(command, "echo") == 0)
+		return (1);
+	if (ft_strcmp(command, "cd") == 0)
+		return (1);
+	if (ft_strcmp(command, "pwd") == 0)
+		return (1);
+	if (ft_strcmp(command, "export") == 0)
+		return (1);
+	if (ft_strcmp(command, "unset") == 0)
+		return (1);
+	if (ft_strcmp(command, "env") == 0)
+		return (1);
+	if (ft_strcmp(command, "exit") == 0)
+		return (1);
+	return (0);
 }
 
-void	minienv_update(char *name, char *value, t_env *minienv)
+/**
+ * @brief Verifica se um comando é um built-in que altera o estado do
+ * shell principal e, portanto, não pode ser executado em um fork.
+ * @param command O nome do comando.
+ * @return 1 se for um built-in "especial", 0 caso contrário.
+ */
+int	is_special_builtin(char *command)
 {
-	t_env	*aux;
-	char	*new_keypair;
-	int		size;
-	int		i;
-
-	aux = minienv_node(name, minienv);
-	if (!aux)
-	{
-		new_keypair = create_keypair(name, value);
-		list_append(new_keypair, &minienv);
-		free(new_keypair);
-		return ;
-	}
-	size = ft_strlen(name) + ft_strlen(value) + 2;
-	new_keypair = malloc(size * sizeof(char));
-	i = 0;
-	while (*name)
-		new_keypair[i++] = *name++;
-	new_keypair[i++] = '=';
-	while (*value)
-		new_keypair[i++] = *value++;
-	new_keypair[i] = '\0';
-	aux->key = new_keypair;
+	if (!command)
+		return (0);
+	if (ft_strcmp(command, "cd") == 0)
+		return (1);
+	if (ft_strcmp(command, "exit") == 0)
+		return (1);
+	if (ft_strcmp(command, "unset") == 0)
+		return (1);
+	// 'export' com argumentos também deve ser tratado como especial.
+	if (ft_strcmp(command, "export") == 0)
+		return (1);
+	return (0);
 }
 
-void	list_append(char *key_pair, t_env **list)
+// =============================================================================
+// Suas outras funções de builtins_utils.c devem permanecer aqui.
+// Adicionei apenas as que estavam faltando.
+// =============================================================================
+
+void	move_one_forward(char *str)
 {
-	struct s_env	*new_node;
-	struct s_env	*aux_node;
-
-
-	new_node = malloc(sizeof(struct s_env));
-	new_node->key = ft_strdup(key_pair);
-	new_node->next = NULL;
-	if (!*list)
-	{
-		*list = new_node;
-		return ;
-	}
-	aux_node = *list;
-	while (aux_node->next)
-		aux_node = aux_node->next;
-	aux_node->next = new_node;
+	ft_memmove(str, str + 1, ft_strlen(str + 1) + 1);
 }
 
-int	is_valid_varname(char *name)
+int	str_equal(const char *str1, const char *str2)
 {
-    if (!((*name >= 'a' && *name <= 'z') || (*name >= 'A' && *name <= 'Z')))
-        return (FALSE);
-    while (*name)
-    {
-        if (!is_varname(*name))
-            return (FALSE);
-        name++;
-    }
-    return (TRUE);
-}
+	size_t	size;
 
-char	*value_only(char *key_pair)
-{
-	int	i;
-
-	i = 0;
-	while (key_pair[i] != '=' && key_pair[i])
-		i++;
-	if (!key_pair[i])
-		return (NULL);
-	return (&key_pair[i + 1]);
-}
-
-char	*name_only(char *key_pair)
-{
-	int	i;
-
-	i = 0;
-	while (key_pair[i] != '=' && key_pair[i])
-		i++;
-	return (ft_substr(key_pair, 0, i));
-}
-
-char	*create_keypair(char *name, char *value)
-{
-	char	*key_pair;
-	int		key_pair_size;
-	int		i;
-
-	key_pair_size = ft_strlen(name) + ft_strlen(value) + 2;
-	key_pair = malloc(key_pair_size * sizeof(char));
-	i = 0;
-	while (*name)
-		key_pair[i++] = *name++;
-	key_pair[i++] = '=';
-	while (*value)
-		key_pair[i++] = *value++;
-	key_pair[i] = '\0';
-	return (key_pair);
+	if (!str1 || !str2)
+		return (0);
+	size = ft_strlen(str1);
+	if (size != ft_strlen(str2))
+		return (0);
+	return (ft_strcmp(str1, str2) == 0);
 }

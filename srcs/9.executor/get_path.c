@@ -1,99 +1,56 @@
-
 #include "minishell.h"
 
-static int	is_directory(const char *path)
+static char	*find_in_paths(char **paths, const char *cmd)
 {
-	struct stat	statbuf;
+	char	*full_path;
+	char	*tmp;
+	int		i;
 
-	if (stat(path, &statbuf) != 0)
-		return (0);
-	return (S_ISDIR(statbuf.st_mode));
+	i = 0;
+	while (paths && paths[i])
+	{
+		tmp = ft_strjoin(paths[i], "/");
+		full_path = ft_strjoin(tmp, cmd);
+		free(tmp);
+		if (access(full_path, X_OK) == 0)
+			return (full_path);
+		free(full_path);
+		i++;
+	}
+	return (NULL);
 }
 
-static void	construct_path(char *destination, const char *part1, const char *part2, const char *part3)
-{
-    destination[0] = '\0';
-    ft_strlcat(destination, part1, PATH_MAX);
-    ft_strlcat(destination, part2, PATH_MAX);
-    ft_strlcat(destination, part3, PATH_MAX);
-}
-
-static int	is_absolute_or_relative_path(const char *command)
-{
-    return (command[0] == '/' ||
-            (command[0] == '.' && command[1] == '/') ||
-            (command[0] == '.' && command[1] == '.' && command[2] == '/'));
-}
-
-static char	*search_in_path_env(char *command, char *path_env, t_ctx *ctx)
-{
-    char	**paths;
-    char	**paths_start;
-    char	current_path[PATH_MAX];
-
-    paths = ft_split(path_env, ':');
-    paths_start = paths;
-    while (paths && *paths)
-    {
-        construct_path(current_path, *paths, "/", command);
-        if (access(current_path, F_OK) == 0)
-        {
-            if (is_directory(current_path)) {
-            
-            } else if (access(current_path, X_OK) == 0) {
-                free_string_array(paths_start);
-                return (ft_strdup(current_path));
-            } else {
-            
-                ctx->exit_status = 126;
-                free_string_array(paths_start);
-                return (NULL);
-            }
-        }
-        paths++;
-    }
-    if (paths_start)
-        free_string_array(paths_start);
-    ctx->exit_status = 127;
-    errno = ENOENT;
-    return (NULL);
-}
-
+/**
+ * @brief Obtém o caminho absoluto de um comando.
+ * @param command O nome do comando.
+ * @param ctx O contexto do minishell (para acessar o PATH).
+ * @return Uma string alocada com o caminho, ou NULL se não for encontrado.
+ */
 char	*get_path(char *command, t_ctx *ctx)
 {
-    char	*path_env;
+	char	*path_env;
+	char	**paths;
+	char	*full_path;
 
-
-    if (is_absolute_or_relative_path(command))
+	if (!command || !*command)
+		return (NULL);
+	if (ft_strchr(command, '/'))
 	{
-		if (is_directory(command))
-		{
-			ctx->exit_status = 126;
-            errno = EISDIR;
-			return (NULL);
-		}
-	
-		if (access(command, F_OK) == 0) {
-            if (access(command, X_OK) == 0)
-                return (ft_strdup(command));
-            else {
-                ctx->exit_status = 126;
-                return (NULL);
-            }
-        } else {
-            ctx->exit_status = 127;
-            errno = ENOENT;
-            return (NULL);
-        }
+		if (access(command, X_OK) == 0)
+			return (ft_strdup(command));
+		return (NULL);
 	}
-
-
-    path_env = get_env_value(ctx, "PATH");
-    if (!path_env || *path_env == '\0')
+	// Corrigido: 'get_env_value' agora precisa de 'ctx'.
+	path_env = get_env_value(ctx, command);
+	if (!path_env)
 	{
-		ctx->exit_status = 127;
-        errno = ENOENT;
-        return (NULL);
+		// Se o PATH não estiver definido, não há onde procurar.
+		return (NULL);
 	}
-    return (search_in_path_env(command, path_env, ctx));
+	// 'safe_split' seria mais seguro aqui, se o tiver.
+	paths = ft_split(path_env, ':');
+	full_path = find_in_paths(paths, command);
+	// 'free_string_array' seria o ideal aqui.
+	free_array(paths);
+	return (full_path);
 }
