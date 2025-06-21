@@ -40,12 +40,16 @@ void	unset_env_var(t_ctx *ctx, const char *key)
 }
 
 
+// Em srcs/10.builtins/ft_unset.c
+
 int	ft_unset(char **args, t_ctx *ctx)
 {
 	int		exit_status;
 	int		i;
+	bool	changed;
 
 	exit_status = EXIT_SUCCESS;
+	changed = false;
 	i = 1;
 	while (args[i])
 	{
@@ -58,9 +62,17 @@ int	ft_unset(char **args, t_ctx *ctx)
 		}
 		else
 		{
-			unset_env_var(ctx, args[i]);
+			// Verifica se a variável existe para saber se algo mudou
+			if (find_env_var(ctx->env_list, args[i]))
+				changed = true;
+			unset_env_var(ctx, args[i]); // Modifica a lista encadeada
 		}
 		i++;
 	}
+	
+	// Se alguma variável foi removida, sincroniza o array
+	if (changed)
+		sync_env_list_str(ctx);
+		
 	return (exit_status);
 }

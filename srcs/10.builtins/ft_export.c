@@ -1,6 +1,7 @@
-
 #include "minishell.h"
 
+// Função para imprimir as variáveis de ambiente no formato 'declare -x KEY="VALUE"'
+// Esta é a sua função original.
 static int	print_export_env(t_env *env_list)
 {
 	t_env	*current;
@@ -22,43 +23,78 @@ static int	print_export_env(t_env *env_list)
 	return (EXIT_SUCCESS);
 }
 
-static char	*get_key_from_assignment(const char *assignment)
+/**
+ * @brief Valida se um argumento para 'export' é um identificador válido.
+ *
+ * Um identificador válido para export deve começar com uma letra ou underscore,
+ * seguido por letras, números ou underscores. Esta função verifica apenas a
+ * parte da CHAVE (antes do '=') para validação.
+ *
+ * @param arg A string do argumento (ex: "VAR=valor" ou "VAR").
+ * @return 1 se for válido, 0 caso contrário.
+ */
+static int	is_valid_export_argument(const char *arg)
 {
-	const char	*equal_pos;
+	int	i;
 
-	equal_pos = ft_strchr(assignment, '=');
-	if (!equal_pos)
-		return (ft_strdup(assignment));
-	return (ft_strndup(assignment, equal_pos - assignment));
+	i = 0;
+	// O primeiro caractere deve ser uma letra ou um underscore.
+	if (!arg || (!ft_isalpha(arg[0]) && arg[0] != '_'))
+		return (0);
+	i++;
+	// Itera até o final da chave (encontra '=' ou o fim da string).
+	while (arg[i] && arg[i] != '=')
+	{
+		// Os caracteres restantes da chave devem ser alfanuméricos ou underscore.
+		if (!ft_isalnum(arg[i]) && arg[i] != '_')
+			return (0);
+		i++;
+	}
+	// Se chegamos até aqui, o nome da variável é válido.
+	return (1);
 }
 
+/**
+ * @brief Adiciona ou atualiza variáveis de ambiente.
+ *
+ * Se chamado sem argumentos, imprime as variáveis de ambiente.
+ * Para cada argumento, valida se é um identificador válido e, em caso
+ * afirmativo, o adiciona/atualiza no ambiente.
+ *
+ * @param args Argumentos do comando (ex: {"export", "VAR=valor", "VAR2", NULL}).
+ * @param ctx Ponteiro para o contexto do minishell.
+ * @return EXIT_SUCCESS ou EXIT_FAILURE.
+ */
 int	ft_export(char **args, t_ctx *ctx)
 {
-	int		exit_status;
-	int		i;
-	char	*key;
+	int	i;
+	int	exit_status;
 
-	exit_status = EXIT_SUCCESS;
 	i = 1;
-	if (!args[1])
-		return (print_export_env(ctx->env_list));
+	exit_status = EXIT_SUCCESS;
+	// Se não houver argumentos, imprime o ambiente.
+	if (!args[i])
+	{
+		print_export_env(ctx->env_list);
+		return (exit_status);
+	}
+	// Itera sobre todos os argumentos.
 	while (args[i])
 	{
-		key = get_key_from_assignment(args[i]);
-		if (!is_valid_env_identifier(key))
+		// Usa a nova função de validação que entende o formato "CHAVE=VALOR".
+		if (!is_valid_export_argument(args[i]))
 		{
 			ft_putstr_fd("minishell: export: `", STDERR_FILENO);
 			ft_putstr_fd(args[i], STDERR_FILENO);
 			ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
 			exit_status = EXIT_FAILURE;
 		}
-		else if (ft_strchr(args[i], '='))
-			set_env_var(ctx, args[i]);
-		else if (!find_env_var(ctx->env_list, key))
+		else
 		{
-			add_new_env_var(ctx, ft_strdup(key), NULL, args[i]);
+			// set_env_var já lida com os casos de ter ou não um '='.
+			// Ex: "VAR=valor" e "VAR".
+			set_env_var(ctx, args[i]);
 		}
-		free(key);
 		i++;
 	}
 	return (exit_status);

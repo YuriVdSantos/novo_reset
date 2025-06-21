@@ -759,9 +759,10 @@ void	close_all_fds(void);
 void	close_extra_fds(void);
 int		redirect_output(char *command);
 int		redirect_input(char *command);
-char	**minienv_to_envp(t_env *minienv);
 t_env	*minienv_node(char *name, t_env *minienv);
 void	free_array(char **arr);
+void	sync_env_list_str(t_ctx *ctx);
+size_t	minienv_size(t_env *minienv);
 
 
 // =============================================================================
@@ -810,8 +811,7 @@ void	cleanup_heredocs(t_cmd *cmd_list);
 // srcs/12.handle_new_env/create_new_env.c
 t_env	*find_env_var(t_env *env_list, const char *key);
 void	set_env_var(t_ctx *ctx, const char *assignment);
-void	add_new_env_var(t_ctx *ctx, char *key, char *value, \
-	const char *assignment);
+void	add_new_env_var(t_ctx *ctx, char *key, char *value);
 void	update_existing_var(t_ctx *ctx, t_env *var, const char *value);
 void	unset_env_var(t_ctx *ctx, const char *key);
 
