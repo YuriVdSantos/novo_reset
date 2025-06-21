@@ -1,1 +1,1 @@
-ls: cannot access 'nonexistent_file': No such file or directory
+ls: nonexistent_file: No such file or directory

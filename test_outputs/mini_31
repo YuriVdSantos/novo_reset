@@ -1,2 +1,1 @@
-test $HOME
-exit
+./tester.sh: line 44: valgrind: command not found

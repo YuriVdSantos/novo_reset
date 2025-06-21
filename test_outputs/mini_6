@@ -1,2 +1,1 @@
-minishell: cd: too many arguments
-exit
+./tester.sh: line 44: valgrind: command not found
