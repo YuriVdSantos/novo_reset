@@ -1,2 +1,0 @@
-minishell> echo append >> test_outputs/out1.txt
-minishell> exit

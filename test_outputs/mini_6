@@ -1,3 +1,0 @@
-minishell> cd test_files && pwd
-minishell: cd: too many arguments
-minishell> exit

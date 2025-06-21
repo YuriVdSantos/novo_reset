@@ -1,3 +1,0 @@
-minishell> cat < test_files/file1.txt
-minishell: cat
-minishell> exit

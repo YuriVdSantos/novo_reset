@@ -1,5 +1,0 @@
-minishell> ls | grep nonexistent | wc -l
-minishell: ls
-minishell: grep
-minishell: wc
-minishell> exit

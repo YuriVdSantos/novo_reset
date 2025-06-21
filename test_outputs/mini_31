@@ -1,3 +1,0 @@
-minishell> echo 'test $HOME'
-test $HOME
-minishell> exit

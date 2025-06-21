@@ -1,4 +1,0 @@
-minishell> cat test_files/file1.txt | grep test
-minishell: cat
-minishell: grep
-minishell> exit

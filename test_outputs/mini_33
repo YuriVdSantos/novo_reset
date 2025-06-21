@@ -1,3 +1,0 @@
-minishell> echo 'test "inner" quotes'
-test "inner" quotes
-minishell> exit

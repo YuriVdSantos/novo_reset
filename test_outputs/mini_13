@@ -1,4 +1,0 @@
-minishell> ls | grep .sh
-minishell: grep
-minishell: ls
-minishell> exit

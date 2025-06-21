@@ -1,6 +1,8 @@
+2tester.sh
 Libft42
 Makefile
 README.md
+ls;
 minishell
 minishell.c
 minishell.h
@@ -10,6 +12,7 @@ objs
 readline.supp
 reference_outputs
 srcs
+test;
 test_files
 test_outputs
 tester.sh
