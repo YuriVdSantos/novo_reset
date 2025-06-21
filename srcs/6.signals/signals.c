@@ -4,6 +4,8 @@
 // Esta é a única vez que ela é definida sem 'extern'.
 volatile sig_atomic_t	g_signal = 0;
 
+
+
 /**
  * @brief Handler para o sinal SIGINT (Ctrl+C).
  */
@@ -19,37 +21,55 @@ static void	handle_sigint(int sig)
 	rl_redisplay();
 }
 
+void	define_interactive_signals(void)
+{
+    signal(SIGINT, handle_sigint);
+    signal(SIGQUIT, SIG_IGN);
+}
+
 /**
  * @brief Configura os handlers de sinal para o modo interativo principal.
  * - Ctrl+C (SIGINT) exibe um novo prompt.
  * - Ctrl+\ (SIGQUIT) é ignorado.
  */
-void	define_signals(void)
+void	define_execute_signals(int child_pid)
 {
-	struct sigaction	sa_int;
-	struct sigaction	sa_quit;
+    if (child_pid == 0)
+    {
+        // Processo filho: restaurar sinais padrão
+        signal(SIGINT, SIG_DFL);
+        signal(SIGQUIT, SIG_DFL);
+    }
+    else
+    {
+        // Processo pai: ignorar sinais enquanto espera o filho
+        signal(SIGINT, SIG_IGN);
+        signal(SIGQUIT, SIG_IGN);
+    }
+}
 
-	sa_int.sa_handler = handle_sigint;
-	sigemptyset(&sa_int.sa_mask);
-	sa_int.sa_flags = SA_RESTART;
-	sigaction(SIGINT, &sa_int, NULL);
-	sa_quit.sa_handler = SIG_IGN; // Ignora o SIGQUIT
-	sigemptyset(&sa_quit.sa_mask);
-	sa_quit.sa_flags = 0;
-	sigaction(SIGQUIT, &sa_quit, NULL);
+void	define_heredoc_signals(int child_pid)
+{
+    if (child_pid == 0)
+    {
+        // Processo filho (heredoc): SIGINT encerra o heredoc
+        signal(SIGINT, SIG_DFL);
+        signal(SIGQUIT, SIG_IGN);
+    }
+    else
+    {
+        // Processo pai: ignora SIGINT durante o heredoc
+        signal(SIGINT, SIG_IGN);
+        signal(SIGQUIT, SIG_IGN);
+    }
 }
 
 // As funções abaixo são placeholders para quando você implementar a lógica
 // de execução e heredoc, que precisam de um comportamento de sinal diferente.
 
-void	define_execute_signals(int child_pid)
-{
-	(void)child_pid;
-	// A definir: Lógica de sinais durante a execução de um comando.
-}
 
-void	define_heredoc_signals(int child_pid)
+
+void	define_signals(void)
 {
-	(void)child_pid;
-	// A definir: Lógica de sinais durante a leitura de um heredoc.
+    define_interactive_signals();
 }

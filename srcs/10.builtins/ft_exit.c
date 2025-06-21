@@ -1,8 +1,9 @@
 #include "minishell.h"
 
-static int	is_numeric_string(const char *str)
+// Função auxiliar para verificar se uma string é um número válido (possivelmente com sinal)
+static int	is_numeric(char *str)
 {
-	if (!str || !*str)
+	if (!str)
 		return (0);
 	if (*str == '+' || *str == '-')
 		str++;
@@ -17,38 +18,42 @@ static int	is_numeric_string(const char *str)
 	return (1);
 }
 
+/**
+ * @brief Implements the exit built-in command.
+ * Exits the shell, optionally with a specific status code.
+ * @param args The command arguments. `args[1]` can be the exit status.
+ * @param ctx The shell's context, used for cleanup.
+ * @return This function does not return, as it terminates the shell.
+ */
 int	ft_exit(char **args, t_ctx *ctx)
 {
-	int	exit_status;
+	long long	status;
 
-	if (!isatty(STDIN_FILENO))
-    	ft_putstr_fd("exit\n", STDOUT_FILENO);
-
-	if (args[1] && args[2])
+	ft_putendl_fd("exit", STDOUT_FILENO);
+	if (!args[1])
 	{
-		ft_putstr_fd("minishell: exit: too many arguments\n", STDERR_FILENO);
-		ctx->exit_status = 1;
-		return (EXIT_FAILURE);
+		status = ctx->exit_status; // Pega o último status de saída
+		free_context(ctx);
+		exit(status);
 	}
-	if (args[1])
+	if (!is_numeric(args[1]))
 	{
-		if (!is_numeric_string(args[1]))
-		{
-			ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
-			ft_putstr_fd(args[1], STDERR_FILENO);
-			ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
-			exit_status = 2;
-		}
-		else
-		{
-			exit_status = ft_atoi(args[1]);
-		}
+		ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
+		ft_putstr_fd(args[1], STDERR_FILENO);
+		ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
+		status = 2; // Código de erro para argumento não numérico
+	}
+	else if (args[2])
+	{
+		ft_putendl_fd("minishell: exit: too many arguments", STDERR_FILENO);
+		return (1); // Retorna 1 mas não sai, como no bash
 	}
 	else
 	{
-		exit_status = ctx->exit_status;
+		status = ft_atodbl(args[1]); // ft_atoll para converter long long
 	}
-	rl_clear_history();
+	// A correção crucial está aqui: o status é armazenado em uma variável local
+	// ANTES de liberar o contexto.
 	free_context(ctx);
-	exit(ctx->exit_status = exit_status);
+	exit((unsigned char)status); // Sai com o status, fazendo o cast para unsigned char
 }

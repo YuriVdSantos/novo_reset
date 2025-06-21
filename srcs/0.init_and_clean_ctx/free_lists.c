@@ -29,20 +29,29 @@ void	free_redir_list(t_redir *redir)
 
 void	free_cmd_list(t_cmd *cmd)
 {
-	t_cmd	*next;
+	size_t	i;
 
-	while (cmd)
-	{
-		next = cmd->next;
-		free_string_array(cmd->args);
-		cmd->args = NULL;
-		free(cmd->cmd_path);
-		cmd->cmd_path = NULL;
-		free_redir_list(cmd->redirections);
-		free(cmd);
-		cmd = next;
-	}
-	cmd = NULL;
+    if (!cmd)
+        return;
+    if (cmd->args)
+    {
+        for (i = 0; cmd->args[i]; i++)
+            free(cmd->args[i]);
+        free(cmd->args);
+    }
+    if (cmd->cmd_path)
+        free(cmd->cmd_path);
+    // Liberar redirecionamentos
+    t_redir *redir = cmd->redirections;
+    while (redir)
+    {
+        t_redir *tmp = redir->next;
+        if (redir->filename)
+            free(redir->filename);
+        free(redir);
+        redir = tmp;
+    }
+    free(cmd);
 }
 
 void	free_token_list(t_token *token)
