@@ -5,6 +5,7 @@
 // com o status de saída, especialmente com sinais.
 int	g_exit_status = 0;
 
+
 // Protótipos para funções locais neste arquivo.
 void	execute(t_ctx *ctx);
 void	free_ctx_between_commands(t_ctx *ctx);
