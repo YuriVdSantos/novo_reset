@@ -1,2 +1,1 @@
-/workspaces/novo_reset
-exit
+./tester.sh: line 44: valgrind: command not found

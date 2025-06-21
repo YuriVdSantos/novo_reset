@@ -1,2 +1,1 @@
-minishell: syntax error near redirection
-exit
+./tester.sh: line 44: valgrind: command not found

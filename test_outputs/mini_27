@@ -1,2 +1,1 @@
-minishell: unset: `&&': not a valid identifier
-exit
+./tester.sh: line 44: valgrind: command not found

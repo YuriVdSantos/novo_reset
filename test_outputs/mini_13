@@ -1,7 +1,1 @@
-minishell
-minishell.c
-minishell.h
-minishell_tester
-minishell_tester-main-2
-tester.sh
-exit
+./tester.sh: line 44: valgrind: command not found
