@@ -455,7 +455,7 @@
 # define ERR_GENERAL_MSG "General error"
 # define ERR_MISUSE_SHELL_MSG "Misuse of shell builtins"
 # define ERR_CANT_EXECUTE_MSG "Command invoked cannot execute"
-# define ERR_CMD_NOT_FOUND_MSG "Command not found"
+# define ERR_CMD_NOT_FOUND_MSG "command not found"
 # define ERR_EXIT_ARG_MSG "Invalid argument to exit"
 # define ERR_CTRL_C_MSG "Script terminated by Ctrl-C"
 # define ERR_KILL_9_MSG "Script terminated by kill -9"
@@ -463,6 +463,9 @@
 # define ERR_EXIT_RANGE_MSG "Exit status out of range"
 # define ERR_UNKNOWN_MSG "Unknown error"
 # define _POSIX_C_SOURCE 200809L
+# define ERR_PERMISSION_DENIED "Permission denied"
+# define NOT_EXECUTABLE_MSG "Is a directory"
+
 
 //Para Execução
 # define INTERRUPT 128
@@ -480,7 +483,6 @@
 # define OUT_OF_RANGE 255
 # define BUILTIN_MISUSE 2
 # define CMD_NOT_FOUND_MSG	"command not found"
-# define NOT_EXECUTABLE_MSG "is a directory"
 // # define PATH_MAX    4096
 
 typedef enum e_alloc_type {

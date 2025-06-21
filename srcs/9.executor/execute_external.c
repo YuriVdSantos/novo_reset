@@ -1,41 +1,61 @@
 #include "minishell.h"
-
-// Adicionando o protótipo da função free_array, já que parece estar
-// faltando no escopo deste arquivo. O ideal seria ter este protótipo
-// em um arquivo de cabeçalho (como minishell.h ou um utils.h).
-void	free_array(char **arr);
+#include <errno.h>      // Necessário para a variável 'errno'
+#include <sys/stat.h>   // Necessário para a função stat
 
 /**
- * @brief Executa um comando externo.
- * @param args O array de argumentos (argv), onde args[0] é o comando.
- * @param minienv A lista de variáveis de ambiente.
- * @param ctx O contexto do minishell.
- * @return Esta função não retorna em caso de sucesso, pois o processo é
- * substituído. Retorna um código de erro em caso de falha antes do execve.
+ * @brief Prints a standardized error message and exits the child process.
+ * @param ctx   The shell's context for memory cleanup.
+ * @param arg   The command argument that caused the error.
+ * @param msg   The error message string to display.
+ * @param code  The exit code to use.
+ */
+static void	exit_with_error(t_ctx *ctx, const char *arg, const char *msg, int code)
+{
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd((char *)arg, STDERR_FILENO);
+	ft_putstr_fd((char *)msg, STDERR_FILENO);
+	free_context(ctx);
+	exit(code);
+}
+
+/**
+ * @brief Executes an external command in a child process.
+ *
+ * This function resolves the command path, validates it, and then attempts
+ * to execute it. It handles various error conditions like "command not found",
+ * "is a directory", and "permission denied" with the correct exit codes.
+ * @param args      The command and its arguments.
+ * @param minienv   The environment list.
+ * @param ctx       The shell's context for memory cleanup.
+ * @return This function does not return on success; it exits the process.
  */
 int	execute_external(char **args, t_env *minienv, t_ctx *ctx)
 {
-	char	*path;
-	char	**envp;
+	char		*cmd_name;
+	char		*path;
+	char		**envp;
+	struct stat	path_stat;
 
-	// 'get_path' precisa ser ajustado para receber 'ctx' também.
-	path = get_path(args[0], ctx);
+	if (!args || !args[0] || !args[0][0])
+	{
+		free_context(ctx);
+		exit(0);
+	}
+	cmd_name = args[0];
+	if (ft_strchr(cmd_name, '/'))
+		path = cmd_name;
+	else
+		path = get_path(cmd_name, ctx);
 	if (!path)
-	{
-		print_error(ctx, args[0], CMD_NOT_FOUND, CMD_NOT_FOUND);
-		exit(CMD_NOT_FOUND);
-	}
+		exit_with_error(ctx, cmd_name, ": command not found\n", 127);
+	if (stat(path, &path_stat) == -1)
+		exit_with_error(ctx, cmd_name, ": No such file or directory\n", 127);
+	if (S_ISDIR(path_stat.st_mode))
+		exit_with_error(ctx, cmd_name, ": is a directory\n", 126);
 	envp = minienv_to_envp(minienv);
-	if (!envp)
-	{
-		free(path);
-		print_error(ctx, "fatal", -1, 1);
-		exit(1);
-	}
 	execve(path, args, envp);
-	// Se execve retornar, houve um erro.
-	free(path);
-	free_array(envp);
-	print_error(ctx, args[0], PERMISSION_DENIED, PERMISSION_DENIED);
-	exit(PERMISSION_DENIED);
+	if (errno == EACCES)
+		exit_with_error(ctx, cmd_name, ": Permission denied\n", 126);
+	exit_with_error(ctx, cmd_name, ": command not found\n", 127);
+	return (1);
 }
