@@ -1,1 +1,3 @@
-./tester.sh: line 44: valgrind: command not found
+minishell> cat < test_files/file1.txt
+minishell: cat
+minishell> exit

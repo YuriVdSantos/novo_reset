@@ -2,7 +2,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "(gdb) Launch",
+      "name": "(gdb) Launch - Minishell",
       "type": "cppdbg",
       "request": "launch",
       "program": "${workspaceFolder}/minishell",
@@ -12,27 +12,22 @@
       "environment": [],
       "externalConsole": false,
       "MIMode": "gdb",
-      "preLaunchTask": "C/C++: gcc build active file",
+      "preLaunchTask": "C/C++: make build",
       "setupCommands": [
         {
           "description": "Enable pretty-printing for gdb",
           "text": "-enable-pretty-printing",
           "ignoreFailures": true
-        },
-        {
-          "description": "Set Disassembly Flavor to Intel",
-          "text": "-gdb-set disassembly-flavor intel",
-          "ignoreFailures": true
         }
       ]
     },
     {
-      "name": "C/C++ Runner: Debug Session",
+      "name": "(lldb) Launch - Minishell",
       "type": "lldb",
       "request": "launch",
+      "program": "${workspaceFolder}/minishell",
       "args": [],
-      "cwd": "/Users/yurivieiradossantos/novo_reset_minishell",
-      "program": "/Users/yurivieiradossantos/novo_reset_minishell/minishell"
+      "cwd": "${workspaceFolder}"
     }
   ]
 }

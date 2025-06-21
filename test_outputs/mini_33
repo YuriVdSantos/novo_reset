@@ -1,1 +1,3 @@
-./tester.sh: line 44: valgrind: command not found
+minishell> echo 'test "inner" quotes'
+test "inner" quotes
+minishell> exit

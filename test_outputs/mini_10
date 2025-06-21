@@ -1,1 +1,2 @@
-./tester.sh: line 44: valgrind: command not found
+minishell> echo append >> test_outputs/out1.txt
+minishell> exit

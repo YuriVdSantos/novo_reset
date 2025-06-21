@@ -37,7 +37,7 @@ int	ft_exit(char **args, t_ctx *ctx)
 			ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
 			ft_putstr_fd(args[1], STDERR_FILENO);
 			ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
-			exit_status = 255;
+			exit_status = 2;
 		}
 		else
 		{

@@ -1,1 +1,3 @@
-./tester.sh: line 44: valgrind: command not found
+minishell> unset TEST_VAR && echo $TEST_VAR
+minishell: unset: `&&': not a valid identifier
+minishell> exit

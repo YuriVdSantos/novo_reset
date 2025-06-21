@@ -1,1 +1,2 @@
-./tester.sh: line 44: valgrind: command not found
+minishell> exit 42
+exit

@@ -1,1 +1,3 @@
-./tester.sh: line 44: valgrind: command not found
+minishell> unset PATH && ls
+minishell: unset: `&&': not a valid identifier
+minishell> exit

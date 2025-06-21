@@ -1,1 +1,20 @@
-./tester.sh: line 44: valgrind: command not found
+minishell> /bin/ls
+Libft42
+Makefile
+README.md
+minishell
+minishell.c
+minishell.h
+minishell_tester
+minishell_tester-main-2
+objs
+readline.supp
+reference_outputs
+srcs
+test_files
+test_outputs
+test_results.log
+tester.sh
+utils
+valgrind_leaks.log
+minishell> exit

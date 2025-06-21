@@ -1,1 +1,3 @@
-./tester.sh: line 44: valgrind: command not found
+minishell> pwd
+/workspaces/novo_reset
+minishell> exit

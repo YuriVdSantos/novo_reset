@@ -41,7 +41,7 @@ char	*get_path(char *command, t_ctx *ctx)
 		return (NULL);
 	}
 	// Corrigido: 'get_env_value' agora precisa de 'ctx'.
-	path_env = get_env_value(ctx, command);
+	path_env = get_env_value(ctx, "PATH");
 	if (!path_env)
 	{
 		// Se o PATH não estiver definido, não há onde procurar.

@@ -1,1 +1,5 @@
-./tester.sh: line 44: valgrind: command not found
+minishell> ls | grep .sh | wc -l
+minishell: ls
+minishell: grep
+minishell: wc
+minishell> exit

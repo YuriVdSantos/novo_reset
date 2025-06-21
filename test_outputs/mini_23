@@ -1,1 +1,3 @@
-./tester.sh: line 44: valgrind: command not found
+minishell> cd test_files && pwd
+minishell: cd: too many arguments
+minishell> exit
