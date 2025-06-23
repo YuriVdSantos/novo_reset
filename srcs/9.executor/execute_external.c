@@ -46,9 +46,9 @@ int	execute_external(char **args, t_env *minienv, t_ctx *ctx)
 		path = cmd_name;
 	else
 		path = get_path(cmd_name, ctx);
-	if (!path && errno == EACCES)
+	if (!path)
 		exit_with_error(ctx, cmd_name, ": command not found\n", 127);
-	if (stat(path, &path_stat) == -1 && errno == EACCES)
+	if (stat(path, &path_stat) == -1)
 		exit_with_error(ctx, cmd_name, ": No such file or directory\n", 127);
 	if (S_ISDIR(path_stat.st_mode))
 		print_error(ctx, "Is a directory", 126, 126);
