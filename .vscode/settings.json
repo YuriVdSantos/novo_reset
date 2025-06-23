@@ -14,5 +14,6 @@
     "other": true,
     "comments": false,
     "strings": true
-  }
+  },
+  "C_Cpp_Runner.msvcBatchPath": ""
 }
