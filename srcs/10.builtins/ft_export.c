@@ -92,7 +92,6 @@ int	ft_export(char **args, t_ctx *ctx)
 		else
 		{
 			// set_env_var já lida com os casos de ter ou não um '='.
-			// Ex: "VAR=valor" e "VAR".
 			set_env_var(ctx, args[i]);
 		}
 		i++;
