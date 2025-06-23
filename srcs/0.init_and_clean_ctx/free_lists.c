@@ -27,30 +27,33 @@ void	free_redir_list(t_redir *redir)
 	redir = NULL;
 }
 
-void	free_cmd_list(t_cmd *cmd)
+void	free_cmd_list(t_cmd *cmd_list)
 {
+	t_cmd	*current_cmd;
+	t_cmd	*next_cmd;
 	size_t	i;
 
-    if (!cmd)
-        return;
-    if (cmd->args)
-    {
-        for (i = 0; cmd->args[i]; i++)
-            free(cmd->args[i]);
-        free(cmd->args);
-    }
-    if (cmd->cmd_path)
-        free(cmd->cmd_path);
-    t_redir *redir = cmd->redirections;
-    while (redir)
-    {
-        t_redir *tmp = redir->next;
-        if (redir->filename)
-            free(redir->filename);
-        free(redir);
-        redir = tmp;
-    }
-    free(cmd);
+	current_cmd = cmd_list;
+	while (current_cmd)
+	{
+		next_cmd = current_cmd->next; // Guarda o ponteiro para o próximo comando
+
+		if (current_cmd->args)
+		{
+			for (i = 0; current_cmd->args[i]; i++)
+				free(current_cmd->args[i]);
+			free(current_cmd->args);
+		}
+		if (current_cmd->cmd_path)
+			free(current_cmd->cmd_path);
+		
+		// O free da lista de redirecionamentos já é iterativo,
+		// então você pode chamar sua função free_redir_list aqui.
+		free_redir_list(current_cmd->redirections);
+		
+		free(current_cmd); // Libera o comando atual
+		current_cmd = next_cmd; // Move para o próximo
+	}
 }
 
 void	free_token_list(t_token *token)

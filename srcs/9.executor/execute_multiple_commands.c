@@ -4,13 +4,26 @@
 static void	child_process_logic(t_cmd *cmd, t_ctx *ctx)
 {
 	int	original_fds[2];
+	int exit_status; // Variável para guardar o status de saída
 
 	if (apply_redirections(cmd, original_fds) == FAILED)
+	{
+		free_context(ctx); // Liberar memória antes de sair em caso de erro
 		exit(EXIT_FAILURE);
+	}
 	if (is_builtin(cmd->args[0]))
-		exit(execute_builtin(cmd->args, ctx));
+	{
+		// O builtin ft_exit já chama free_context e exit, então não retornará.
+		// Para outros builtins, guardamos o status, liberamos a memória e saímos.
+		exit_status = execute_builtin(cmd->args, ctx);
+		free_context(ctx);
+		exit(exit_status);
+	}
 	else
+	{
+		// execute_external já lida com a liberação de memória em caso de erro
 		execute_external(cmd->args, ctx->env_list, ctx);
+	}
 }
 
 int	execute_multiple_commands(t_cmd *cmd_list, t_ctx *ctx)
