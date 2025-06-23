@@ -1,10 +1,5 @@
 #include "minishell.h"
 
-/**
- * @brief Verifica se um comando é um dos built-ins do minishell.
- * @param command O nome do comando a ser verificado.
- * @return 1 se for um built-in, 0 caso contrário.
- */
 int	is_builtin(char *command)
 {
 	if (!command)
@@ -26,12 +21,6 @@ int	is_builtin(char *command)
 	return (0);
 }
 
-/**
- * @brief Verifica se um comando é um built-in que altera o estado do
- * shell principal e, portanto, não pode ser executado em um fork.
- * @param command O nome do comando.
- * @return 1 se for um built-in "especial", 0 caso contrário.
- */
 int	is_special_builtin(char *command)
 {
 	if (!command)
@@ -42,16 +31,10 @@ int	is_special_builtin(char *command)
 		return (1);
 	if (ft_strcmp(command, "unset") == 0)
 		return (1);
-	// 'export' com argumentos também deve ser tratado como especial.
 	if (ft_strcmp(command, "export") == 0)
 		return (1);
 	return (0);
 }
-
-// =============================================================================
-// Suas outras funções de builtins_utils.c devem permanecer aqui.
-// Adicionei apenas as que estavam faltando.
-// =============================================================================
 
 void	move_one_forward(char *str)
 {

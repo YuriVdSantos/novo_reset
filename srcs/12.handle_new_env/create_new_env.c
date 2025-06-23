@@ -1,6 +1,5 @@
 #include "minishell.h"
 
-// Encontra uma variável de ambiente na lista.
 t_env	*find_env_var(t_env *env_list, const char *key)
 {
 	t_env	*current;
@@ -15,7 +14,6 @@ t_env	*find_env_var(t_env *env_list, const char *key)
 	return (NULL);
 }
 
-// Adiciona uma nova variável de ambiente à lista encadeada.
 void	add_new_env_var(t_ctx *ctx, char *key, char *value)
 {
 	t_env	*new_node;
@@ -24,7 +22,7 @@ void	add_new_env_var(t_ctx *ctx, char *key, char *value)
 	(void)ctx;
 	new_node = malloc(sizeof(t_env));
 	if (!new_node)
-		return ; // Idealmente, chame handle_error
+		return ;
 	new_node->key = key;
 	new_node->value = value;
 	new_node->next = NULL;
@@ -39,7 +37,6 @@ void	add_new_env_var(t_ctx *ctx, char *key, char *value)
 	}
 }
 
-// Atualiza o valor de uma variável de ambiente existente.
 void	update_existing_var(t_ctx *ctx, t_env *var, const char *value)
 {
 	(void)ctx;
@@ -48,7 +45,6 @@ void	update_existing_var(t_ctx *ctx, t_env *var, const char *value)
 	var->value = ft_strdup(value);
 }
 
-// A função principal que lida com "export VAR=val" ou "VAR=val".
 void	set_env_var(t_ctx *ctx, const char *assignment)
 {
 	char	*key;
@@ -81,7 +77,6 @@ void	set_env_var(t_ctx *ctx, const char *assignment)
 	sync_env_list_str(ctx);
 }
 
-// A função de sincronização que eu sugeri antes.
 void	sync_env_list_str(t_ctx *ctx)
 {
 	int		i;
@@ -101,7 +96,7 @@ void	sync_env_list_str(t_ctx *ctx)
 	}
 	ctx->env_list_str = malloc(sizeof(char *) * (count + 1));
 	if (!ctx->env_list_str)
-		return ; // Idealmente, chame handle_error
+		return ;
 	i = 0;
 	current = ctx->env_list;
 	while (current)

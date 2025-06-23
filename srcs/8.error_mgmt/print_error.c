@@ -22,7 +22,6 @@ void	print_error(t_ctx *ctx, char *context_msg, int errnum, int exit_status)
         ft_putstr_fd(context_msg, STDERR_FILENO);
         ft_putstr_fd(": ", STDERR_FILENO);
     }
-    // Usa strerror para obter a mensagem de erro real
     ft_putendl_fd(strerror(errnum), STDERR_FILENO);
 
     if (ctx)

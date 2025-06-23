@@ -22,13 +22,12 @@ char	**minienv_to_envp(t_env *minienv)
 	int		i;
 	char	*tmp;
 
-	// O size aqui deve ser apenas das vars com valor.
 	envp = malloc(sizeof(char *) * (minienv_size(minienv) + 1));
 	aux = minienv;
 	i = 0;
 	while (aux)
 	{
-		if (aux->value) // Enviar para execve apenas vars com valor
+		if (aux->value)
 		{
 			tmp = ft_strjoin(aux->key, "=");
 			envp[i] = ft_strjoin(tmp, aux->value);

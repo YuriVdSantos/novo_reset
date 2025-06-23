@@ -41,7 +41,6 @@ void	free_cmd_list(t_cmd *cmd)
     }
     if (cmd->cmd_path)
         free(cmd->cmd_path);
-    // Liberar redirecionamentos
     t_redir *redir = cmd->redirections;
     while (redir)
     {
