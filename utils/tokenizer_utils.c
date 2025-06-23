@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
+/*   By: yvieira- <yvieira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 20:17:26 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/18 12:46:51 by yurivieirad      ###   ########.fr       */
+/*   Updated: 2025/06/23 20:19:44 by yvieira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 void	get_pid_var(t_ctx *ctx, char **str)
 {
@@ -71,14 +70,13 @@ static int	substr_handle_env_var(t_ctx *ctx, char **str, const char **input)
 	while (start[len] && !ft_isspace(start[len]) && start[len] != '$' \
 			&& start[len] != '\'' && start[len] != '\"')
 		len++;
-
-
 	*str = ft_safe_strndup(ctx, start, len);
 	*input += len;
 	return (len);
 }
 
-int	define_substring(t_ctx *ctx, char **str, const char **input, t_token_type type)
+int	define_substring(t_ctx *ctx, char **str,
+	const char **input, t_token_type type)
 {
 	if (type == SQUOTE)
 		return (substr_handle_squote(str, input));

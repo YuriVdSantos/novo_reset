@@ -86,8 +86,7 @@ SRCS =  minishell.c \
 	utils/safe_split.c \
 	utils/safe_utils_libft.c \
 	utils/safe_utils_libft_1.c \
-	utils/tokenizer_utils.c\
-	utils/get_next_line_simplified.c
+	utils/tokenizer_utils.c
 
 # --- Arquivos Objeto (.o) ---
 OBJS = $(patsubst %.c, $(OBJS_DIR)/%.o, $(SRCS))

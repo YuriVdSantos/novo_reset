@@ -6,12 +6,14 @@
 
 static void	handle_execve_errors(char **args, const char *path, t_ctx *ctx) 
 {
-	(void)path; 
-	
-	
+	int	exit_status;
+
+	(void)path;
 	print_error(ctx, args[0], errno, ctx->exit_status);
+	exit_status = ctx->exit_status;
 	close_all_fds();
-	exit(ctx->exit_status); 
+	free_context(ctx);
+	exit(exit_status); 
 }
 
 
