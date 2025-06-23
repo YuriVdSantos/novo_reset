@@ -6,7 +6,6 @@ int	wait_for_child(int child_pid, int is_last_child, t_ctx *ctx)
 {
 	int	status;
 
-	(void)is_last_child;
 	(void)ctx;
 	if (waitpid(child_pid, &status, 0) == -1)
 	{
@@ -20,10 +19,15 @@ int	wait_for_child(int child_pid, int is_last_child, t_ctx *ctx)
 	else if (WIFSIGNALED(status))
 	{
 		g_exit_status = 128 + WTERMSIG(status);
-		if (WTERMSIG(status) == SIGQUIT)
-			ft_putendl_fd("Quit: 3", STDERR_FILENO);
-		else if (WTERMSIG(status) == SIGINT)
-			ft_putstr_fd("\n", STDERR_FILENO);
+        if (is_last_child)
+        {
+            if (WTERMSIG(status) == SIGQUIT)
+                ft_putendl_fd("Quit: 3", STDERR_FILENO);
+            else if (WTERMSIG(status) == SIGINT)
+                ft_putstr_fd("\n", STDERR_FILENO);
+            else if (WTERMSIG(status) == SIGPIPE)
+                ft_putendl_fd("Broken pipe", STDERR_FILENO);
+        }
 	}
 	return (g_exit_status);
 }
