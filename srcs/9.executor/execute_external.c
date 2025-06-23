@@ -6,7 +6,7 @@ static void exit_with_error(t_ctx *ctx, const char *arg, const char *msg, int co
 {
     ft_putstr_fd("minishell: ", STDERR_FILENO);
     ft_putstr_fd((char *)arg, STDERR_FILENO);
-    ft_putstr_fd(": ", STDERR_FILENO); // Sempre adiciona o separador
+    ft_putstr_fd(": ", STDERR_FILENO);
     ft_putstr_fd((char *)msg, STDERR_FILENO);
     if (msg[ft_strlen(msg) - 1] != '\n')
         ft_putstr_fd("\n", STDERR_FILENO);
@@ -35,7 +35,9 @@ int execute_external(char **args, t_env *minienv, t_ctx *ctx)
 	}
 	if (access(cmd_name, F_OK) == 0)
 	{
-		if (access(cmd_name, X_OK) == -1)
+		if (!path)
+        exit_with_error(ctx, cmd_name, "command not found", 127);
+		else if (access(cmd_name, X_OK) == -1)
 			exit_with_error(ctx, cmd_name, ": Permission denied\n", 126);
 	}
     if (!path)
