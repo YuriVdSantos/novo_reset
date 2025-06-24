@@ -853,10 +853,9 @@ char	*safe_strjoin(t_ctx *ctx, char const *s1, char const *s2);
 char	*safe_itoa(t_ctx *ctx, long n);
 
 // utils/tokenizer_utils.c
-int	define_substring(t_ctx *ctx, char **str, const char **input, t_token_type type);
+int		define_substring(t_ctx *ctx, char **str, const char **input, t_token_type type);
 void	get_pid_var(t_ctx *ctx, char **str);
-char	*get_var_value(t_ctx *ctx, const char *var_name, int *len); // ADICIONE ESTA LINHA
-
+char	*get_var_value(t_ctx *ctx, const char *var_name, int *len);
 
 // =============================================================================
 // minishell.c (main program file)

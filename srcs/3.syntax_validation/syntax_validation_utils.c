@@ -18,7 +18,7 @@ bool	check_pipes(t_ctx *ctx, t_token *tokens)
 
 	current = tokens;
 	if (current->type == PIPE)
-		return (syntax_error(ctx, "syntax error near `|'"));
+		return (syntax_error(ctx, "syntax error near unexpected `|'"));
 	while (current)
 	{
 		if (current->type == PIPE)
@@ -26,7 +26,7 @@ bool	check_pipes(t_ctx *ctx, t_token *tokens)
 			if (!current->next || current->next->type == PIPE || \
 				current->next->type == END)
 				return (syntax_error(ctx, \
-					"syntax error near `|'"));
+					"syntax error near unexpected `|'"));
 		}
 		current = current->next;
 	}
