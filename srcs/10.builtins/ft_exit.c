@@ -21,6 +21,7 @@ int	ft_exit(char **args, t_ctx *ctx)
 {
 	long long	status;
 
+	close_all_fds();
 	ft_putendl_fd("exit", STDOUT_FILENO);
 	if (!args[1])
 	{
