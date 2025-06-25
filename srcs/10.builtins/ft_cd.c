@@ -45,7 +45,9 @@ static char	*get_env_value_from_ctx(t_ctx *ctx, const char *key)
 int	ft_cd(char **args, t_ctx *ctx)
 {
 	const char	*path;
+	char		*path_to_go;
 
+	path_to_go = NULL;
 	if (args[1] == NULL)
 	{
 		path = get_env_value_from_ctx(ctx, "HOME");
@@ -70,14 +72,29 @@ int	ft_cd(char **args, t_ctx *ctx)
 		}
 		ft_putendl_fd((char *)path, STDOUT_FILENO);
 	}
+	else if (args[1][0] == '~')
+	{
+		char *home = get_env_value_from_ctx(ctx, "HOME");
+		if (home == NULL || *home == '\0')
+		{
+			ft_putstr_fd("minishell: cd: HOME not set\n", STDERR_FILENO);
+			return (EXIT_FAILURE);
+		}
+		path_to_go = ft_strjoin(home, args[1] + 1);
+		path = path_to_go;
+	}
 	else
 		path = args[1];
 	if (chdir(path) != 0)
 	{
 		ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
 		perror((char *)path);
+		if (path_to_go)
+			free(path_to_go);
 		return (EXIT_FAILURE);
 	}
 	update_pwd_vars(ctx);
+	if (path_to_go)
+		free(path_to_go);
 	return (EXIT_SUCCESS);
 }
