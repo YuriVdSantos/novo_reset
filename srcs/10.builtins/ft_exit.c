@@ -36,9 +36,9 @@ static int	is_within_long_long_range(const char *str)
 	else
 		limit = "9223372036854775807";
 	if (len > (int)ft_strlen(limit))
-		return (0); // Excede o comprimento máximo
+		return (0);
 	if (len == (int)ft_strlen(limit) && ft_strcmp(str, limit) > 0)
-		return (0); // Excede o valor máximo/mínimo
+		return (0);
 	return (1);
 }
 
@@ -53,24 +53,21 @@ int	ft_exit(char **args, t_ctx *ctx)
 		free_context(ctx);
 		exit(status);
 	}
-	// Validação combinada de formato e intervalo
 	if (!is_numeric(args[1]) || !is_within_long_long_range(args[1]))
 	{
 		ft_putstr_fd("minishell: exit: ", STDERR_FILENO);
 		ft_putstr_fd(args[1], STDERR_FILENO);
 		ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
 		free_context(ctx);
-		exit(2); // Bash usa o status 2 para este erro
+		exit(2);
 	}
 	else if (args[2])
 	{
 		ft_putendl_fd("minishell: exit: too many arguments", STDERR_FILENO);
-		return (1); // Retorna 1 mas não sai do shell
+		return (1);
 	}
 	else
-	{
-		status = ft_atodbl(args[1]); // ft_atodbl é seguro aqui pois já validamos
-	}
+		status = ft_atodbl(args[1]);
 	free_context(ctx);
 	exit((unsigned char)status);
 }

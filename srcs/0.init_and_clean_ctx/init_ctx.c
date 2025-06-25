@@ -93,12 +93,6 @@ t_ctx	*init_ctx(t_ctx *ctx, char **env_array)
 	ctx->last_error_message = NULL;
 	ctx->env_list_str = dup_mtz(env_array);
 	ctx->allocations = NULL;
-	// ft_bzero(ctx->allocations, sizeof(t_allocation));
-	// if (!ctx->allocations)
-	// {
-	// 	ft_putstr_fd("minishell: initialization error\n", 2);
-	// 	return (NULL);
-	// }
 	ctx->is_interactive = isatty(STDIN_FILENO);
 	init_environment(ctx, env_array);
 	return (ctx);

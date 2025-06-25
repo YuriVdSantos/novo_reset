@@ -36,7 +36,7 @@ void	free_cmd_list(t_cmd *cmd_list)
 	current_cmd = cmd_list;
 	while (current_cmd)
 	{
-		next_cmd = current_cmd->next; // Guarda o ponteiro para o próximo comando
+		next_cmd = current_cmd->next;
 
 		if (current_cmd->args)
 		{
@@ -46,13 +46,9 @@ void	free_cmd_list(t_cmd *cmd_list)
 		}
 		if (current_cmd->cmd_path)
 			free(current_cmd->cmd_path);
-		
-		// O free da lista de redirecionamentos já é iterativo,
-		// então você pode chamar sua função free_redir_list aqui.
 		free_redir_list(current_cmd->redirections);
-		
-		free(current_cmd); // Libera o comando atual
-		current_cmd = next_cmd; // Move para o próximo
+		free(current_cmd);
+		current_cmd = next_cmd;
 	}
 }
 
