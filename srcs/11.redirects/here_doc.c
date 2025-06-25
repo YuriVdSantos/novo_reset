@@ -32,13 +32,18 @@ static int handle_single_heredoc(t_redir *redir, t_ctx *ctx)
 	char	*temp_filename;
 	bool	expand;
 
-	delimiter = redir->filename;
-	expand = !ft_strchr(delimiter, '\'') && !ft_strchr(delimiter, '\"');
+
+	if (ctx->was_expanded)
+	{
+		delimiter = ctx->expanded_str;
+	}
+	else
+		delimiter = redir->filename;
+	expand = (!ft_strchr(delimiter, '\'') && !ft_strchr(delimiter, '\"')) || ft_strchr(delimiter, '$');
 
 	temp_filename = create_temp_filename();
 	if (!temp_filename)
 		return (FAILED);
-		
 	temp_fd = open(temp_filename, O_WRONLY | O_CREAT | O_TRUNC, 0600);
 	if (temp_fd == -1)
 		return (free(temp_filename), FAILED);
@@ -55,7 +60,7 @@ static int handle_single_heredoc(t_redir *redir, t_ctx *ctx)
 		{
 			char *expanded_line = expand_string(ctx, line);
 			ft_putendl_fd(expanded_line, temp_fd);
-			 free(expanded_line);
+			free(expanded_line);
 		}
 		else
 			ft_putendl_fd(line, temp_fd);

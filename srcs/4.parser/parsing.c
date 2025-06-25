@@ -82,11 +82,11 @@ t_cmd	*parse_tokens(t_ctx *ctx, t_token **tokens)
 		else if (tmp->type == WORD)
 			process_word_token(ctx, &tmp, current);
 		else if (tmp->type == DQUOTE)
-             handle_dquote(ctx, &tmp, current);
+            handle_dquote(ctx, &tmp, current);
         else if (tmp->type == SQUOTE)
-             handle_squote(ctx, &tmp, current);
+        	handle_squote(ctx, &tmp, current);
         else if (tmp->type == ENV_VAR)
-             handle_env_var(ctx, &tmp, current);
+            handle_env_var(ctx, &tmp, current);
 		else
 		{
 			handle_error(ctx, "Parsing error: unexpected token", -1, 2);

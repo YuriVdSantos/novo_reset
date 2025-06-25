@@ -54,8 +54,10 @@ void	handle_word(t_token **tmp, t_cmd *current)
 void	handle_dquote(t_ctx *ctx, t_token **tmp, t_cmd *current)
 {
 	char	*content;
-
+	//se for heredoc não expandir
 	content = safe_strdup(ctx, expand_dquotes(ctx, (*tmp)->value));
+	ctx->was_expanded = 1;
+	ctx->expanded_str = content;
 	add_arg(current, content);
 	*tmp = (*tmp)->next;
 }
