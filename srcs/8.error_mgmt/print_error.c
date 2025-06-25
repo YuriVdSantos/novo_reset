@@ -20,10 +20,14 @@ void	print_error(t_ctx *ctx, char *context_msg, int errnum, int exit_status)
     if (context_msg)
     {
         ft_putstr_fd(context_msg, STDERR_FILENO);
-        ft_putstr_fd(": ", STDERR_FILENO);
     }
-    ft_putendl_fd(strerror(errnum), STDERR_FILENO);
-
+	if (errnum > 0) 
+    {
+        ft_putstr_fd(": ", STDERR_FILENO);
+        ft_putstr_fd(": ", STDERR_FILENO);
+        ft_putstr_fd(strerror(errnum), STDERR_FILENO);
+    }
+	ft_putstr_fd("\n", STDERR_FILENO);
     if (ctx)
         ctx->exit_status = exit_status;
     else
