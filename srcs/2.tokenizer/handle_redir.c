@@ -20,7 +20,12 @@ void	token_handle_redir(t_ctx *ctx, const char **input, t_token **tokens)
 	type = ERROR;
 	c = **input;
 	(*input)++;
-	if (**input == c && c == '<')
+	if (c == '>' && **input == '|')
+	{
+		type = REDIR_OUT; // Ou um novo tipo como REDIR_CLOBBER se preferir
+		(*input)++;
+	}
+	else if (**input == c && c == '<')
 		type = HEREDOC;
 	else if (**input == c && c == '>')
 		type = APPEND;
