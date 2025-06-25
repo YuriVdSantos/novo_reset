@@ -22,7 +22,7 @@ void	token_handle_redir(t_ctx *ctx, const char **input, t_token **tokens)
 	(*input)++;
 	if (c == '>' && **input == '|')
 	{
-		type = REDIR_OUT; // Ou um novo tipo como REDIR_CLOBBER se preferir
+		type = REDIR_OUT;
 		(*input)++;
 	}
 	else if (**input == c && c == '<')
