@@ -32,13 +32,7 @@ static int handle_single_heredoc(t_redir *redir, t_ctx *ctx)
 	char	*temp_filename;
 	bool	expand;
 
-
-	if (ctx->was_expanded)
-	{
-		delimiter = ctx->expanded_str;
-	}
-	else
-		delimiter = redir->filename;
+	delimiter = redir->filename;
 	expand = (!ft_strchr(delimiter, '\'') && !ft_strchr(delimiter, '\"')) || ft_strchr(delimiter, '$');
 
 	temp_filename = create_temp_filename();
@@ -60,7 +54,6 @@ static int handle_single_heredoc(t_redir *redir, t_ctx *ctx)
 		{
 			char *expanded_line = expand_string(ctx, line);
 			ft_putendl_fd(expanded_line, temp_fd);
-			free(expanded_line);
 		}
 		else
 			ft_putendl_fd(line, temp_fd);

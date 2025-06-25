@@ -573,8 +573,6 @@ typedef struct s_ctx {
 	bool					is_interactive;
 	char					*pwd;
 	char					*oldpwd;
-	int						was_expanded;
-	char					*expanded_str;
 }	t_ctx;
 
 extern volatile sig_atomic_t	g_signal;

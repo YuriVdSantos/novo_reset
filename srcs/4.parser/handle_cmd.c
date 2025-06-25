@@ -28,7 +28,7 @@ void	handle_redir(t_ctx *ctx, t_token **tmp, t_cmd *current)
 		print_error(ctx, "syntax error near unexpected token", -1, 2);
 		return;
 	}
-	expanded_filename = expand_string(ctx, (*tmp)->value);
+	expanded_filename = (*tmp)->value;
 	if (!expanded_filename)
 	{
 		ctx->exit_status = 1;
@@ -54,10 +54,8 @@ void	handle_word(t_token **tmp, t_cmd *current)
 void	handle_dquote(t_ctx *ctx, t_token **tmp, t_cmd *current)
 {
 	char	*content;
-	//se for heredoc não expandir
+
 	content = safe_strdup(ctx, expand_dquotes(ctx, (*tmp)->value));
-	ctx->was_expanded = 1;
-	ctx->expanded_str = content;
 	add_arg(current, content);
 	*tmp = (*tmp)->next;
 }
