@@ -686,6 +686,9 @@ char	*expand_string(t_ctx *ctx, const char *input);
 void	define_execute_signals(int child_pid);
 void	define_signals(void);
 void	define_heredoc_signals(int child_pid);
+void	define_interactive_signals(void);
+void	define_non_interactive_signals(void);
+
 
 
 // =============================================================================

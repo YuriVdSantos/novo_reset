@@ -28,9 +28,15 @@ int execute_one_command(t_cmd *command, t_ctx *ctx)
         }
         if (pid == 0)
         {
+            define_non_interactive_signals();
             execute_external(command->args, ctx->env_list, ctx);
         }
-        g_exit_status = wait_for_child(pid, 1, ctx);
+		else
+		{
+            define_execute_signals(pid);
+			g_exit_status = wait_for_child(pid, 1, ctx);
+			define_interactive_signals();
+		}
     }
     restore_original_fds(original_fds);
     return (g_exit_status);

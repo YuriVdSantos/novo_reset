@@ -22,6 +22,11 @@ int	main(int argc, char **argv, char **envp)
 	{
 		define_signals();
 		ctx->input = readline("minishell> ");
+		if (g_signal == 130)
+		{
+			ctx->exit_status = 130;
+			g_signal = 0;
+		}
 		if (!ctx->input)
 		{
 			printf("exit\n");

@@ -5,7 +5,7 @@ volatile sig_atomic_t	g_signal = 0;
 static void	handle_sigint(int sig)
 {
 	(void)sig;
-	g_signal = SIGINT;
+	g_signal = 130;
 	write(STDOUT_FILENO, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
@@ -16,6 +16,12 @@ void	define_interactive_signals(void)
 {
     signal(SIGINT, handle_sigint);
     signal(SIGQUIT, SIG_IGN);
+}
+
+void	define_non_interactive_signals(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 }
 
 void	define_execute_signals(int child_pid)
