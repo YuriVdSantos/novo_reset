@@ -12,30 +12,28 @@
 
 #include "libft.h"
 
-double	ft_atodbl(char *s)
+long long	ft_atodbl(char *str)
 {
-	long	integer_part;
-	double	fractional_part;
-	double	pow;
-	int		sign;
+	long long	result;
+	int			sign;
 
-	integer_part = 0;
-	fractional_part = 0;
-	sign = +1;
-	pow = 1;
-	while ((*s >= 9 && *s <= 13) || 32 == *s)
-		++s;
-	while ('+' == *s || '-' == *s)
-		if ('-' == *s++)
-			sign = -sign;
-	while (*s != '.' && *s)
-		integer_part = (integer_part * 10) + (*s++ - 48);
-	if ('.' == *s)
-		++s;
-	while (*s)
+	result = 0;
+	sign = 1;
+	// 1. Pular espaços em branco
+	while (*str == ' ' || (*str >= '\t' && *str <= '\r'))
+		str++;
+	// 2. Lidar com o sinal de + ou -
+	if (*str == '-' || *str == '+')
 	{
-		pow /= 10;
-		fractional_part = fractional_part + (*s++ - 48) * pow;
+		if (*str == '-')
+			sign = -1;
+		str++;
 	}
-	return ((integer_part + fractional_part) * sign);
+	// 3. Converter os dígitos para número
+	while (*str >= '0' && *str <= '9')
+	{
+		result = result * 10 + (*str - '0');
+		str++;
+	}
+	return (result * sign);
 }

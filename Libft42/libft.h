@@ -62,6 +62,6 @@ int			ft_putnbr(int n);
 int			ft_putunbr_fd(unsigned int n);
 int			ft_printf(const char *format, ...);
 int			ft_strcmp(const char *s1, const char *s2);
-double		ft_atodbl(char *s);
+long long		ft_atodbl(char *str);
 
 #endif
