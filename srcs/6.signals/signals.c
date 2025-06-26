@@ -1,7 +1,5 @@
 #include "minishell.h"
 
-volatile sig_atomic_t	g_signal = 0;
-
 static void	handle_sigint(int sig)
 {
 	(void)sig;

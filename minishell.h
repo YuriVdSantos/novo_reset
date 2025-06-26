@@ -577,7 +577,6 @@ typedef struct s_ctx {
 
 extern volatile sig_atomic_t	g_signal;
 
-
 // Protótipos de funções
 // =============================================================================
 // srcs/0.init_and clean_ctx/
