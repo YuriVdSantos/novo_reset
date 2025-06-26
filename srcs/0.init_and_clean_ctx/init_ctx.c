@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 17:55:10 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/13 17:46:01 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/26 17:07:13 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,3 +100,6 @@ t_ctx	*init_ctx(t_ctx *ctx, char **env_array)
 	init_environment(ctx, env_array);
 	return (ctx);
 }
+
+
+

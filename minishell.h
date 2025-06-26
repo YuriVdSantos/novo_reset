@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 15:10:26 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/13 17:46:54 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/26 17:07:47 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ typedef struct s_ctx {
 	t_cmd					*cmd_list;
 	t_token					*token_list;
 	char					*input;
-	t_env					*env_list_str;
+	char					**env_list_str;//AQUI É UM ARRAY
 	int						exit_status;
 	int						previous_exit_status;
 	int						current_exit_status;
@@ -400,6 +400,7 @@ void	process_assignments(t_ctx *ctx, t_cmd *cmd);
 // utils/main_utils.c
 void	no_input(void);
 void	input_null(t_ctx *ctx, char **input);
+char	**dup_mtz(char **mtz);
 
 // utils/parsing_utils.c
 void	add_arg(t_cmd *cmd, char *value);
