@@ -29,9 +29,7 @@ void	token_handle_quote(t_ctx *ctx, const char **input, t_token **tokens)
 
 
 	if (!closed_quotation(ctx, *input, quote_char))
-	{
-    
-    
+	{    
 		ft_lstadd_back(tokens, new_token(ctx, ERROR, NULL));
 		while (**input)
 			(*input)++;
