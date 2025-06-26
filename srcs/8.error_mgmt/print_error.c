@@ -47,7 +47,7 @@ bool	syntax_error(t_ctx *ctx, char *msg)
 	char	*error_msg;
 
 	error_msg = ft_strjoin("syntax error near unexpected token `", msg);
-	error_msg = ft_strjoin_free(NULL, error_msg, "'");
+	error_msg = ft_strjoin_free(ctx, error_msg, "'");
 	print_error(ctx, error_msg, 0, 2);
 	free(error_msg);
 	return (false);

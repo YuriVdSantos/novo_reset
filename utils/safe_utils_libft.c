@@ -13,11 +13,12 @@ char	*ft_strjoin_free(t_ctx *ctx, char *s1, char *s2)
 {
 	char	*result;
 
+	(void)ctx; // ctx is not used in this function, but kept for consistency
 	result = ft_strjoin(s1, s2);
 
-	safe_free(ctx, s1);
+	free(s1);
 
-	return (safe_strdup(ctx, result));
+	return (ft_strdup(result));//ver se precisa de free
 }
 
 char	*ft_safe_strndup(t_ctx *ctx, const char *s, size_t size)

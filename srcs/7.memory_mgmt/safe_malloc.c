@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   safe_malloc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
+/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 16:04:12 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/18 00:58:40 by yurivieirad      ###   ########.fr       */
+/*   Updated: 2025/06/26 19:11:21 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ void	*safe_malloc(t_ctx *ctx, size_t size, t_alloc_type type)
 {
 	void			*ptr;
 	t_allocation	*new_alloc;
+	t_allocation	*current;
 
+	current = ctx->allocations;
 	ptr = malloc(size);
 	if (!ptr)
 	{
@@ -34,7 +36,7 @@ void	*safe_malloc(t_ctx *ctx, size_t size, t_alloc_type type)
 	}
 	new_alloc->ptr = ptr;
 	new_alloc->type = type;
-	new_alloc->next = ctx->allocations;
+	new_alloc->next = current;
 	ctx->allocations = new_alloc;
 	return (ptr);
 }
