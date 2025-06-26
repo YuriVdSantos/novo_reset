@@ -21,7 +21,7 @@ int execute_external(char **args, t_env *minienv, t_ctx *ctx)
     char        **envp;
     struct stat path_stat;
 
-    if (!args || !args[0] || !args[0][0])
+    if (!args || !args[0])
     {
         free_context(ctx);
         exit(0);
