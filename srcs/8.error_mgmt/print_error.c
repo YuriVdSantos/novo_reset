@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-extern int	g_signal;
+volatile sig_atomic_t g_signal;
 
 void	print_error_msg(char *command, char *msg)
 {

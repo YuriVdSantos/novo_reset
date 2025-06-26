@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	g_signal = 0;
+volatile sig_atomic_t g_signal = 0;
 
 void	execute(t_ctx *ctx);
 void	free_ctx_between_commands(t_ctx *ctx);

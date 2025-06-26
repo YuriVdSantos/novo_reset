@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-extern int	g_signal;
+volatile sig_atomic_t	g_signal;
 
 int	wait_for_child(int child_pid, int is_last_child, t_ctx *ctx)
 {
