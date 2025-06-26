@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-extern int	g_exit_status;
+extern int	g_signal;
 
 int	wait_for_child(int child_pid, int is_last_child, t_ctx *ctx)
 {
@@ -14,11 +14,11 @@ int	wait_for_child(int child_pid, int is_last_child, t_ctx *ctx)
 	}
 	if (WIFEXITED(status))
 	{
-		g_exit_status = WEXITSTATUS(status);
+		g_signal = WEXITSTATUS(status);
 	}
 	else if (WIFSIGNALED(status))
 	{
-		g_exit_status = 128 + WTERMSIG(status);
+		g_signal = 128 + WTERMSIG(status);
         if (is_last_child)
         {
             if (WTERMSIG(status) == SIGQUIT)
@@ -29,7 +29,7 @@ int	wait_for_child(int child_pid, int is_last_child, t_ctx *ctx)
                 ft_putendl_fd("Broken pipe", STDERR_FILENO);
         }
 	}
-	return (g_exit_status);
+	return (g_signal);
 }
 
 int	wait_for_children(int children_pid[1024], t_ctx *ctx)

@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-int	g_exit_status = 0;
+int	g_signal = 0;
 
 void	execute(t_ctx *ctx);
 void	free_ctx_between_commands(t_ctx *ctx);
@@ -38,7 +38,7 @@ int	main(int argc, char **argv, char **envp)
 		free_ctx_between_commands(ctx);
 	}
 	free_context(ctx);
-	return (g_exit_status);
+	return (g_signal);
 }
 
 void	execute(t_ctx *ctx)

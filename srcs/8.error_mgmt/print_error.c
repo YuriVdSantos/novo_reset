@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-extern int	g_exit_status;
+extern int	g_signal;
 
 void	print_error_msg(char *command, char *msg)
 {
@@ -31,7 +31,7 @@ void	print_error(t_ctx *ctx, char *context_msg, int errnum, int exit_status)
     if (ctx)
         ctx->exit_status = exit_status;
     else
-        g_exit_status = exit_status;
+        g_signal = exit_status;
 }
 
 
