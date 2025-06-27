@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_ctx.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yvieira- <yvieira-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/15 19:22:03 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/18 21:53:24 by yvieira-         ###   ########.fr       */
+/*   Updated: 2025/06/26 20:18:17 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	free_context(t_ctx *ctx)
 	if (ctx)
 	{
 		super_free(ctx);
-		
 		if (ctx->input)
 			free(ctx->input);
 		if (ctx->pwd)

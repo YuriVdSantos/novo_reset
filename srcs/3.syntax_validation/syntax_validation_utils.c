@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_validation_utils.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yvieira- <yvieira-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 15:27:25 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/19 16:40:24 by yvieira-         ###   ########.fr       */
+/*   Updated: 2025/06/26 20:56:07 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ bool	check_pipes(t_ctx *ctx, t_token *tokens)
 	return (true);
 }
 
-static bool	is_valid_filename_token(t_token_type type)
+bool	is_valid_filename_token(t_token_type type)
 {
 	return (type == WORD || type == SQUOTE || type == DQUOTE);
 }
@@ -51,6 +51,26 @@ bool	check_redirections(t_ctx *ctx, t_token *tokens)
 				return (syntax_error(ctx, "syntax error near redirection"));
 		}
 		current = current->next;
+	}
+	return (true);
+}
+
+bool	check_initial_pipe(t_ctx *ctx, t_token *tokens)
+{
+	if (tokens->type == PIPE)
+	{
+		print_error(ctx, "syntax error near unexpected token `|'", 0, 258);
+		return (false);
+	}
+	return (true);
+}
+
+bool	check_consecutive_pipes(t_ctx *ctx, t_token *prev, t_token *current)
+{
+	if (prev && prev->type == PIPE && current->type == PIPE)
+	{
+		print_error(ctx, "syntax error near unexpected token `|'", 0, 258);
+		return (false);
 	}
 	return (true);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_lists.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yvieira- <yvieira-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 19:15:54 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/19 17:40:38 by yvieira-         ###   ########.fr       */
+/*   Updated: 2025/06/26 20:32:03 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	free_cmd_list(t_cmd *cmd_list)
 	t_cmd	*next_cmd;
 	size_t	i;
 
+	i = 0;
 	current_cmd = cmd_list;
 	while (current_cmd)
 	{
@@ -40,8 +41,11 @@ void	free_cmd_list(t_cmd *cmd_list)
 
 		if (current_cmd->args)
 		{
-			for (i = 0; current_cmd->args[i]; i++)
+			while (current_cmd->args[i])
+			{
 				free(current_cmd->args[i]);
+				i++;
+			}
 			free(current_cmd->args);
 		}
 		if (current_cmd->cmd_path)

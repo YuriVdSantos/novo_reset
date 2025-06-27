@@ -37,9 +37,10 @@ SRCS =  minishell.c \
 	srcs/2.tokenizer/handle_word.c \
 	\
 	srcs/3.syntax_validation/syntax_validation.c \
+	srcs/3.syntax_validation/syntax_validation_.c \
 	\
 	srcs/4.parser/parsing.c \
-		  srcs/3.syntax_validation/syntax_validation_utils.c \
+	srcs/3.syntax_validation/syntax_validation_utils.c \
 	srcs/4.parser/handle_cmd.c \
 	srcs/4.parser/handle_cmd_1.c \
 	\

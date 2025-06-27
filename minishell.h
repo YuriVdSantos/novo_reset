@@ -640,7 +640,11 @@ t_token	*new_token(t_ctx *ctx, t_token_type type, const char *str);
 bool	validate_syntax(t_ctx *ctx, t_token *tokens);
 bool	check_pipes(t_ctx *ctx, t_token *tokens);
 bool	check_redirections(t_ctx *ctx, t_token *tokens);
-
+bool	check_initial_pipe(t_ctx *ctx, t_token *tokens);
+bool	check_consecutive_pipes(t_ctx *ctx, t_token *prev, t_token *current);
+bool	check_redirection_syntax(t_ctx *ctx, t_token *current);
+bool	check_final_pipe(t_ctx *ctx, t_token *current);
+bool	is_valid_filename_token(t_token_type type);
 
 // =============================================================================
 // srcs/4.parser/
