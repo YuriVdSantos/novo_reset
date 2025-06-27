@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_cmd_1.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/26 21:09:24 by jhualves          #+#    #+#             */
+/*   Updated: 2025/06/26 21:10:31 by jhualves         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
@@ -20,13 +31,13 @@ void	handle_env_var(t_ctx *ctx, t_token **tmp, t_cmd *current)
 	char	*env_value;
 
 	env_value = get_env_value(ctx, (*tmp)->value);
-    if (env_value == NULL || ft_strlen(env_value) == 0)
-    {
-        *tmp = (*tmp)->next; 
-        return; 
-    }
+	if (env_value == NULL || ft_strlen(env_value) == 0)
+	{
+		*tmp = (*tmp)->next;
+		return ;
+	}
 	add_arg(current, safe_strdup(ctx, env_value));
-	current->type = CMD_BUILTIN; 
+	current->type = CMD_BUILTIN;
 	*tmp = (*tmp)->next;
 }
 

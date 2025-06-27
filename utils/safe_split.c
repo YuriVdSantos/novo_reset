@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 15:48:45 by jhualves          #+#    #+#             */
-/*   Updated: 2025/05/27 02:14:14 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/26 21:54:40 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,12 @@ char	**safe_split(t_ctx *ctx, const char *s, char c)
 	}
 	result[word_ct] = NULL;
 	return (result);
+}
+
+int	ft_isalpha_upper(int c)
+{
+	if (c >= 'A' && c <= 'Z')
+		return (1);
+	else
+		return (0);
 }

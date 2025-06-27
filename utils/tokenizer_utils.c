@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
+/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 20:17:26 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/18 12:46:51 by yurivieirad      ###   ########.fr       */
+/*   Updated: 2025/06/26 22:03:09 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ static int	substr_handle_env_var(t_ctx *ctx, char **str, const char **input)
 	return (len);
 }
 
-int	define_substring(t_ctx *ctx, char **str, const char **input, t_token_type type)
+int	define_substring(t_ctx *ctx, char **str, const char **input, \
+	t_token_type type)
 {
 	if (type == SQUOTE)
 		return (substr_handle_squote(str, input));

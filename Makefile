@@ -43,6 +43,7 @@ SRCS =  minishell.c \
 	srcs/3.syntax_validation/syntax_validation_utils.c \
 	srcs/4.parser/handle_cmd.c \
 	srcs/4.parser/handle_cmd_1.c \
+	srcs/4.parser/handle_cmd_2.c \
 	\
 	srcs/5.expander/quotes_expander.c \
 	srcs/5.expander/string_expander.c\

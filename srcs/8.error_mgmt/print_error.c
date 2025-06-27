@@ -1,6 +1,16 @@
-#include "minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   print_error.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/26 21:58:34 by jhualves          #+#    #+#             */
+/*   Updated: 2025/06/26 21:58:41 by jhualves         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-// volatile sig_atomic_t g_signal;
+#include "minishell.h"
 
 void	print_error_msg(char *command, char *msg)
 {
@@ -16,22 +26,22 @@ void	print_error_msg(char *command, char *msg)
 
 void	print_error(t_ctx *ctx, char *context_msg, int errnum, int exit_status)
 {
-    ft_putstr_fd("minishell: ", STDERR_FILENO);
-    if (context_msg)
-    {
-        ft_putstr_fd(context_msg, STDERR_FILENO);
-    }
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	if (context_msg)
+	{
+		ft_putstr_fd(context_msg, STDERR_FILENO);
+	}
 	if (errnum > 0) 
-    {
-        ft_putstr_fd(": ", STDERR_FILENO);
-        ft_putstr_fd(": ", STDERR_FILENO);
-        ft_putstr_fd(strerror(errnum), STDERR_FILENO);
-    }
+	{
+		ft_putstr_fd(": ", STDERR_FILENO);
+		ft_putstr_fd(": ", STDERR_FILENO);
+		ft_putstr_fd(strerror(errnum), STDERR_FILENO);
+	}
 	ft_putstr_fd("\n", STDERR_FILENO);
-    if (ctx)
-        ctx->exit_status = exit_status;
-    else
-        g_signal = exit_status;
+	if (ctx)
+		ctx->exit_status = exit_status;
+	else
+		g_signal = exit_status;
 }
 
 

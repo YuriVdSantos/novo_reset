@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   safe_utils_libft.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/26 21:54:05 by jhualves          #+#    #+#             */
+/*   Updated: 2025/06/26 22:02:49 by jhualves         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 char	*safe_strdup(t_ctx *ctx, const char *s)
@@ -13,12 +25,10 @@ char	*ft_strjoin_free(t_ctx *ctx, char *s1, char *s2)
 {
 	char	*result;
 
-	(void)ctx; // ctx is not used in this function, but kept for consistency
+	(void)ctx;
 	result = ft_strjoin(s1, s2);
-
 	free(s1);
-
-	return (ft_strdup(result));//ver se precisa de free
+	return (ft_strdup(result));
 }
 
 char	*ft_safe_strndup(t_ctx *ctx, const char *s, size_t size)

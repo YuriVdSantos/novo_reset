@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   string_expander.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/26 21:55:16 by jhualves          #+#    #+#             */
+/*   Updated: 2025/06/26 21:56:55 by jhualves         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 #define EXPAND_BUFFER_SIZE 4096
@@ -6,28 +18,24 @@ char	*get_var_value(t_ctx *ctx, const char *var_name, int *len)
 {
 	char	*val;
 	char	*key;
+	char	*pid_str;
 
-    
 	if (var_name[0] == '?')
 	{
 		*len = 1;
 		return (safe_itoa(ctx, ctx->exit_status));
 	}
-    
 	if (var_name[0] == '$')
 	{
 		*len = 1;
-		char *pid_str;
 		get_pid_var(ctx, &pid_str);
 		return (pid_str);
 	}
-    
-    if (var_name[0] == '\0' || (!ft_isalpha(var_name[0]) && var_name[0] != '_'))
-    {
-        *len = 0; 
-        return (safe_strdup(ctx, "$")); 
-    }
-    
+	if (var_name[0] == '\0' || (!ft_isalpha(var_name[0]) && var_name[0] != '_'))
+	{
+		*len = 0;
+		return (safe_strdup(ctx, "$"));
+	}
 	*len = 0;
 	while (ft_isalnum(var_name[*len]) || var_name[*len] == '_')
 		(*len)++;
@@ -35,8 +43,6 @@ char	*get_var_value(t_ctx *ctx, const char *var_name, int *len)
 	if (!key)
 		return (NULL);
 	val = get_env_value(ctx, key);
-	
-	
 	if (val)
 		return (safe_strdup(ctx, val));
 	return (safe_strdup(ctx, ""));
@@ -70,7 +76,6 @@ char	*expand_string(t_ctx *ctx, const char *input)
 		{
 			int len;
 			char *var_value;
-
 			len = 0;
 			var_value = get_var_value(ctx, &input[i + 1], &len);
 			if (var_value)

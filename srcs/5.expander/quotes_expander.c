@@ -1,7 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   quotes_expander.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/26 21:41:14 by jhualves          #+#    #+#             */
+/*   Updated: 2025/06/26 21:55:02 by jhualves         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	ft_isalpha_upper(int c);
+static void	*return_null_error(t_ctx *ctx);
 
 char	*expand_dquotes(t_ctx *ctx, const char *input)
 {
@@ -9,29 +20,31 @@ char	*expand_dquotes(t_ctx *ctx, const char *input)
 	char	*env_value;
 	int		len;
 
-    result = safe_strdup(ctx, "");
-    if (!result) return (NULL);
-
+	result = safe_strdup(ctx, "");
+	if (!result)
+		return (NULL);
 	while (*input)
 	{
 		if (*input == '$')
 		{
 			env_value = get_var_value(ctx, input + 1, &len);
-            if (!env_value) {
-                return (NULL);
-            }
+			if (!env_value)
+				return (NULL);
 			result = safe_strjoin(ctx, result, env_value);
 			input += len + 1;
 		}
 		else
-			result = safe_strjoin(ctx, result, (char []){*input++, '\0'});
+			result = ft_strjoin_free(ctx, result, (char []){*input++, '\0'});
 	}
 	if (result == NULL)
-	{
-		handle_error(ctx, "Memory allocation error in expand_dquotes", 12, 1);
-		return (NULL);
-	}
+		return (return_null_error(ctx));
 	return (result);
+}
+
+static void	*return_null_error(t_ctx *ctx)
+{
+	handle_error(ctx, "Memory allocation error in expand_dquotes", 12, 1);
+	return (NULL);
 }
 
 char	*get_env_value(t_ctx *ctx, const char *key)
@@ -64,13 +77,5 @@ int	var_name_length(const char *input)
 
 char	*expand_env_var(t_ctx *ctx, const char *input, int *len)
 {
-    return (get_var_value(ctx, input, len));
-}
-
-static int	ft_isalpha_upper(int c)
-{
-	if (c >= 'A' && c <= 'Z')
-		return (1);
-	else
-		return (0);
+	return (get_var_value(ctx, input, len));
 }

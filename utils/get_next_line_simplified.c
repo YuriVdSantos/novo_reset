@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_simplified.c                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/26 22:01:43 by jhualves          #+#    #+#             */
+/*   Updated: 2025/06/26 22:01:50 by jhualves         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 #ifndef GNL_BUFFER_SIZE
@@ -30,8 +42,6 @@ static int	read_to_buffer(int fd, char **stash)
 	if (!buffer)
 		return (-1);
 	bytes_read = 1;
-
-
 	while (find_newline(*stash) == -1 && bytes_read != 0)
 	{
 		bytes_read = read(fd, buffer, GNL_BUFFER_SIZE);
