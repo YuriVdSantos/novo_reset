@@ -1,10 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   execute_multiple_commands.c                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/27 15:30:10 by jhualves          #+#    #+#             */
+/*   Updated: 2025/06/27 15:30:16 by jhualves         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 
 static void	child_process_logic(t_cmd *cmd, t_ctx *ctx)
 {
 	int	original_fds[2];
-	int exit_status;
+	int	exit_status;
 
 	if (apply_redirections(cmd, original_fds) == FAILED)
 	{

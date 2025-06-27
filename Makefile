@@ -38,17 +38,19 @@ SRCS =  minishell.c \
 	\
 	srcs/3.syntax_validation/syntax_validation.c \
 	srcs/3.syntax_validation/syntax_validation_.c \
+	srcs/3.syntax_validation/syntax_validation_utils.c \
 	\
 	srcs/4.parser/parsing.c \
-	srcs/3.syntax_validation/syntax_validation_utils.c \
 	srcs/4.parser/handle_cmd.c \
 	srcs/4.parser/handle_cmd_1.c \
 	srcs/4.parser/handle_cmd_2.c \
 	\
 	srcs/5.expander/quotes_expander.c \
 	srcs/5.expander/string_expander.c\
+	srcs/5.expander/var_expander.c\
 	\
 	srcs/6.signals/signals.c \
+	srcs/6.signals/signals_utils.c \
 	\
 	srcs/7.memory_mgmt/safe_malloc.c \
 	\
@@ -60,7 +62,6 @@ SRCS =  minishell.c \
 	srcs/9.executor/execute_builtin.c \
 	srcs/9.executor/wait.c \
 	srcs/9.executor/get_path.c \
-	srcs/9.executor/pipes.c \
 	srcs/9.executor/multiple_commands_utils.c \
 	srcs/9.executor/utils.c \
 	srcs/9.executor/utils_envp.c \

@@ -6,12 +6,11 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 20:17:26 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/26 22:03:09 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/26 22:17:47 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 void	get_pid_var(t_ctx *ctx, char **str)
 {
@@ -71,8 +70,6 @@ static int	substr_handle_env_var(t_ctx *ctx, char **str, const char **input)
 	while (start[len] && !ft_isspace(start[len]) && start[len] != '$' \
 			&& start[len] != '\'' && start[len] != '\"')
 		len++;
-
-
 	*str = ft_safe_strndup(ctx, start, len);
 	*input += len;
 	return (len);

@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/27 15:43:38 by jhualves          #+#    #+#             */
+/*   Updated: 2025/06/27 15:43:57 by jhualves         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdbool.h>
@@ -26,13 +37,11 @@ int	ft_echo(char **args, t_ctx *ctx)
 	(void)ctx;
 	i = 1;
 	newline = true;
-
 	while (args[i] && is_n_flag(args[i]))
 	{
 		newline = false;
 		i++;
 	}
-
 	while (args[i])
 	{
 		ft_putstr_fd(args[i], STDOUT_FILENO);
@@ -40,7 +49,6 @@ int	ft_echo(char **args, t_ctx *ctx)
 			ft_putstr_fd(" ", STDOUT_FILENO);
 		i++;
 	}
-
 	if (newline)
 		ft_putchar_fd('\n', STDOUT_FILENO);
 	return (0);

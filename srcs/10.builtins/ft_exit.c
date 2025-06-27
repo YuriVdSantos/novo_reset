@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/27 15:44:22 by jhualves          #+#    #+#             */
+/*   Updated: 2025/06/27 15:46:19 by jhualves         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	is_numeric(char *str)
@@ -68,6 +80,5 @@ int	ft_exit(char **args, t_ctx *ctx)
 	}
 	else
 		status = ft_atodbl(args[1]);
-	free_context(ctx);
-	exit((unsigned char)status);
+	return (free_context(ctx), exit((unsigned char)status), 0);
 }

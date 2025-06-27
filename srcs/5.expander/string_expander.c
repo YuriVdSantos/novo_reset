@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 21:55:16 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/26 21:56:55 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/27 15:14:37 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,95 +14,87 @@
 
 #define EXPAND_BUFFER_SIZE 4096
 
-char	*get_var_value(t_ctx *ctx, const char *var_name, int *len)
-{
-	char	*val;
-	char	*key;
-	char	*pid_str;
+typedef struct s_expand_buffer {
+	char	*result;
+	char	*cursor;
+	size_t	remaining;
+}	t_expand_buffer;
 
-	if (var_name[0] == '?')
+static void	init_expand_buffer(t_expand_buffer *buf, char *result, size_t size)
+{
+	buf->result = result;
+	buf->cursor = result;
+	buf->remaining = size;
+}
+
+static void	handle_dollar_expansion(t_ctx *ctx, const char *input, \
+		int *i, t_expand_buffer *buf)
+{
+	int		len;
+	char	*var_value;
+
+	len = 0;
+	var_value = get_var_value(ctx, &input[*i + 1], &len);
+	if (!var_value)
 	{
-		*len = 1;
-		return (safe_itoa(ctx, ctx->exit_status));
+		*i += len + 1;
+		return ;
 	}
-	if (var_name[0] == '$')
+	if (ft_strlen(var_value) < buf->remaining)
 	{
-		*len = 1;
-		get_pid_var(ctx, &pid_str);
-		return (pid_str);
+		ft_strlcpy(buf->cursor, var_value, buf->remaining);
+		buf->cursor += ft_strlen(var_value);
+		buf->remaining -= ft_strlen(var_value);
 	}
-	if (var_name[0] == '\0' || (!ft_isalpha(var_name[0]) && var_name[0] != '_'))
+	free(var_value);
+	*i += len + 1;
+}
+
+static void	handle_regular_char(const char *input, int *i, t_expand_buffer *buf)
+{
+	if (buf->remaining > 1)
 	{
-		*len = 0;
-		return (safe_strdup(ctx, "$"));
+		*buf->cursor = input[*i];
+		buf->cursor++;
+		buf->remaining--;
+		(*i)++;
 	}
-	*len = 0;
-	while (ft_isalnum(var_name[*len]) || var_name[*len] == '_')
-		(*len)++;
-	key = ft_safe_strndup(ctx, var_name, *len);
-	if (!key)
-		return (NULL);
-	val = get_env_value(ctx, key);
-	if (val)
-		return (safe_strdup(ctx, val));
-	return (safe_strdup(ctx, ""));
+}
+
+static void	handle_quotes(const char *input, int *i, char *quote_char)
+{
+	if ((input[*i] == '\'' || input[*i] == '\"') && *quote_char == 0)
+	{
+		*quote_char = input[*i];
+		(*i)++;
+	}
+	else if (input[*i] == *quote_char)
+	{
+		*quote_char = 0;
+		(*i)++;
+	}
 }
 
 char	*expand_string(t_ctx *ctx, const char *input)
 {
-	char	result[EXPAND_BUFFER_SIZE];
-	char	*cursor;
-	int		i;
-	char	quote_char;
+	char				result[EXPAND_BUFFER_SIZE];
+	t_expand_buffer		buf;
+	int					i;
+	char				quote_char;
 
 	ft_bzero(result, EXPAND_BUFFER_SIZE);
-	cursor = result;
+	init_expand_buffer(&buf, result, EXPAND_BUFFER_SIZE);
 	i = 0;
 	quote_char = 0;
-
 	while (input[i] != '\0')
 	{
-		if ((input[i] == '\'' || input[i] == '\"') && quote_char == 0)
-		{
-			quote_char = input[i];
-			i++;
-		}
-		else if (input[i] == quote_char && quote_char != 0)
-		{
-			quote_char = 0;
-			i++;
-		}
+		if ((input[i] == '\'' || input[i] == '\"') || input[i] == quote_char)
+			handle_quotes(input, &i, &quote_char);
 		else if (input[i] == '$' && quote_char != '\'')
-		{
-			int len;
-			char *var_value;
-			len = 0;
-			var_value = get_var_value(ctx, &input[i + 1], &len);
-			if (var_value)
-			{
-				if ((cursor - result) + ft_strlen(var_value) < EXPAND_BUFFER_SIZE)
-				{
-					ft_strlcpy(cursor, var_value, EXPAND_BUFFER_SIZE - (cursor - result));
-					cursor += ft_strlen(var_value);
-				}
-			}
-			i += len + 1;
-		}
+			handle_dollar_expansion(ctx, input, &i, &buf);
 		else
-		{
-			if (cursor - result < EXPAND_BUFFER_SIZE - 1)
-			{
-				*cursor = input[i];
-				cursor++;
-			}
-			i++;
-		}
+			handle_regular_char(input, &i, &buf);
 	}
-	*cursor = '\0';
-	return (safe_strdup(ctx, result));
-}
-
-int	is_valid_dollar(char c)
-{
-	return (ft_isalnum(c) || c == '{' || c == '?' || c == '$' || c == '_');
+	*buf.cursor = '\0';
+	return (safe_strdup(ctx, buf.result));
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/27 15:50:51 by jhualves          #+#    #+#             */
+/*   Updated: 2025/06/27 15:51:39 by jhualves         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 int	is_valid_env_identifier(const char *name)
@@ -47,8 +59,8 @@ int	ft_unset(char **args, t_ctx *ctx)
 
 	exit_status = EXIT_SUCCESS;
 	changed = false;
-	i = 1;
-	while (args[i])
+	i = 0;
+	while (args[++i])
 	{
 		if (!is_valid_env_identifier(args[i]))
 		{
@@ -63,10 +75,8 @@ int	ft_unset(char **args, t_ctx *ctx)
 				changed = true;
 			unset_env_var(ctx, args[i]);
 		}
-		i++;
 	}
 	if (changed)
 		sync_env_list_str(ctx);
-		
 	return (exit_status);
 }

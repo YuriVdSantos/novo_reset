@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/26 22:07:06 by jhualves          #+#    #+#             */
+/*   Updated: 2025/06/26 22:33:50 by jhualves         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-volatile sig_atomic_t g_signal = 0;
+void			execute(t_ctx *ctx);
+void			free_ctx_between_commands(t_ctx *ctx);
 
-void	execute(t_ctx *ctx);
-void	free_ctx_between_commands(t_ctx *ctx);
+volatile sig_atomic_t	g_signal = 0;
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -18,6 +30,13 @@ int	main(int argc, char **argv, char **envp)
 		exit(EXIT_FAILURE);
 	}
 	init_ctx(ctx, envp);
+	ctx = main_loop(ctx);
+	free_context(ctx);
+	return (g_signal);
+}
+
+t_ctx	*main_loop(t_ctx *ctx)
+{
 	while (1)
 	{
 		define_signals();
@@ -37,8 +56,7 @@ int	main(int argc, char **argv, char **envp)
 		process_input(ctx, ctx->input);
 		free_ctx_between_commands(ctx);
 	}
-	free_context(ctx);
-	return (g_signal);
+	return (ctx);
 }
 
 void	execute(t_ctx *ctx)

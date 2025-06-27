@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 19:15:54 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/26 20:32:03 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/27 15:18:34 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	free_cmd_list(t_cmd *cmd_list)
 	while (current_cmd)
 	{
 		next_cmd = current_cmd->next;
-
 		if (current_cmd->args)
 		{
 			while (current_cmd->args[i])

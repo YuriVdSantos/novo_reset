@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 21:41:14 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/26 21:55:02 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/27 15:15:09 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ char	*get_env_value(t_ctx *ctx, const char *key)
 
 	if (!key || ft_strcmp(key, "") == 0)
 		return (NULL);
-
 	node = find_env_var(ctx->env_list, key);
 	if (node)
 		return (node->value);

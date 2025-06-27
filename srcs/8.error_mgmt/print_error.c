@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 21:58:34 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/26 21:58:41 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/27 15:21:36 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	print_error_msg(char *command, char *msg)
 	ft_putendl_fd(msg, STDERR_FILENO);
 }
 
-
 void	print_error(t_ctx *ctx, char *context_msg, int errnum, int exit_status)
 {
 	ft_putstr_fd("minishell: ", STDERR_FILENO);
@@ -31,7 +30,7 @@ void	print_error(t_ctx *ctx, char *context_msg, int errnum, int exit_status)
 	{
 		ft_putstr_fd(context_msg, STDERR_FILENO);
 	}
-	if (errnum > 0) 
+	if (errnum > 0)
 	{
 		ft_putstr_fd(": ", STDERR_FILENO);
 		ft_putstr_fd(": ", STDERR_FILENO);
@@ -44,13 +43,11 @@ void	print_error(t_ctx *ctx, char *context_msg, int errnum, int exit_status)
 		g_signal = exit_status;
 }
 
-
 bool	handle_error(t_ctx *ctx, char *msg, int errnum, int exit_status)
 {
 	print_error(ctx, msg, errnum, exit_status);
 	return (false);
 }
-
 
 bool	syntax_error(t_ctx *ctx, char *msg)
 {

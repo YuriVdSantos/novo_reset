@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
+/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:59:18 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/20 12:13:02 by yurivieirad      ###   ########.fr       */
+/*   Updated: 2025/06/27 15:56:50 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,18 @@ static char	*create_temp_filename(void)
 	return (filename);
 }
 
-static int handle_single_heredoc(t_redir *redir, t_ctx *ctx)
+static int	handle_single_heredoc(t_redir *redir, t_ctx *ctx)
 {
 	int		temp_fd;
 	char	*line;
 	char	*delimiter;
 	char	*temp_filename;
+	char	*expanded_line;
 	bool	expand;
 
 	delimiter = redir->filename;
-	expand = (!ft_strchr(delimiter, '\'') && !ft_strchr(delimiter, '\"')) || ft_strchr(delimiter, '$');
-
+	expand = (!ft_strchr(delimiter, '\'') && !ft_strchr(delimiter, '\"')) \
+					|| ft_strchr(delimiter, '$');
 	temp_filename = create_temp_filename();
 	if (!temp_filename)
 		return (FAILED);
@@ -46,13 +47,13 @@ static int handle_single_heredoc(t_redir *redir, t_ctx *ctx)
 		line = readline("> ");
 		if (!line || ft_strcmp(line, delimiter) == 0)
 		{
-			if(line)
+			if (line)
 				free(line);
 			break ;
 		}
 		if (expand)
 		{
-			char *expanded_line = expand_string(ctx, line);
+			expanded_line = expand_string(ctx, line);
 			ft_putendl_fd(expanded_line, temp_fd);
 		}
 		else

@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 19:02:00 by jhualves          #+#    #+#             */
-/*   Updated: 2025/05/26 03:23:38 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/26 22:06:00 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,6 @@ int			ft_putnbr(int n);
 int			ft_putunbr_fd(unsigned int n);
 int			ft_printf(const char *format, ...);
 int			ft_strcmp(const char *s1, const char *s2);
-long long		ft_atodbl(char *str);
+long long	ft_atodbl(char *str);
 
 #endif
