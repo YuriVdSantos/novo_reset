@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yvieira- <yvieira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 21:23:41 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/26 21:40:07 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/27 21:03:10 by yvieira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	handle_quotes_pipes(t_ctx *ctx, t_token **tmp, t_cmd *current);
+static void	handle_quotes_pipes(t_ctx *ctx, t_token **tmp, t_cmd **current);
 
 char	*remove_quotes(char *str)
 {
@@ -78,7 +78,7 @@ t_cmd	*parse_tokens(t_ctx *ctx, t_token **tokens)
 	while (tmp && tmp->type != END)
 	{
 		if (tmp->type == DQUOTE || tmp->type == SQUOTE || tmp->type == PIPE)
-			handle_quotes_pipes(ctx, &tmp, current);
+			handle_quotes_pipes(ctx, &tmp, &current);
 		else if (tmp->type >= REDIR_IN && tmp->type <= APPEND)
 			handle_redir(ctx, &tmp, current);
 		else if (tmp->type == WORD)
@@ -94,10 +94,10 @@ t_cmd	*parse_tokens(t_ctx *ctx, t_token **tokens)
 	return (head);
 }
 
-static void	handle_quotes_pipes(t_ctx *ctx, t_token **tmp, t_cmd *current)
+static void	handle_quotes_pipes(t_ctx *ctx, t_token **tmp, t_cmd **current)
 {
 	if ((*tmp)->type == PIPE)
-		handle_pipe(tmp, &current);
+		handle_pipe(tmp, current);
 	else if ((*tmp)->type == DQUOTE || (*tmp)->type == SQUOTE)
 		handle_dquote(ctx, tmp, current);
 	else if ((*tmp)->type == SQUOTE)

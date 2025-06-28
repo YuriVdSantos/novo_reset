@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yvieira- <yvieira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:14:01 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/27 15:36:26 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/27 21:03:39 by yvieira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,8 +231,8 @@ bool	is_valid_filename_token(t_token_type type);
 void	handle_pipe(t_token **tmp, t_cmd **current);
 void	handle_redir(t_ctx *ctx, t_token **tmp, t_cmd *current);
 void	handle_word(t_token **tmp, t_cmd *current);
-void	handle_dquote(t_ctx *ctx, t_token **tmp, t_cmd *current);
-void	handle_squote(t_ctx *ctx, t_token **tmp, t_cmd *current);
+void	handle_dquote(t_ctx *ctx, t_token **tmp, t_cmd **current);
+void	handle_squote(t_ctx *ctx, t_token **tmp, t_cmd **current);
 
 // srcs/4.parser/handle_cmd_1.c
 void	handle_assignment_var(t_ctx *ctx, t_token **tmp, t_cmd *current);
