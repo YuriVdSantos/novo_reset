@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 15:50:51 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/27 15:51:39 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/27 21:54:42 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,13 @@ void	unset_env_var(t_ctx *ctx, const char *key)
 	}
 }
 
+static void print_error_unset(char *args)
+{
+	ft_putstr_fd("minishell: unset: `", STDERR_FILENO);
+	ft_putstr_fd(args, STDERR_FILENO);
+	ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
+}
+
 int	ft_unset(char **args, t_ctx *ctx)
 {
 	int		exit_status;
@@ -64,9 +71,7 @@ int	ft_unset(char **args, t_ctx *ctx)
 	{
 		if (!is_valid_env_identifier(args[i]))
 		{
-			ft_putstr_fd("minishell: unset: `", STDERR_FILENO);
-			ft_putstr_fd(args[i], STDERR_FILENO);
-			ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
+			print_error_unset(args[i]);
 			exit_status = EXIT_FAILURE;
 		}
 		else

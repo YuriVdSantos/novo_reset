@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 19:15:54 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/27 15:18:34 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/27 21:16:29 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ void	free_cmd_list(t_cmd *cmd_list)
 				free(current_cmd->args[i]);
 				i++;
 			}
-			free(current_cmd->args);
+			if (current_cmd->args)
+				free(current_cmd->args);
 		}
 		if (current_cmd->cmd_path)
 			free(current_cmd->cmd_path);

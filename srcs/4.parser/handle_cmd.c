@@ -6,7 +6,7 @@
 /*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 21:10:42 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/26 21:40:17 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/27 21:23:01 by jhualves         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,21 @@ void	handle_word(t_token **tmp, t_cmd *current)
 	*tmp = (*tmp)->next;
 }
 
-void	handle_dquote(t_ctx *ctx, t_token **tmp, t_cmd *current)
+void	handle_dquote(t_ctx *ctx, t_token **tmp, t_cmd **current)
 {
 	char	*content;
 
 	content = safe_strdup(ctx, expand_dquotes(ctx, (*tmp)->value));
-	add_arg(current, content);
+	add_arg(*current, content);
 	*tmp = (*tmp)->next;
 }
 
-void	handle_squote(t_ctx *ctx, t_token **tmp, t_cmd *current)
+void	handle_squote(t_ctx *ctx, t_token **tmp, t_cmd **current)
 {
 	char	*content;
 
 	content = safe_strdup(ctx, (*tmp)->value);
-	add_arg(current, content);
+	add_arg(*current, content);
 	*tmp = (*tmp)->next;
 }
 
