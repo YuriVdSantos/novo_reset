@@ -83,6 +83,7 @@ SRCS =  minishell.c \
 	\
 	srcs/12.handle_new_env/assignment_handler.c \
 	srcs/12.handle_new_env/create_new_env.c \
+	srcs/12.handle_new_env/create_new_env_utils.c \
 	\
 	utils/main_utils.c \
 	utils/parsing_utils.c \

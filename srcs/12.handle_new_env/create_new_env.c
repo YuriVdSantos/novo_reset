@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_new_env.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:01:05 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/26 22:01:30 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/06/30 04:28:11 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,24 +57,30 @@ void	update_existing_var(t_ctx *ctx, t_env *var, const char *value)
 	var->value = ft_strdup(value);
 }
 
-void	set_env_var(t_ctx *ctx, const char *assignment)
+static void	extract_key_value(const char *assignment, char **key, char **value)
 {
-	char	*key;
-	char	*value;
 	char	*equal_pos;
-	t_env	*existing_var;
 
 	equal_pos = ft_strchr(assignment, '=');
 	if (equal_pos)
 	{
-		key = ft_strndup(assignment, equal_pos - assignment);
-		value = ft_strdup(equal_pos + 1);
+		*key = ft_strndup(assignment, equal_pos - assignment);
+		*value = ft_strdup(equal_pos + 1);
 	}
 	else
 	{
-		key = ft_strdup(assignment);
-		value = NULL;
+		*key = ft_strdup(assignment);
+		*value = NULL;
 	}
+}
+
+void	set_env_var(t_ctx *ctx, const char *assignment)
+{
+	char	*key;
+	char	*value;
+	t_env	*existing_var;
+
+	extract_key_value(assignment, &key, &value);
 	existing_var = find_env_var(ctx->env_list, key);
 	if (existing_var)
 	{
@@ -87,39 +93,4 @@ void	set_env_var(t_ctx *ctx, const char *assignment)
 	else
 		add_new_env_var(ctx, key, value);
 	sync_env_list_str(ctx);
-}
-
-void	sync_env_list_str(t_ctx *ctx)
-{
-	int		i;
-	t_env	*current;
-	char	*tmp;
-	size_t	count;
-
-	if (ctx->env_list_str)
-		free_string_array(ctx->env_list_str);
-	count = 0;
-	current = ctx->env_list;
-	while (current)
-	{
-		if (current->value != NULL)
-			count++;
-		current = current->next;
-	}
-	ctx->env_list_str = malloc(sizeof(char *) * (count + 1));
-	if (!ctx->env_list_str)
-		return ;
-	i = 0;
-	current = ctx->env_list;
-	while (current)
-	{
-		if (current->value != NULL)
-		{
-			tmp = ft_strjoin(current->key, "=");
-			ctx->env_list_str[i++] = ft_strjoin(tmp, current->value);
-			free(tmp);
-		}
-		current = current->next;
-	}
-	ctx->env_list_str[i] = NULL;
 }
