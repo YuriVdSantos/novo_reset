@@ -60,4 +60,4 @@ void	unset_string_env_var(t_ctx *ctx, const char *key)
 	}
 	free_string_array(ctx->env_list_str);
 	ctx->env_list_str = temp;
-}	
+}

@@ -61,8 +61,17 @@
 # define OUT_OF_RANGE 255
 # define BUILTIN_MISUSE 2
 # define CMD_NOT_FOUND_MSG	"command not found"
+# define EXPAND_BUFFER_SIZE 4096
 
-typedef enum e_alloc_type {
+typedef struct s_expand_buffer
+{
+	char	*result;
+	char	*cursor;
+	size_t	remaining;
+}	t_expand_buffer;
+
+typedef enum e_alloc_type
+{
 	ALLOC_TYPE_GENERIC,
 	ALLOC_TYPE_CMD,
 	ALLOC_TYPE_TOKEN,
@@ -73,7 +82,8 @@ typedef enum e_alloc_type {
 	ALLOC_TYPE_CTX
 }	t_alloc_type;
 
-typedef enum e_token_type {
+typedef enum e_token_type
+{
 	WORD,
 	PIPE,
 	REDIR_IN,
@@ -89,19 +99,22 @@ typedef enum e_token_type {
 	ERROR
 }	t_token_type;
 
-typedef enum e_redir_type {
+typedef enum e_redir_type
+{
 	REDIR_INPUT,
 	REDIR_OUTPUT,
 	REDIR_HEREDOC,
 	REDIR_APPEND
 }	t_redir_type;
 
-typedef enum e_cmd_type {
+typedef enum e_cmd_type
+{
 	CMD_BUILTIN,
 	CMD_EXTERNAL
 }	t_cmd_type;
 
-typedef struct s_redir {
+typedef struct s_redir
+{
 	t_redir_type	type;
 	char			*filename;
 	int				fd;
@@ -109,13 +122,15 @@ typedef struct s_redir {
 	struct s_redir	*next;
 }	t_redir;
 
-typedef struct s_token {
+typedef struct s_token
+{
 	t_token_type	type;
 	char			*value;
 	struct s_token	*next;
 }	t_token;
 
-typedef struct s_cmd {
+typedef struct s_cmd
+{
 	char			**args;
 	char			*cmd_path;
 	int				pipe[2];
@@ -124,19 +139,22 @@ typedef struct s_cmd {
 	struct s_cmd	*next;
 }	t_cmd;
 
-typedef struct s_env {
+typedef struct s_env
+{
 	char			*key;
 	char			*value;
 	struct s_env	*next;
 }	t_env;
 
-typedef struct s_allocation {
+typedef struct s_allocation
+{
 	void				*ptr;
 	t_alloc_type		type;
 	struct s_allocation	*next;
 }	t_allocation;
 
-typedef struct s_ctx {
+typedef struct s_ctx
+{
 	t_env					*env_list;
 	t_cmd					*cmd_list;
 	t_token					*token_list;

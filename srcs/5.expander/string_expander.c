@@ -12,14 +12,6 @@
 
 #include "minishell.h"
 
-#define EXPAND_BUFFER_SIZE 4096
-
-typedef struct s_expand_buffer {
-	char	*result;
-	char	*cursor;
-	size_t	remaining;
-}	t_expand_buffer;
-
 static void	init_expand_buffer(t_expand_buffer *buf, char *result, size_t size)
 {
 	buf->result = result;
