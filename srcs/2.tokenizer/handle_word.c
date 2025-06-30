@@ -24,13 +24,12 @@ void	token_handle_word(t_ctx *ctx, const char **input, t_token **tokens)
 	const char	*start;
 	int			len;
 	char		*word;
-	char		quote_char;
 
 	start = *input;
 	len = 0;
 	while (start[len] && !is_metachar(start[len]))
 	{
-		quote_char = quote_chr(start, &len);
+		quote_chr(start, &len);
 	}
 	if (len > 0)
 	{

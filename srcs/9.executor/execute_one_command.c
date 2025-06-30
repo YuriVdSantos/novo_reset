@@ -12,8 +12,6 @@
 
 #include "minishell.h"
 
-// volatile sig_atomic_t g_signal;
-
 int	execute_one_command(t_cmd *command, t_ctx *ctx)
 {
 	pid_t	pid;

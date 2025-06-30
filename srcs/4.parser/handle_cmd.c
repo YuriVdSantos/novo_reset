@@ -32,8 +32,9 @@ void	handle_dquote(t_ctx *ctx, t_token **tmp, t_cmd **current)
 {
 	char	*content;
 
-	content = safe_strdup(ctx, expand_dquotes(ctx, (*tmp)->value));
+	content = expand_dquotes(ctx, (*tmp)->value);
 	add_arg(*current, content);
+	free(content);
 	*tmp = (*tmp)->next;
 }
 
