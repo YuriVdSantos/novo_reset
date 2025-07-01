@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   safe_utils_libft.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 21:54:05 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/26 22:02:49 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:35:05 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,6 @@ char	*safe_strdup(t_ctx *ctx, const char *s)
 	dup = safe_malloc(ctx, ft_strlen(s) + 1, ALLOC_TYPE_STRING);
 	ft_strlcpy(dup, s, ft_strlen(s) + 1);
 	return (dup);
-}
-
-char	*ft_strjoin_free(t_ctx *ctx, char *s1, char *s2)
-{
-	char	*result;
-
-	(void)ctx;
-	result = ft_strjoin(s1, s2);
-	free(s1);
-	return (ft_strdup(result));
 }
 
 char	*ft_safe_strndup(t_ctx *ctx, const char *s, size_t size)

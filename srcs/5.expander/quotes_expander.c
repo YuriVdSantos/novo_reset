@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 21:41:14 by jhualves          #+#    #+#             */
-/*   Updated: 2025/07/01 14:07:16 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/01 16:33:25 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*expand_dquotes(t_ctx *ctx, const char *input)
 			input += len + 1;
 		}
 		else
-			result = ft_strjoin_free(ctx, result, (char []){*input++, '\0'});
+			result = safe_strjoin(ctx, result, (char []){*input++, '\0'});
 	}
 	if (result == NULL)
 		return (return_null_error(ctx));

@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:14:01 by jhualves          #+#    #+#             */
-/*   Updated: 2025/07/01 14:15:49 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/01 16:34:56 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -435,7 +435,6 @@ char	**safe_split(t_ctx *ctx, const char *s, char c);
 
 // utils/safe_utils_libft.c
 char	*safe_strdup(t_ctx *ctx, const char *s);
-char	*ft_strjoin_free(t_ctx *ctx, char *s1, char *s2);
 char	*ft_safe_strndup(t_ctx *ctx, const char *s, size_t size);
 char	*safe_substr(t_ctx *ctx, char const *s, unsigned int start, size_t len);
 char	*safe_strchr(t_ctx *ctx, const char *s, int c);
