@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_validation.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 20:39:00 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/26 21:08:06 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:18:02 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ bool	check_redirection_syntax(t_ctx *ctx, t_token *current)
 
 	if (is_redirection(current->type))
 	{
-		if (!current->next || current->next->type != WORD)
+		if ((!current->next || current->next->type != WORD) 
+			&& (current->next->type != SQUOTE) && (current->next->type != DQUOTE))
 		{
 			unexpected_token_str = get_token_name(current->next);
 			ft_strlcpy(error_msg, "syntax error near unexpected token `", \
