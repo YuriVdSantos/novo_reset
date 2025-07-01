@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 21:10:42 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/27 21:23:01 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/07/01 14:12:49 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	handle_dquote(t_ctx *ctx, t_token **tmp, t_cmd **current)
 
 	content = expand_dquotes(ctx, (*tmp)->value);
 	add_arg(*current, content);
-	free(content);
 	*tmp = (*tmp)->next;
 }
 

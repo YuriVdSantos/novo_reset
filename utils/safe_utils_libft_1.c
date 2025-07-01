@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   safe_utils_libft_1.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 15:48:45 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/10 23:04:27 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/07/01 14:14:49 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ char	*safe_strjoin(t_ctx *ctx, char const *s1, char const *s2)
 	joined = ft_strjoin(s1, s2);
 	if (joined == NULL)
 		return (NULL);
-	return (safe_strdup(ctx, joined));
+	register_alloc(ctx, joined, ALLOC_TYPE_STRING);
+	return (joined);
 }
 
 char	*safe_itoa(t_ctx *ctx, long n)

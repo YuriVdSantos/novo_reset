@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 21:58:34 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/27 15:21:36 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/07/01 14:34:12 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,10 @@ bool	handle_error(t_ctx *ctx, char *msg, int errnum, int exit_status)
 bool	syntax_error(t_ctx *ctx, char *msg)
 {
 	char	*error_msg;
+	char	*tmp;
 
-	error_msg = ft_strjoin("syntax error near unexpected token `", msg);
-	error_msg = ft_strjoin_free(ctx, error_msg, "'");
+	tmp = safe_strjoin(ctx, "syntax error near unexpected token `", msg);
+	error_msg = safe_strjoin(ctx, tmp, "'");
 	print_error(ctx, error_msg, 0, 2);
-	free(error_msg);
 	return (false);
 }

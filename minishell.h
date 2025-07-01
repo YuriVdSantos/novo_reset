@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yvieira- <yvieira-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:14:01 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/27 21:03:39 by yvieira-         ###   ########.fr       */
+/*   Updated: 2025/07/01 14:15:49 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -446,6 +446,7 @@ char	*safe_strtrim(t_ctx *ctx, char const *s1, char const *set);
 char	*safe_strjoin(t_ctx *ctx, char const *s1, char const *s2);
 char	*safe_itoa(t_ctx *ctx, long n);
 int		ft_isalpha_upper(int c);
+void	register_alloc(t_ctx *ctx, void *ptr, t_alloc_type type);
 
 // utils/tokenizer_utils.c
 int		define_substring(t_ctx *ctx, char **str, const char **input, \
