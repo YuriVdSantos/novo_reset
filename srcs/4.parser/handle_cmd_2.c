@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_cmd_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 21:10:42 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/26 21:20:25 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/07/01 16:02:34 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,30 @@ static t_redir_type	define_type(t_token **tmp);
 void	handle_redir(t_ctx *ctx, t_token **tmp, t_cmd *current)
 {
 	t_redir_type	type;
-	char			*expanded_filename;
-	char			*final_filename;
+	char			*filename_or_delimiter;
 
 	type = define_type(tmp);
 	*tmp = (*tmp)->next;
-	if (!*tmp || (*tmp)->type != WORD)
-		return (print_error(ctx, "syntax error near unexpected token", -1, 2));
-	expanded_filename = (*tmp)->value;
-	if (!expanded_filename)
+	if (!*tmp || ((*tmp)->type != WORD && (*tmp)->type != SQUOTE && (*tmp)->type != DQUOTE))
+	{
+		print_error(ctx, "syntax error near unexpected token", -1, 2);
+		return;
+	}
+	if (type == REDIR_HEREDOC)
+	{
+		filename_or_delimiter = ft_strdup((*tmp)->value);
+	}
+	else
+	{
+		filename_or_delimiter = remove_quotes((*tmp)->value);
+	}
+	if (!filename_or_delimiter)
 	{
 		ctx->exit_status = 1;
-		return ;
+		return;
 	}
-	final_filename = remove_quotes(expanded_filename);
-	if (!final_filename)
-	{
-		ctx->exit_status = 1;
-		return ;
-	}
-	add_redir(current, type, final_filename);
-	free(final_filename);
+	add_redir(current, type, filename_or_delimiter);
+	free(filename_or_delimiter);
 	*tmp = (*tmp)->next;
 }
 
