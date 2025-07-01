@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 15:44:22 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/27 15:46:19 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/07/01 15:02:22 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int	ft_exit(char **args, t_ctx *ctx)
 	{
 		status = ctx->exit_status;
 		free_context(ctx);
+		close_all_fds();
 		exit(status);
 	}
 	if (!is_numeric(args[1]) || !is_within_long_long_range(args[1]))
@@ -71,6 +72,7 @@ int	ft_exit(char **args, t_ctx *ctx)
 		ft_putstr_fd(args[1], STDERR_FILENO);
 		ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
 		free_context(ctx);
+		close_all_fds();
 		exit(2);
 	}
 	else if (args[2])

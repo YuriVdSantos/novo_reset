@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:07:06 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/26 22:33:50 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/07/01 15:04:39 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	main(int argc, char **argv, char **envp)
 	}
 	init_ctx(ctx, envp);
 	ctx = main_loop(ctx);
+	close_all_fds();
 	free_context(ctx);
 	return (g_signal);
 }

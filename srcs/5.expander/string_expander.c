@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   string_expander.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 21:55:16 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/27 15:14:37 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/07/01 14:52:19 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	handle_dollar_expansion(t_ctx *ctx, const char *input, \
 		buf->cursor += ft_strlen(var_value);
 		buf->remaining -= ft_strlen(var_value);
 	}
-	free(var_value);
+	// free(var_value);
 	*i += len + 1;
 }
 
