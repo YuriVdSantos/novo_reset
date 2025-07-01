@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 21:23:41 by jhualves          #+#    #+#             */
-/*   Updated: 2025/07/01 15:11:33 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/01 17:26:35 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void	process_word_token(t_ctx *ctx, t_token **tmp, t_cmd *current)
 		*tmp = (*tmp)->next;
 		return ;
 	}
-	add_arg(current, expanded_str);
+	add_arg(ctx, current, expanded_str);
 	*tmp = (*tmp)->next;
 }
 

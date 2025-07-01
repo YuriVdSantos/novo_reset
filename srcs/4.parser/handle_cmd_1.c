@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_cmd_1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 21:09:24 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/26 21:10:31 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/07/01 17:28:45 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	handle_assignment_var(t_ctx *ctx, t_token **tmp, t_cmd *current)
 	while ((*tmp)->value && (*tmp)->value[i] && (*tmp)->value[i] != '=')
 		i++;
 	value = ft_strdup((*tmp)->value + i + 1);
-	add_arg(current, value);
+	add_arg(ctx, current, value);
 	set_env_var(ctx, (*tmp)->value);
 	*tmp = (*tmp)->next;
 }
@@ -36,7 +36,7 @@ void	handle_env_var(t_ctx *ctx, t_token **tmp, t_cmd *current)
 		*tmp = (*tmp)->next;
 		return ;
 	}
-	add_arg(current, safe_strdup(ctx, env_value));
+	add_arg(ctx, current, safe_strdup(ctx, env_value));
 	current->type = CMD_BUILTIN;
 	*tmp = (*tmp)->next;
 }

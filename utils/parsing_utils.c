@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yurivieiradossantos <yurivieiradossanto    +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/25 23:26:04 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/11 00:22:08 by yurivieirad      ###   ########.fr       */
+/*   Updated: 2025/07/01 17:33:30 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_cmd	*new_cmd(void)
 	return (cmd);
 }
 
-void	add_arg(t_cmd *cmd, char *value)
+void	add_arg(t_ctx *ctx, t_cmd *cmd, char *value)
 {
 	char	**new_args;
 	size_t	count;
@@ -42,7 +42,7 @@ void	add_arg(t_cmd *cmd, char *value)
 		new_args[i] = cmd->args[i];
 		i++;
 	}
-	new_args[i] = ft_strdup(value);
+	new_args[i] = safe_strdup(ctx, value);
 	new_args[i + 1] = NULL;
 	free(cmd->args);
 	cmd->args = new_args;

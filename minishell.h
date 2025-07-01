@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:14:01 by jhualves          #+#    #+#             */
-/*   Updated: 2025/07/01 16:34:56 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/01 17:29:05 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,7 +248,7 @@ bool	is_valid_filename_token(t_token_type type);
 // srcs/4.parser/handle_cmd.c
 void	handle_pipe(t_token **tmp, t_cmd **current);
 void	handle_redir(t_ctx *ctx, t_token **tmp, t_cmd *current);
-void	handle_word(t_token **tmp, t_cmd *current);
+void	handle_word(t_ctx *ctx, t_token **tmp, t_cmd *current);
 void	handle_dquote(t_ctx *ctx, t_token **tmp, t_cmd **current);
 void	handle_squote(t_ctx *ctx, t_token **tmp, t_cmd **current);
 
@@ -426,7 +426,7 @@ void	input_null(t_ctx *ctx, char **input);
 char	**dup_mtz(char **mtz);
 
 // utils/parsing_utils.c
-void	add_arg(t_cmd *cmd, char *value);
+void	add_arg(t_ctx *ctx, t_cmd *cmd, char *value);
 void	add_redir(t_cmd *cmd, t_redir_type type, char *file);
 t_cmd	*new_cmd(void);
 

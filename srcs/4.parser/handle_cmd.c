@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 21:10:42 by jhualves          #+#    #+#             */
-/*   Updated: 2025/07/01 14:12:49 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/01 17:29:28 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	handle_pipe(t_token **tmp, t_cmd **current)
 	*tmp = (*tmp)->next;
 }
 
-void	handle_word(t_token **tmp, t_cmd *current)
+void	handle_word(t_ctx *ctx, t_token **tmp, t_cmd *current)
 {
-	add_arg(current, (*tmp)->value);
+	add_arg(ctx, current, (*tmp)->value);
 	*tmp = (*tmp)->next;
 }
 
@@ -33,7 +33,7 @@ void	handle_dquote(t_ctx *ctx, t_token **tmp, t_cmd **current)
 	char	*content;
 
 	content = expand_dquotes(ctx, (*tmp)->value);
-	add_arg(*current, content);
+	add_arg(ctx, *current, content);
 	*tmp = (*tmp)->next;
 }
 
@@ -42,7 +42,7 @@ void	handle_squote(t_ctx *ctx, t_token **tmp, t_cmd **current)
 	char	*content;
 
 	content = safe_strdup(ctx, (*tmp)->value);
-	add_arg(*current, content);
+	add_arg(ctx, *current, content);
 	*tmp = (*tmp)->next;
 }
 
