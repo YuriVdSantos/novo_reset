@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yvieira- <yvieira-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 21:23:41 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/27 21:03:10 by yvieira-         ###   ########.fr       */
+/*   Updated: 2025/07/01 15:11:33 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ static void	handle_quotes_pipes(t_ctx *ctx, t_token **tmp, t_cmd **current)
 {
 	if ((*tmp)->type == PIPE)
 		handle_pipe(tmp, current);
-	else if ((*tmp)->type == DQUOTE || (*tmp)->type == SQUOTE)
+	else if ((*tmp)->type == DQUOTE)
 		handle_dquote(ctx, tmp, current);
 	else if ((*tmp)->type == SQUOTE)
 		handle_squote(ctx, tmp, current);
