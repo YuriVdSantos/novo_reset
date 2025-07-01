@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_word.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:18:26 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/26 22:18:29 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/07/01 18:00:12 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ void	token_handle_word(t_ctx *ctx, const char **input, t_token **tokens)
 	start = *input;
 	len = 0;
 	while (start[len] && !is_metachar(start[len]))
-	{
+	{//Invalid read of size 1
+		if (start[len] == '\'' || start[len] == '\"')
+			len += 1 +  quote_chr(start + len, &len);
 		quote_chr(start, &len);
 	}
 	if (len > 0)
