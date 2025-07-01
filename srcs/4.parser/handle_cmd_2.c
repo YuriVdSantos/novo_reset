@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 21:10:42 by jhualves          #+#    #+#             */
-/*   Updated: 2025/07/01 16:02:34 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/01 16:05:51 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,9 @@ void	handle_redir(t_ctx *ctx, t_token **tmp, t_cmd *current)
 		return;
 	}
 	if (type == REDIR_HEREDOC)
-	{
 		filename_or_delimiter = ft_strdup((*tmp)->value);
-	}
 	else
-	{
 		filename_or_delimiter = remove_quotes((*tmp)->value);
-	}
 	if (!filename_or_delimiter)
 	{
 		ctx->exit_status = 1;
