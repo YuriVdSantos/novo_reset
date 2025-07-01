@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes_expander.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 21:41:14 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/27 15:15:09 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/07/01 14:07:16 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	var_name_length(const char *input)
 	if (input[0] == '$')
 		return (1);
 	while (input[len] && (ft_isalpha_upper(input[len]) || \
-	ft_isdigit(input[len]) || input[len] == '_'))
+ft_isdigit(input[len]) || input[len] == '_'))
 		len++;
 	return (len);
 }
