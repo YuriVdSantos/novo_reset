@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yvieira- <yvieira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:59:18 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/27 15:56:50 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/07/02 20:27:57 by yvieira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,28 +24,16 @@ static char	*create_temp_filename(void)
 	return (filename);
 }
 
-static int	handle_single_heredoc(t_redir *redir, t_ctx *ctx)
+static void	heredoc_readline_loop(t_redir *redir, t_ctx *ctx, int temp_fd,
+		bool expand)
 {
-	int		temp_fd;
 	char	*line;
-	char	*delimiter;
-	char	*temp_filename;
 	char	*expanded_line;
-	bool	expand;
 
-	delimiter = redir->filename;
-	expand = (!ft_strchr(delimiter, '\'') && !ft_strchr(delimiter, '\"')) \
-					|| ft_strchr(delimiter, '$');
-	temp_filename = create_temp_filename();
-	if (!temp_filename)
-		return (FAILED);
-	temp_fd = open(temp_filename, O_WRONLY | O_CREAT | O_TRUNC, 0600);
-	if (temp_fd == -1)
-		return (free(temp_filename), FAILED);
 	while (1)
 	{
-		line = readline("> ");
-		if (!line || ft_strcmp(line, delimiter) == 0)
+		line = readline("heredoc> ");
+		if (!line || ft_strcmp(line, redir->filename) == 0)
 		{
 			if (line)
 				free(line);
@@ -60,6 +48,25 @@ static int	handle_single_heredoc(t_redir *redir, t_ctx *ctx)
 			ft_putendl_fd(line, temp_fd);
 		free(line);
 	}
+}
+
+static int	handle_single_heredoc(t_redir *redir, t_ctx *ctx)
+{
+	int		temp_fd;
+	char	*temp_filename;
+	int		expand;
+
+	if ((ft_strchr(redir->filename, '\'') \
+		|| ft_strchr(redir->filename, '\"')) \
+			&& !ft_strchr(redir->filename, '$'))
+				expand = 1;
+	temp_filename = create_temp_filename();
+	if (!temp_filename)
+		return (FAILED);
+	temp_fd = open(temp_filename, O_WRONLY | O_CREAT | O_TRUNC, 0600);
+	if (temp_fd == -1)
+		return (free(temp_filename), FAILED);
+	heredoc_readline_loop(redir, ctx, temp_fd, expand);
 	close(temp_fd);
 	free(redir->filename);
 	redir->filename = temp_filename;

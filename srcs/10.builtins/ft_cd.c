@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yvieira- <yvieira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 15:43:06 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/27 15:43:07 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/07/02 20:02:21 by yvieira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,34 +59,22 @@ int	ft_cd(char **args, t_ctx *ctx)
 	{
 		path = get_env_value_from_ctx(ctx, "HOME");
 		if (path == NULL || *path == '\0')
-		{
-			ft_putstr_fd("minishell: cd: HOME not set\n", STDERR_FILENO);
-			return (EXIT_FAILURE);
-		}
+			return (print_error(ctx, "cd: HOME not set\n", 2, 2), 1);
 	}
 	else if (args[2] != NULL)
-	{
-		ft_putstr_fd("minishell: cd: too many arguments\n", STDERR_FILENO);
-		return (EXIT_FAILURE);
-	}
+		return (print_error(ctx, "cd: too many arguments\n", 2, 2), 1);
 	else if (args[1][0] == '-' && args[1][1] == '\0')
 	{
 		path = get_env_value_from_ctx(ctx, "OLDPWD");
 		if (path == NULL || *path == '\0')
-		{
-			ft_putstr_fd("minishell: cd: OLDPWD not set\n", STDERR_FILENO);
-			return (EXIT_FAILURE);
-		}
+			return (print_error(ctx, "cd: OLDPWD not set\n", 2, 2), 1);
 		ft_putendl_fd((char *)path, STDOUT_FILENO);
 	}
 	else
 		path = args[1];
 	if (chdir(path) != 0)
-	{
-		ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
-		perror((char *)path);
-		return (EXIT_FAILURE);
-	}
+		return (print_error(ctx, ft_strjoin("minishell: cd: ", (char *)path), \
+		2, 2), 1);
 	update_pwd_vars(ctx);
 	return (EXIT_SUCCESS);
 }

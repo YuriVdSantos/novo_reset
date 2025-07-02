@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_word.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: yvieira- <yvieira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:18:26 by jhualves          #+#    #+#             */
-/*   Updated: 2025/07/02 18:48:03 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/02 19:38:56 by yvieira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,9 @@ void	token_handle_word(t_ctx *ctx, const char **input, t_token **tokens)
 	while (start[len] && !is_metachar(start[len]))
 	{
 		if (start[len] == '\'' || start[len] == '\"')
-		{
-			len += quote_chr(start + len); 
-		}
+			len += quote_chr(start + len);
 		else
-		{
 			len++;
-		}
 	}
 	if (len > 0)
 	{
@@ -48,21 +44,16 @@ void	token_handle_word(t_ctx *ctx, const char **input, t_token **tokens)
 
 static char	quote_chr(const char *start)
 {
-	char quote_char;
-	int i;
+	char	quote_char;
+	int		i;
 
 	if (*start != '\'' && *start != '\"')
 		return (0);
-
 	quote_char = *start;
 	i = 1;
 	while (start[i] && start[i] != quote_char)
-	{
 		i++;
-	}
 	if (start[i] == quote_char)
-	{
 		i++;
-	}
 	return (i);
 }

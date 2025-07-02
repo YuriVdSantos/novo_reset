@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_expander.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yvieira- <yvieira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 14:54:17 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/27 14:55:26 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/07/02 19:48:14 by yvieira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ char	*get_var_value(t_ctx *ctx, const char *var_name, int *len)
 	char	*val;
 	char	*key;
 
-	if (var_name[0] == '?' || var_name[0] == '$' || \
-(var_name[0] == '\0' || (!ft_isalpha(var_name[0]) && \
-var_name[0] != '_')))
+	if ((var_name[0] == '?') || (var_name[0] == '$') \
+		|| (var_name[0] == '\0') || ((!ft_isalpha(var_name[0])) \
+		&& (var_name[0] != '_')))
 		return (return_var_value(ctx, var_name, len));
 	*len = 0;
 	while (ft_isalnum(var_name[*len]) || var_name[*len] == '_')
@@ -50,8 +50,7 @@ static char	*return_var_value(t_ctx *ctx, const char *var_name, int *len)
 		get_pid_var(ctx, &pid_str);
 		return (pid_str);
 	}
-	if (var_name[0] == '\0' || \
-(!ft_isalpha(var_name[0]) && var_name[0] != '_'))
+	if (var_name[0] == '\0' || (!ft_isalpha(var_name[0]) && var_name[0] != '_'))
 	{
 		*len = 0;
 		return (safe_strdup(ctx, "$"));

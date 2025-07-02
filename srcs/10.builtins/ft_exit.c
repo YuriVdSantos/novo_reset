@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: yvieira- <yvieira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 15:44:22 by jhualves          #+#    #+#             */
-/*   Updated: 2025/07/01 15:02:22 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/02 20:12:52 by yvieira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,8 @@ int	ft_exit(char **args, t_ctx *ctx)
 		exit(2);
 	}
 	else if (args[2])
-	{
-		ft_putendl_fd("minishell: exit: too many arguments", STDERR_FILENO);
-		return (1);
-	}
+		return (print_error(ctx, "minishell: exit: too many arguments", 2, 2), \
+			1);
 	else
 		status = ft_atodbl(args[1]);
 	return (free_context(ctx), exit((unsigned char)status), 0);

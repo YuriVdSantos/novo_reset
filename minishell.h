@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
+/*   By: yvieira- <yvieira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:14:01 by jhualves          #+#    #+#             */
-/*   Updated: 2025/07/01 17:29:05 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/02 20:24:48 by yvieira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -417,9 +417,6 @@ void	unset_string_env_var(t_ctx *ctx, const char *key);
 // =============================================================================
 // utils/
 // =============================================================================
-
-char	*get_next_line_simplified(int fd);
-
 // utils/main_utils.c
 void	no_input(void);
 void	input_null(t_ctx *ctx, char **input);

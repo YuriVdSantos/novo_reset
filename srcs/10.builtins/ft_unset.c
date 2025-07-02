@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jhualves <jhualves@student.42.fr>          +#+  +:+       +#+        */
+/*   By: yvieira- <yvieira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 15:50:51 by jhualves          #+#    #+#             */
-/*   Updated: 2025/06/27 21:54:42 by jhualves         ###   ########.fr       */
+/*   Updated: 2025/07/02 19:50:11 by yvieira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	unset_env_var(t_ctx *ctx, const char *key)
 	}
 }
 
-static void print_error_unset(char *args)
+static void	print_error_unset(char *args)
 {
 	ft_putstr_fd("minishell: unset: `", STDERR_FILENO);
 	ft_putstr_fd(args, STDERR_FILENO);

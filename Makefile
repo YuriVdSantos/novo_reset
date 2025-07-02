@@ -85,13 +85,13 @@ SRCS =  minishell.c \
 	srcs/12.handle_new_env/create_new_env.c \
 	srcs/12.handle_new_env/create_new_env_utils.c \
 	\
+	utils/execute_utils.c \
 	utils/main_utils.c \
 	utils/parsing_utils.c \
 	utils/safe_split.c \
 	utils/safe_utils_libft.c \
 	utils/safe_utils_libft_1.c \
 	utils/tokenizer_utils.c\
-	utils/get_next_line_simplified.c
 
 # --- Arquivos Objeto (.o) ---
 OBJS = $(patsubst %.c, $(OBJS_DIR)/%.o, $(SRCS))

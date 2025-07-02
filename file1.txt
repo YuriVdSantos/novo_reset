@@ -1,2 +1,0 @@
-linha 1 do arquivo
-linha 2 do arquivo
