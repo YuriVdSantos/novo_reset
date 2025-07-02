@@ -6,13 +6,13 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/26 22:18:26 by jhualves          #+#    #+#             */
-/*   Updated: 2025/07/01 18:00:12 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/02 18:48:03 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	quote_chr(const char *start, int *len);
+static char	quote_chr(const char *start);
 
 static int	is_metachar(char c)
 {
@@ -28,10 +28,15 @@ void	token_handle_word(t_ctx *ctx, const char **input, t_token **tokens)
 	start = *input;
 	len = 0;
 	while (start[len] && !is_metachar(start[len]))
-	{//Invalid read of size 1
+	{
 		if (start[len] == '\'' || start[len] == '\"')
-			len += 1 +  quote_chr(start + len, &len);
-		quote_chr(start, &len);
+		{
+			len += quote_chr(start + len); 
+		}
+		else
+		{
+			len++;
+		}
 	}
 	if (len > 0)
 	{
@@ -41,23 +46,23 @@ void	token_handle_word(t_ctx *ctx, const char **input, t_token **tokens)
 	*input += len;
 }
 
-static char	quote_chr(const char *start, int *len)
+static char	quote_chr(const char *start)
 {
-	char	quote_char;
+	char quote_char;
+	int i;
 
-	if (start[*len] == '\'' || start[*len] == '\"')
+	if (*start != '\'' && *start != '\"')
+		return (0);
+
+	quote_char = *start;
+	i = 1;
+	while (start[i] && start[i] != quote_char)
 	{
-		quote_char = start[*len];
-		(*len)++;
-		while (start[*len] && start[*len] != quote_char)
-			len++;
-		if (start[*len] == quote_char)
-			(*len)++;
+		i++;
 	}
-	else
+	if (start[i] == quote_char)
 	{
-		(*len)++;
-		quote_char = '\0';
+		i++;
 	}
-	return (quote_char);
+	return (i);
 }

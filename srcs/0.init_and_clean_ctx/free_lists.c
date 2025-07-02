@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 19:15:54 by jhualves          #+#    #+#             */
-/*   Updated: 2025/07/01 17:52:09 by codespace        ###   ########.fr       */
+/*   Updated: 2025/07/02 18:48:28 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,13 @@ void	free_cmd_list(t_cmd *cmd_list)
 {
 	t_cmd	*current_cmd;
 	t_cmd	*next_cmd;
-	// size_t	i;
 
-	// i = 0;
 	current_cmd = cmd_list;
 	while (current_cmd)
 	{
 		next_cmd = current_cmd->next;
 		if (current_cmd->args)
 		{
-			// while (current_cmd->args[i])
-			// {
-			// 	free(current_cmd->args[i]);
-			// 	i++;
-			// }
-			// if (current_cmd->args)
-			// 	free(current_cmd->args);
 			free(current_cmd->args);
 		}
 		if (current_cmd->cmd_path)
