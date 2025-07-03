@@ -6,7 +6,7 @@
 /*   By: yvieira- <yvieira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 14:59:18 by jhualves          #+#    #+#             */
-/*   Updated: 2025/07/02 20:27:57 by yvieira-         ###   ########.fr       */
+/*   Updated: 2025/07/02 21:14:16 by yvieira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ static int	handle_single_heredoc(t_redir *redir, t_ctx *ctx)
 	char	*temp_filename;
 	int		expand;
 
+	expand = 0;
 	if ((ft_strchr(redir->filename, '\'') \
 		|| ft_strchr(redir->filename, '\"')) \
 			&& !ft_strchr(redir->filename, '$'))

@@ -6,7 +6,7 @@
 /*   By: yvieira- <yvieira-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/27 15:43:06 by jhualves          #+#    #+#             */
-/*   Updated: 2025/07/02 20:02:21 by yvieira-         ###   ########.fr       */
+/*   Updated: 2025/07/02 21:41:21 by yvieira-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	ft_cd(char **args, t_ctx *ctx)
 {
 	const char	*path;
 
-	if (args[1] == NULL)
+	if (args[1] == NULL || args[1][0] == '~')
 	{
 		path = get_env_value_from_ctx(ctx, "HOME");
 		if (path == NULL || *path == '\0')
@@ -73,8 +73,8 @@ int	ft_cd(char **args, t_ctx *ctx)
 	else
 		path = args[1];
 	if (chdir(path) != 0)
-		return (print_error(ctx, ft_strjoin("minishell: cd: ", (char *)path), \
-		2, 2), 1);
+		return (print_error(ctx, safe_strjoin(ctx, "minishell: cd: ", \
+		(char *)path), 2, 2), 1);
 	update_pwd_vars(ctx);
 	return (EXIT_SUCCESS);
 }
